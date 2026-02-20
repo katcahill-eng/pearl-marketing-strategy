@@ -1,0 +1,140 @@
+{
+  "project": "PearlApp",
+  "branchName": "ralph/improvement-paths",
+  "description": "Improvement Paths & Rebate Persistence - Wire Improve tab to use real ImprovementPath component with context data, create Rebate and ImprovementPath contexts, generate personalized paths from symptoms, replace all mock data",
+  "userStories": [
+    {
+      "id": "US-102",
+      "title": "Create Rebate and ImprovementPath models",
+      "description": "As a developer, I need data models for rebates and improvement paths so data has a consistent shape across the app.",
+      "acceptanceCriteria": [
+        "Create src/models/Rebate.ts with Rebate interface: id (string), equipmentType (RebateEquipmentType), savingsAmount (number), programName (string), programDescription (string), eligibility (EligibilityStatus), eligibilityRequirements (string[]), howToClaim (ClaimStep[]), expirationDate (string | null), additionalInfo (string | null)",
+        "Create ClaimStep interface in Rebate.ts: step (number), title (string), description (string), requiresProfessional (boolean)",
+        "Create src/models/ImprovementPathData.ts with ImprovementPathData interface: id (string), title (string), description (string), sourceSymptomIds (string[]), steps (ImprovementStep[] from components), createdAt (string, ISO)",
+        "Export all new types from src/models/index.ts",
+        "Typecheck passes"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": "RebateEquipmentType and EligibilityStatus already exist in components/RebateCard. ImprovementStep already exists in components/ImprovementPath. Import these types, don't duplicate."
+    },
+    {
+      "id": "US-103",
+      "title": "Create RebateContext with AsyncStorage persistence and seed data",
+      "description": "As a developer, I need a RebateContext to persist rebates and provide them across the app.",
+      "acceptanceCriteria": [
+        "Create src/context/RebateContext.tsx following EquipmentContext pattern",
+        "AsyncStorage key: @pearl_rebates",
+        "State: rebates (Rebate[]), isLoaded (boolean)",
+        "Methods: getRebateById(id: string) returns Rebate | undefined, addRebate(rebate: Rebate), updateRebate(id: string, updates: Partial<Rebate>)",
+        "On first load when storage is empty, seed with DEFAULT_REBATES array of 5 rebates: Federal Heat Pump Tax Credit (heatPump, $2000, eligible), Home Energy Rebate Program (insulation, $1600, likely), Heat Pump Water Heater Rebate (waterHeater, $1750, eligible), Energy Efficient Windows Credit (windows, $600, check), Residential Clean Energy Credit (solar, $7500, eligible)",
+        "Each seeded rebate must include full programDescription, eligibilityRequirements array, and howToClaim steps — combine data from ImproveScreen MOCK_REBATES and RebateDetailScreen REBATE_DATA patterns",
+        "Provider gates on isLoaded (returns null until loaded)",
+        "Export RebateProvider and useRebates from src/context/index.ts",
+        "Add RebateProvider to App.tsx provider chain",
+        "Typecheck passes"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": "Seed data is critical — Improve tab must show rebates on first launch. Use the EquipmentContext pattern exactly. RebateEquipmentType and EligibilityStatus come from components/RebateCard."
+    },
+    {
+      "id": "US-104",
+      "title": "Create ImprovementPathContext with AsyncStorage persistence",
+      "description": "As a developer, I need an ImprovementPathContext to persist generated improvement paths.",
+      "acceptanceCriteria": [
+        "Create src/context/ImprovementPathContext.tsx following EquipmentContext pattern",
+        "AsyncStorage key: @pearl_improvement_paths",
+        "State: paths (ImprovementPathData[]), isLoaded (boolean)",
+        "Methods: addPath(path: ImprovementPathData), deletePath(id: string), getPathById(id: string) returns ImprovementPathData | undefined, getPathsForSymptom(symptomId: string) returns paths where sourceSymptomIds includes the symptomId",
+        "Provider gates on isLoaded (returns null until loaded)",
+        "Export ImprovementPathProvider and useImprovementPaths from src/context/index.ts",
+        "Add ImprovementPathProvider to App.tsx provider chain",
+        "Typecheck passes"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": "ImprovementPathData uses ImprovementStep from components/ImprovementPath. This context stores generated paths that persist across restarts."
+    },
+    {
+      "id": "US-105",
+      "title": "Create ImprovementPathService to generate paths from symptoms",
+      "description": "As a user, I want Pearl to generate personalized improvement paths based on my logged symptoms.",
+      "acceptanceCriteria": [
+        "Create src/services/ImprovementPathService.ts",
+        "Export generatePathForSymptom(symptomId: string, symptomLabel: string, categoryId: string): ImprovementPathData",
+        "Function is synchronous (pure function, no async needed)",
+        "Maps all 17 symptom IDs from SymptomLogModal to contextual improvement paths with 3-5 steps",
+        "Each path has steps across multiple phases: at minimum now + soon, most include later, some include major",
+        "Now phase steps: free or cheap ($0, $0-30) quick checks the user can do themselves — impact low/medium",
+        "Soon phase steps: moderate cost (~$100-300) professional inspections or assessments — impact medium, hasPearlPro true",
+        "Later phase steps: significant cost ($500-3000) targeted fixes — impact high, some have hasRebate true",
+        "Major phase steps: large cost ($5000-15000) full system replacements — impact high, hasRebate true, hasPearlPro true",
+        "Path title format: 'Your [Symptom Label] Plan' (e.g., 'Your Hot Rooms Plan')",
+        "Path description format: brief 1-sentence context (e.g., 'Steps to address hot rooms, from quick checks to long-term fixes')",
+        "Each step has unique id: symptomId-phase-index (e.g., 'hot-rooms-now-1')",
+        "Export from src/services/index.ts",
+        "Typecheck passes"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": "This is the core intelligence of the feature. Each of the 17 symptoms gets a unique path. Steps should feel practical and real. Example for hot-rooms: Now: Check vents open, change filter ($0-30, low) / Soon: Get duct inspection (~$150, medium, hasPearlPro) / Later: Seal duct leaks or add insulation ($500-2000, high, hasRebate) / Major: HVAC upgrade ($8000-15000, high, hasRebate, hasPearlPro)."
+    },
+    {
+      "id": "US-106",
+      "title": "Wire ImproveScreen to use ImprovementPath component with context data",
+      "description": "As a user, I want to see personalized improvement paths on the Improve tab instead of placeholder cards.",
+      "acceptanceCriteria": [
+        "ImproveScreen imports useImprovementPaths from context",
+        "ImproveScreen imports useSymptoms from context",
+        "ImproveScreen imports useRebates from context",
+        "ImproveScreen imports ImprovementPath component and ImprovementStep type from components",
+        "ImproveScreen imports generatePathForSymptom from services",
+        "Remove MOCK_IMPROVEMENT_PATHS constant and local ImprovementPath interface",
+        "Remove MOCK_REBATES constant and local Rebate interface",
+        "Rebates section reads from useRebates().rebates instead of MOCK_REBATES",
+        "On mount (useEffect), for each logged symptom that does not yet have a path in context, call generatePathForSymptom and save via addPath",
+        "Improvement Paths section renders ImprovementPath component for each path (max 3, sorted by createdAt descending)",
+        "Each ImprovementPath gets onStepPress, onRebatePress, onPearlProPress callbacks",
+        "If no symptoms logged AND no paths exist, show empty state: icon map-outline, title 'Your Improvement Paths', description 'Log a symptom on the Home tab to get a personalized step-by-step improvement plan.'",
+        "Typecheck passes"
+      ],
+      "priority": 5,
+      "passes": false,
+      "notes": "This is the biggest story — wires everything together. Key: the auto-generation useEffect should check if a path already exists for each symptom's symptomId (via getPathsForSymptom) before generating. Use the EmptyState component for the no-symptoms state. Max 3 paths prevents scroll overwhelm."
+    },
+    {
+      "id": "US-107",
+      "title": "Wire RebateDetailScreen to read from RebateContext",
+      "description": "As a user, I want rebate detail to show real data from context instead of hardcoded mock data.",
+      "acceptanceCriteria": [
+        "RebateDetailScreen imports useRebates from context",
+        "Uses getRebateById(rebateId) to get rebate data instead of REBATE_DATA[rebateId] lookup",
+        "Remove REBATE_DATA constant, local RebateInfo interface, and DEFAULT_REBATE_ID constant",
+        "If rebate not found (getRebateById returns undefined), show a centered fallback message: 'This rebate is no longer available.' with a back button",
+        "All existing UI stays the same when rebate is found (hero, eligibility, requirements, how-to-claim, actions)",
+        "ClaimStep interface comes from models import instead of local definition",
+        "Typecheck passes"
+      ],
+      "priority": 6,
+      "passes": false,
+      "notes": "Straightforward context wiring. The Rebate model has the same fields as the local RebateInfo interface. Remove all local type definitions and REBATE_DATA mock. Equipment icon and label mappings stay local (they're display-only)."
+    },
+    {
+      "id": "US-108",
+      "title": "Wire ImproveScreen wrapper to pass navigation callbacks",
+      "description": "As a developer, I need ImproveScreen's improvement path and rebate actions to navigate correctly.",
+      "acceptanceCriteria": [
+        "ImproveScreenWrapper in BottomTabNavigator passes onImprovementPathPress callback that console.logs the path ID (future detail screen)",
+        "ImproveScreen accepts onStepRebatePress prop — called when user taps View Rebate on a step, passes rebateId, navigates to RebateDetail",
+        "ImproveScreen accepts onStepPearlProPress prop — called when user taps Find Pro on a step, navigates to PearlPros",
+        "ImproveScreenWrapper passes onStepRebatePress that navigates to RebateDetail",
+        "ImproveScreenWrapper passes onStepPearlProPress that navigates to PearlPros",
+        "Typecheck passes"
+      ],
+      "priority": 7,
+      "passes": false,
+      "notes": "Small wiring in BottomTabNavigator.tsx. onStepRebatePress navigates with a default rebateId matching the step context. onStepPearlProPress navigates to PearlPros."
+    }
+  ]
+}

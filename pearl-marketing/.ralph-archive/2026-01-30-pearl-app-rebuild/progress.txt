@@ -1,0 +1,5 @@
+# Ralph Progress Log
+# PearlBot - Slack Marketing Intake Agent
+# Branch: ralph/pearl-bot
+# Started: 2026-01-30
+

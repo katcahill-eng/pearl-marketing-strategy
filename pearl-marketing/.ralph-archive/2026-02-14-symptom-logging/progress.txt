@@ -1,0 +1,19 @@
+# Ralph Progress Log
+Started: Fri Feb 14 2026
+
+## Codebase Patterns
+- Pearl App lives in `pearl-app/` directory with Expo SDK 54, React Native 0.81.5, TypeScript strict
+- Context pattern: createContext → Provider with AsyncStorage → isLoaded gate → useCallback mutators → barrel export in index.ts → add to App.tsx chain
+- AsyncStorage keys: @pearl_symptoms, @pearl_onboarding, @pearl_is_premium
+- Dates stored as ISO strings in AsyncStorage (no Date objects in JSON)
+- Theme: useTheme() returns { colors, spacing, typography, borderRadius, shadows }
+- Navigation: RootNavigator (NativeStackNavigator) with screen wrappers + BottomTabNavigator
+- Existing contexts: OnboardingContext, DeviceContext, InsightContext, NotificationContext, UtilityBillContext, EquipmentContext
+- SymptomLogModal defines SYMPTOMS and SYMPTOM_CATEGORIES — look up affectedPillars by symptomId
+- HomeScreen currently has MOCK_LOGGED_SYMPTOMS, MOCK_ALERTS, MOCK_MAINTENANCE_ALERTS — first two need replacing
+- NotificationPreferences has flat boolean toggles: symptomFollowUp, etc.
+- BackgroundSyncService runs maintenance/seasonal/equipment checks — add symptom follow-up alongside
+- PearlNotification interface requires: id, category, title, body, data, scheduledAt, delivered, tappedAt
+
+---
+

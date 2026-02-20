@@ -1,0 +1,21 @@
+# Ralph Progress Log
+Started: Fri Feb 14 2026
+
+## Codebase Patterns
+- Pearl App lives in `pearl-app/` directory with Expo SDK 54, React Native 0.81.5, TypeScript strict
+- Context pattern: createContext → Provider with AsyncStorage → isLoaded gate → useCallback mutators → barrel export in index.ts → add to App.tsx chain
+- AsyncStorage keys: @pearl_rebates, @pearl_improvement_paths, @pearl_symptoms, @pearl_onboarding, @pearl_is_premium, @pearl_equipment
+- Dates stored as ISO strings in AsyncStorage (no Date objects in JSON)
+- Theme: useTheme() returns { colors, spacing, typography, borderRadius, shadows }
+- Navigation: RootNavigator (NativeStackNavigator) with screen wrappers + BottomTabNavigator (4 tabs: Home, My Home, Improve, Account)
+- Existing contexts: OnboardingContext, DeviceContext, InsightContext, NotificationContext, UtilityBillContext, EquipmentContext, SymptomContext
+- ImprovementPath component exists at src/components/ImprovementPath.tsx — full timeline UI with phases (now/soon/later/major), exported from components barrel
+- ImproveScreen has MOCK_REBATES (5 items) and MOCK_IMPROVEMENT_PATHS (3 placeholder items with simple Card stubs)
+- RebateDetailScreen has hardcoded REBATE_DATA (3 items with full claim details)
+- RebateEquipmentType and EligibilityStatus types live in components/RebateCard
+- ImprovementStep, ImprovementPhase, ImpactLevel types live in components/ImprovementPath
+- SymptomLogModal defines 17 symptoms across 4 categories with affectedPillars
+- ImproveScreenWrapper in BottomTabNavigator currently passes onRebatePress and onFindPearlPros
+
+---
+

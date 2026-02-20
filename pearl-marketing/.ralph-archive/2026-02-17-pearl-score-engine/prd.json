@@ -1,0 +1,73 @@
+{
+  "project": "Pearl App",
+  "branchName": "ralph/pearl-score-engine",
+  "description": "Pearl Score Calculation Engine — dynamic 0-1000 score from FactorEngine with per-pillar sub-scores and score history",
+  "userStories": [
+    {
+      "id": "US-115",
+      "title": "Create ScoreEngine service",
+      "description": "As a developer, I need a pure-function service that takes Factor[] and returns a total score (0-1000) plus per-pillar sub-scores (0-200 each).",
+      "acceptanceCriteria": [
+        "Create src/services/ScoreEngine.ts with calculateScore(factors: Factor[]): ScoreResult",
+        "ScoreResult type: { total: number; pillars: Record<Pillar, number> }",
+        "Each pillar starts at base 125 points (625 total baseline with no factors)",
+        "Each helping factor adds points by severity: info +10, attention +15, action +20",
+        "Each hurting factor subtracts points by severity: info -5, attention -15, action -30",
+        "Per-pillar scores clamped to 0-200 range",
+        "Total score is sum of all 5 pillar scores (0-1000)",
+        "Export calculateScore and ScoreResult from src/services/index.ts",
+        "Typecheck passes"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-116",
+      "title": "Create ScoreContext with AsyncStorage persistence",
+      "description": "As a user, I want my score to persist and animate from the previous value when it changes.",
+      "acceptanceCriteria": [
+        "Create src/context/ScoreContext.tsx providing { score, previousScore, pillarScores, refreshScore }",
+        "Context uses generateAllFactors + calculateScore with data from DeviceContext, EquipmentContext, SymptomContext, OnboardingContext",
+        "Stores current score under pearl_score_current and previous under pearl_score_previous in AsyncStorage",
+        "On first load previousScore is null (no animation)",
+        "When score changes, old current becomes new previous",
+        "Export useScore hook and ScoreProvider from src/context/index.ts",
+        "Add ScoreProvider to App.tsx provider chain after DeviceProvider, EquipmentProvider, SymptomProvider, OnboardingProvider",
+        "Typecheck passes"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-117",
+      "title": "Wire dynamic score into MyHomeScreen",
+      "description": "As a user, I want to see my real Pearl Score on the My Home tab.",
+      "acceptanceCriteria": [
+        "Remove hardcoded const homeScore = 625 from MyHomeScreen",
+        "Import and use useScore from ScoreContext",
+        "Pass score and previousScore to ScoreDisplay component",
+        "Score updates when equipment, symptoms, readings, or onboarding data change",
+        "Typecheck passes"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-118",
+      "title": "Show per-pillar sub-scores in PillarDetailScreen",
+      "description": "As a user, I want to see each pillar's individual score so I know which areas need improvement.",
+      "acceptanceCriteria": [
+        "Import useScore in PillarDetailScreen",
+        "Display pillar sub-score next to status badge in header as 'X / 200' format",
+        "Sub-score text uses caption font size and pillar status color",
+        "Typecheck passes"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": ""
+    }
+  ]
+}

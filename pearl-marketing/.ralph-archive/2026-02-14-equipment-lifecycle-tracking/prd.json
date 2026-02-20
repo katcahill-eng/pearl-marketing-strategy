@@ -1,0 +1,143 @@
+{
+  "project": "PearlApp",
+  "branchName": "ralph/equipment-lifecycle-tracking",
+  "description": "Equipment Lifecycle Tracking - Add real data persistence for home equipment, replacement cost estimates, aging notifications, and lifecycle insights",
+  "userStories": [
+    {
+      "id": "US-086",
+      "title": "Equipment context with AsyncStorage persistence",
+      "description": "As a developer, I need a context provider that stores equipment records so data persists across sessions.",
+      "acceptanceCriteria": [
+        "Create EquipmentContext in src/context/EquipmentContext.tsx",
+        "State includes: equipment array (EquipmentItem[]), isLoaded boolean",
+        "Provides: addEquipment, updateEquipment, deleteEquipment, getEquipmentById functions",
+        "Persist to AsyncStorage under @pearl_equipment with Date-safe serialization",
+        "Export EquipmentProvider and useEquipment hook",
+        "Add to src/context/index.ts barrel exports",
+        "Add EquipmentProvider to App.tsx provider chain (before DeviceProvider)",
+        "Typecheck passes"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": "Follow same pattern as UtilityBillContext: createContext, Provider with AsyncStorage, isLoaded gate, useCallback mutators. EquipmentItem type already exported from components/EquipmentList.tsx."
+    },
+    {
+      "id": "US-087",
+      "title": "Wire EquipmentEntryScreen to save real data",
+      "description": "As a user, I want my equipment entries to actually save so I can see them later.",
+      "acceptanceCriteria": [
+        "EquipmentEntryScreen calls useEquipment().addEquipment on save (new) or updateEquipment (edit)",
+        "Generates a unique ID for new equipment (equip_{timestamp})",
+        "Calculates status using existing calculateEquipmentStatus function from components",
+        "Sets estimatedLifespan from getTypicalLifespan if user doesn't specify",
+        "Sets typeLabel based on equipment type selection",
+        "After save, calls onSave callback to navigate back",
+        "When equipmentId prop is provided, loads existing equipment from context for editing",
+        "Typecheck passes"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": "EquipmentEntryScreen already has a form with EquipmentFormData type. Wire onSave to build an EquipmentItem from form data and add to context. calculateEquipmentStatus and getTypicalLifespan already exported from components."
+    },
+    {
+      "id": "US-088",
+      "title": "Wire MyHomeScreen to display real equipment from context",
+      "description": "As a user, I want to see my actual saved equipment on the My Home screen instead of mock data.",
+      "acceptanceCriteria": [
+        "MyHomeScreen reads equipment from useEquipment() instead of MOCK_EQUIPMENT constant",
+        "Remove MOCK_EQUIPMENT hardcoded array from MyHomeScreen",
+        "Empty state shown when no equipment added (EquipmentList component handles this)",
+        "Equipment count updates dynamically based on context data",
+        "Typecheck passes"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": "Simple swap: replace MOCK_EQUIPMENT with useEquipment().equipment. EquipmentList already handles empty state. Import useEquipment from context barrel."
+    },
+    {
+      "id": "US-089",
+      "title": "Wire EquipmentDetailScreen to read from context",
+      "description": "As a user, I want to see real data on the equipment detail screen with working edit and delete.",
+      "acceptanceCriteria": [
+        "EquipmentDetailScreen reads equipment from useEquipment().getEquipmentById instead of mock lookup or prop fallback",
+        "Remove any MOCK_EQUIPMENT_DATA hardcoded data from EquipmentDetailScreen",
+        "Delete button calls useEquipment().deleteEquipment and navigates back via onBack callback",
+        "Delete shows confirmation dialog with equipment name before executing",
+        "Edit button navigates to EquipmentEntry with equipmentId param (already wired in RootNavigator)",
+        "Shows 'Equipment not found' error state if ID doesn't match any record, with back button",
+        "Typecheck passes"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": "EquipmentDetailScreen currently accepts equipment as prop. Change to read from context by ID. The navigation wrapper already passes equipmentId. Keep equipment prop as optional fallback during transition."
+    },
+    {
+      "id": "US-090",
+      "title": "Replacement cost estimates",
+      "description": "As a user, I want to see estimated replacement costs for my aging equipment so I can budget ahead.",
+      "acceptanceCriteria": [
+        "Add REPLACEMENT_COST_ESTIMATES constant: Record<EquipmentType, { low: number; high: number; label: string }>",
+        "Values: hvac $8000-15000, waterHeater $1200-3000, insulation $1500-5000, windows $5000-15000, solar $15000-30000, appliance $500-3000, lighting $200-1000, other $500-5000",
+        "Add cost estimate card to EquipmentDetailScreen when status is 'aging' or 'replaceSoon'",
+        "Card shows range formatted with commas (e.g. '$8,000 – $15,000') with 'Typical replacement range' label",
+        "Card only visible to premium users (check @pearl_is_premium)",
+        "Export REPLACEMENT_COST_ESTIMATES from components barrel",
+        "Typecheck passes"
+      ],
+      "priority": 5,
+      "passes": false,
+      "notes": "Add REPLACEMENT_COST_ESTIMATES to EquipmentList.tsx alongside existing constants. Cost card in detail screen uses same Card component with colors.warning or colors.hurting background tint."
+    },
+    {
+      "id": "US-091",
+      "title": "Equipment aging notification trigger",
+      "description": "As a user, I want to receive push notifications when my equipment is approaching end-of-life.",
+      "acceptanceCriteria": [
+        "Create checkEquipmentAging function in src/services/EquipmentAgingService.ts",
+        "Reads equipment from AsyncStorage @pearl_equipment",
+        "For 'aging' equipment: generates notification 'Your {name} is {age} years old. Typical lifespan is {lifespan} years.'",
+        "For 'replaceSoon' equipment: generates notification 'Your {name} may need replacement soon. Check available rebates.'",
+        "Dedup: one notification per equipment per 30 days via @pearl_equipment_aging_notified AsyncStorage key",
+        "Add to services barrel exports",
+        "Call from BackgroundSyncService task alongside maintenance/seasonal checks",
+        "Typecheck passes"
+      ],
+      "priority": 6,
+      "passes": false,
+      "notes": "Follow pattern of SeasonalTipService: read data, evaluate conditions, schedule local notification via expo-notifications, track last-notified timestamps. Notification category maps to existing equipment_aging category."
+    },
+    {
+      "id": "US-092",
+      "title": "Equipment lifecycle insights in InsightEngine",
+      "description": "As a user, I want my equipment status to generate insights on the dashboard.",
+      "acceptanceCriteria": [
+        "Add generateEquipmentInsights(equipment: EquipmentItem[]) function to InsightEngine",
+        "'replaceSoon' equipment generates 'action' severity insight with title like 'Time to plan a {type} replacement'",
+        "'aging' equipment generates 'attention' severity insight with title like 'Your {name} is getting older'",
+        "Each insight includes suggested actions: check rebates (type: 'rebate'), find Pearl Pro (type: 'pearl_pro')",
+        "Insights map to 'operations' pillar for HVAC/waterHeater, 'energy' for solar/lighting, 'comfort' for insulation/windows",
+        "Export from services barrel",
+        "Typecheck passes"
+      ],
+      "priority": 7,
+      "passes": false,
+      "notes": "Follow pattern of generateBillInsights in InsightEngine. Insight interface already exists with id, title, body, severity, pillar, suggestedActions. Equipment type → pillar mapping needed."
+    },
+    {
+      "id": "US-093",
+      "title": "Premium gate for lifecycle features",
+      "description": "As a free-tier user, I want to see basic equipment info but lifecycle tracking details are gated.",
+      "acceptanceCriteria": [
+        "EquipmentDetailScreen checks @pearl_is_premium flag via AsyncStorage",
+        "When not premium: hide lifespan progress bar, replacement cost card, and rebate cards",
+        "Show 'Upgrade for lifecycle tracking' banner in their place listing locked features",
+        "Banner tap shows PremiumGate overlay (reuse existing component)",
+        "Equipment list and basic info (name, type, brand, status badge) always visible on free tier",
+        "Typecheck passes"
+      ],
+      "priority": 8,
+      "passes": false,
+      "notes": "PremiumGate component already exists. Read @pearl_is_premium from AsyncStorage (default true for demo). Gate only the lifecycle-specific sections in EquipmentDetailScreen, not the entire screen."
+    }
+  ]
+}

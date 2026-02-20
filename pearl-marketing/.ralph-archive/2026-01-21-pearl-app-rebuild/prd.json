@@ -1,0 +1,623 @@
+{
+  "project": "Pearl Homeowner App",
+  "branchName": "ralph/pearl-app-rebuild",
+  "description": "Pearl Homeowner App Rebuild - Symptom-based home performance dashboard that helps homeowners understand and improve their lived experience",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Initialize React Native project with navigation structure",
+      "description": "As a developer, I need a React Native project with bottom tab navigation structure.",
+      "acceptanceCriteria": [
+        "React Native project initialized with Expo",
+        "Bottom tab navigation with 4 tabs: Home, My Home, Improve, Account",
+        "Tab icons and labels configured",
+        "Basic placeholder screens for each tab",
+        "Typecheck passes"
+      ],
+      "priority": 1,
+      "passes": true,
+      "notes": "Completed 2026-01-20"
+    },
+    {
+      "id": "US-002",
+      "title": "Set up design system: colors, typography, spacing",
+      "description": "As a developer, I need a consistent design system for the app.",
+      "acceptanceCriteria": [
+        "Colors defined: Primary (#0B3D5C), Accent (#14B8A6), Helping (#10B981), Hurting (#EF4444), Warning (#F59E0B), backgrounds",
+        "Typography scale: H1 (24px), H2 (18px), H3 (16px), Body (14px), Caption (12px)",
+        "Spacing system: 4px base unit, Small (8), Medium (16), Large (24), XL (32)",
+        "Theme provider wrapping app",
+        "Typecheck passes"
+      ],
+      "priority": 2,
+      "passes": true,
+      "notes": "Completed 2026-01-20"
+    },
+    {
+      "id": "US-003",
+      "title": "Create reusable Card component",
+      "description": "As a developer, I need a reusable Card component for consistent UI.",
+      "acceptanceCriteria": [
+        "Card component with white background, border radius, shadow",
+        "Supports onPress prop for tappable cards",
+        "Supports children for flexible content",
+        "Minimum touch target 44x44px when tappable",
+        "Typecheck passes"
+      ],
+      "priority": 3,
+      "passes": true,
+      "notes": "Completed 2026-01-20"
+    },
+    {
+      "id": "US-004",
+      "title": "Create reusable Button component",
+      "description": "As a developer, I need primary and secondary button variants.",
+      "acceptanceCriteria": [
+        "Primary button: teal background, white text",
+        "Secondary button: outline style",
+        "Disabled state styling",
+        "Loading state with spinner",
+        "Minimum touch target 44x44px",
+        "Typecheck passes"
+      ],
+      "priority": 4,
+      "passes": true,
+      "notes": "Completed 2026-01-20"
+    },
+    {
+      "id": "US-005",
+      "title": "Create Splash screen",
+      "description": "As a user, I see a branded splash screen when launching the app.",
+      "acceptanceCriteria": [
+        "Pearl logo centered on dark navy (#0B3D5C) background",
+        "Displays for 2 seconds max before navigation",
+        "Typecheck passes"
+      ],
+      "priority": 5,
+      "passes": true,
+      "notes": "Completed 2026-01-20"
+    },
+    {
+      "id": "US-006",
+      "title": "Create Sign Up screen with social auth",
+      "description": "As a new user, I can sign up with social auth or email.",
+      "acceptanceCriteria": [
+        "Single screen layout",
+        "Google and Apple auth buttons prominently displayed",
+        "Email and password fields (no confirm password)",
+        "Magic link option as text link",
+        "Sign up button",
+        "Link to login for existing users",
+        "Typecheck passes"
+      ],
+      "priority": 6,
+      "passes": true,
+      "notes": "Completed 2026-01-20"
+    },
+    {
+      "id": "US-007",
+      "title": "Create Login screen",
+      "description": "As a returning user, I can log in to my account.",
+      "acceptanceCriteria": [
+        "Email and password fields",
+        "Google and Apple auth buttons",
+        "Login button",
+        "Forgot password link",
+        "Link to sign up for new users",
+        "Typecheck passes"
+      ],
+      "priority": 7,
+      "passes": true,
+      "notes": "Completed 2026-01-20"
+    },
+    {
+      "id": "US-008",
+      "title": "Create Address Entry screen",
+      "description": "As a new user, I can enter my home address after signing up.",
+      "acceptanceCriteria": [
+        "Address search input field with autocomplete placeholder",
+        "We found your home confirmation card showing address",
+        "Looks good / Make changes buttons",
+        "Continue button to proceed",
+        "Typecheck passes"
+      ],
+      "priority": 8,
+      "passes": true,
+      "notes": "Completed 2026-01-20"
+    },
+    {
+      "id": "US-009",
+      "title": "Create Symptom Card component",
+      "description": "As a developer, I need a tappable symptom card for the symptom selector.",
+      "acceptanceCriteria": [
+        "Card with icon (left), label (center-left), checkbox (right when selected)",
+        "Full width minus margins, ~80px height",
+        "Default, pressed, and selected states",
+        "Selected state shows accent border and checkmark",
+        "Typecheck passes"
+      ],
+      "priority": 9,
+      "passes": true,
+      "notes": "Completed 2026-01-20"
+    },
+    {
+      "id": "US-010",
+      "title": "Create Symptom Selection screen",
+      "description": "As a new user, I can select what's bothering me about my home.",
+      "acceptanceCriteria": [
+        "Header: What's bothering you about your home?",
+        "Grid/list of 8-10 symptom cards with icons",
+        "Symptoms: hot/cold rooms, allergies, high bills, drafts, HVAC runs constantly, humidity issues, musty smells, equipment breaking, not sure",
+        "Multi-select enabled",
+        "Just exploring option at bottom",
+        "Continue button",
+        "Typecheck passes"
+      ],
+      "priority": 10,
+      "passes": true,
+      "notes": "Completed 2026-01-21"
+    },
+    {
+      "id": "US-011",
+      "title": "Create Pillar Card component",
+      "description": "As a developer, I need a pillar card showing status indicator.",
+      "acceptanceCriteria": [
+        "Card with icon, pillar name, status dot",
+        "Status colors: green (Good), yellow (Typical), red (Needs Work)",
+        "Tappable to navigate to detail",
+        "Works in row of 5 or 2-column grid",
+        "Typecheck passes"
+      ],
+      "priority": 11,
+      "passes": true,
+      "notes": "Completed 2026-01-21"
+    },
+    {
+      "id": "US-012",
+      "title": "Create Helping/Hurting Factor Card component",
+      "description": "As a developer, I need cards for displaying helping and hurting factors.",
+      "acceptanceCriteria": [
+        "Card with colored left border (green for helping, red for hurting)",
+        "Factor name and brief explanation",
+        "Action CTA button on hurting cards",
+        "Expandable/collapsible state",
+        "Typecheck passes"
+      ],
+      "priority": 12,
+      "passes": true,
+      "notes": "Completed 2026-01-21"
+    },
+    {
+      "id": "US-013",
+      "title": "Create Symptom Insights screen",
+      "description": "As a user who selected symptoms, I see relevant insights about my home.",
+      "acceptanceCriteria": [
+        "Shows after symptom selection",
+        "Header connects symptom to pillar",
+        "Helping factors section with green cards",
+        "Hurting factors section with red cards and CTAs",
+        "What you can do section with improvement suggestions",
+        "Typecheck passes"
+      ],
+      "priority": 13,
+      "passes": true,
+      "notes": "Completed 2026-01-21"
+    },
+    {
+      "id": "US-014",
+      "title": "Create Dashboard screen (Home tab)",
+      "description": "As a user, I see my personalized dashboard on the Home tab.",
+      "acceptanceCriteria": [
+        "Active symptom card if any logged",
+        "Quick actions: Log symptom FAB or card",
+        "Alerts section placeholder (maintenance, equipment, rebates)",
+        "5 pillar summary as row of pillar cards",
+        "No score on dashboard hero",
+        "Typecheck passes"
+      ],
+      "priority": 14,
+      "passes": true,
+      "notes": "Completed 2026-01-21"
+    },
+    {
+      "id": "US-015",
+      "title": "Create Score Display component",
+      "description": "As a developer, I need a score display with level label.",
+      "acceptanceCriteria": [
+        "Large score number (48px, bold, accent color)",
+        "Level label below (Compromised/Needs Improvement/Typical/Good/Very Good/Excellent/Exceptional/Outstanding)",
+        "Visual scale showing 0-1000 range",
+        "Tappable to expand (onPress prop)",
+        "Typecheck passes"
+      ],
+      "priority": 15,
+      "passes": true,
+      "notes": "Completed 2026-01-21"
+    },
+    {
+      "id": "US-016",
+      "title": "Create My Home screen (Profile tab)",
+      "description": "As a user, I can view my home profile with score and pillars.",
+      "acceptanceCriteria": [
+        "Score display component at top",
+        "5 pillar cards in grid/row",
+        "Equipment list section with placeholder",
+        "Badges earned section with placeholder",
+        "Typecheck passes"
+      ],
+      "priority": 16,
+      "passes": true,
+      "notes": "Completed 2026-01-21"
+    },
+    {
+      "id": "US-017",
+      "title": "Create Pillar Detail screen",
+      "description": "As a user, I can view detailed information about each pillar.",
+      "acceptanceCriteria": [
+        "Pillar name and icon as header",
+        "Plain-language pillar explanation",
+        "Helping factors list for this pillar",
+        "Hurting factors list for this pillar",
+        "Related equipment section",
+        "Typecheck passes"
+      ],
+      "priority": 17,
+      "passes": true,
+      "notes": "Completed 2026-01-21"
+    },
+    {
+      "id": "US-018",
+      "title": "Create Equipment List component",
+      "description": "As a developer, I need a list component for displaying home equipment.",
+      "acceptanceCriteria": [
+        "List items with equipment name, type icon, lifecycle status indicator",
+        "Status indicators: Good (green), Aging (yellow), Replace Soon (red)",
+        "Add equipment button/row at bottom",
+        "Tappable items to view/edit",
+        "Typecheck passes"
+      ],
+      "priority": 18,
+      "passes": true,
+      "notes": "Completed 2026-01-21"
+    },
+    {
+      "id": "US-019",
+      "title": "Create Equipment Entry screen",
+      "description": "As a user, I can add or edit equipment details.",
+      "acceptanceCriteria": [
+        "Single screen form layout",
+        "Equipment type selector at top if adding new",
+        "Form fields with smart defaults placeholder",
+        "I don't know option for each field",
+        "Optional photo upload button",
+        "Score impact preview placeholder",
+        "Save button",
+        "Typecheck passes"
+      ],
+      "priority": 19,
+      "passes": true,
+      "notes": "Completed 2026-01-21"
+    },
+    {
+      "id": "US-020",
+      "title": "Create Rebate Card component",
+      "description": "As a developer, I need a rebate card showing savings amount.",
+      "acceptanceCriteria": [
+        "Card with equipment icon (not stock photo)",
+        "Savings amount large and green",
+        "Program name",
+        "Eligibility indicator",
+        "Saved/pinned state",
+        "Tappable to view detail",
+        "Typecheck passes"
+      ],
+      "priority": 20,
+      "passes": true,
+      "notes": "Completed 2026-01-21"
+    },
+    {
+      "id": "US-021",
+      "title": "Create Improve screen (Improve tab)",
+      "description": "As a user, I can browse rebates and improvement paths.",
+      "acceptanceCriteria": [
+        "Recommended for you section with rebate cards",
+        "Total potential savings summary at top",
+        "Improvement paths section placeholder",
+        "Find Pearl Pros link",
+        "Typecheck passes"
+      ],
+      "priority": 21,
+      "passes": true,
+      "notes": "Completed 2026-01-21"
+    },
+    {
+      "id": "US-022",
+      "title": "Create Rebate Detail screen",
+      "description": "As a user, I can view full rebate details and how to claim.",
+      "acceptanceCriteria": [
+        "Rebate amount prominently displayed",
+        "Program name and eligibility requirements",
+        "How to claim steps list",
+        "Save/pin button",
+        "Share button",
+        "Typecheck passes"
+      ],
+      "priority": 22,
+      "passes": true,
+      "notes": "Completed 2026-01-21"
+    },
+    {
+      "id": "US-023",
+      "title": "Create Maintenance Reminder Card component",
+      "description": "As a developer, I need a maintenance reminder card with status.",
+      "acceptanceCriteria": [
+        "Card with item name, due date, status badge",
+        "Status colors: Overdue (red), Due Soon (yellow), Upcoming (gray), Completed (green)",
+        "Mark complete button",
+        "Snooze action",
+        "Typecheck passes"
+      ],
+      "priority": 23,
+      "passes": true,
+      "notes": "Completed 2026-01-21"
+    },
+    {
+      "id": "US-024",
+      "title": "Create Maintenance List screen",
+      "description": "As a user, I can view and manage maintenance reminders.",
+      "acceptanceCriteria": [
+        "List sorted by urgency (overdue first)",
+        "Section headers: Overdue, Due Soon, Upcoming",
+        "Add custom item button",
+        "Empty state with suggestion to use default schedule",
+        "Typecheck passes"
+      ],
+      "priority": 24,
+      "passes": true,
+      "notes": "Completed 2026-01-21"
+    },
+    {
+      "id": "US-025",
+      "title": "Create Badge component",
+      "description": "As a developer, I need a badge display component.",
+      "acceptanceCriteria": [
+        "Badge icon ~60x60px",
+        "Name label below",
+        "Earned state: full color",
+        "In Progress state: outline with progress indicator",
+        "Typecheck passes"
+      ],
+      "priority": 25,
+      "passes": true,
+      "notes": "Completed 2026-01-21"
+    },
+    {
+      "id": "US-026",
+      "title": "Create Badges section for My Home screen",
+      "description": "As a user, I can see badges my home has earned.",
+      "acceptanceCriteria": [
+        "Horizontal scrollable row of badge components",
+        "Earned badges shown first with full color",
+        "In-progress badges shown as paths with progress",
+        "No grayed-out locked badges",
+        "Tap badge to see criteria",
+        "Typecheck passes"
+      ],
+      "priority": 26,
+      "passes": true,
+      "notes": "Completed 2026-01-21"
+    },
+    {
+      "id": "US-027",
+      "title": "Create Certification Progress component",
+      "description": "As a developer, I need a component showing certification tier progress.",
+      "acceptanceCriteria": [
+        "Progress bar showing points toward next tier",
+        "Current tier highlighted",
+        "Tiers: Silver (500+), Gold (625+), Platinum (750+), Platinum Plus (875+)",
+        "Points needed to next tier shown",
+        "Typecheck passes"
+      ],
+      "priority": 27,
+      "passes": true,
+      "notes": "Completed 2026-01-21"
+    },
+    {
+      "id": "US-028",
+      "title": "Create Account screen (Account tab)",
+      "description": "As a user, I can access settings and account functions.",
+      "acceptanceCriteria": [
+        "Profile section with name/email",
+        "Subscription status row",
+        "Documents row (navigates to document list)",
+        "Connected Devices row",
+        "Help / Contact row",
+        "Logout button",
+        "Typecheck passes"
+      ],
+      "priority": 28,
+      "passes": true,
+      "notes": "Completed 2026-01-21"
+    },
+    {
+      "id": "US-029",
+      "title": "Create Documents screen",
+      "description": "As a user, I can view my certification and uploaded documents.",
+      "acceptanceCriteria": [
+        "Three sections: Your Certification, Your Uploads, Tax Documents",
+        "Document list items with icon, name, preview action",
+        "Upload button in Your Uploads section",
+        "Tax Documents only visible during tax season (Jan-Apr) or hidden",
+        "Typecheck passes"
+      ],
+      "priority": 29,
+      "passes": true,
+      "notes": "Completed 2026-01-21"
+    },
+    {
+      "id": "US-030",
+      "title": "Create Upgrade Prompt component",
+      "description": "As a developer, I need a contextual upgrade prompt for paid features.",
+      "acceptanceCriteria": [
+        "Modal or sheet layout",
+        "Shows specific locked feature benefit",
+        "Upgrade button (teal)",
+        "Dismiss option",
+        "Not shown proactively, only when user taps paid feature",
+        "Typecheck passes"
+      ],
+      "priority": 30,
+      "passes": true,
+      "notes": "Completed 2026-01-21"
+    },
+    {
+      "id": "US-031",
+      "title": "Create Symptom Log action flow",
+      "description": "As a returning user, I can log a new symptom from the dashboard.",
+      "acceptanceCriteria": [
+        "FAB or prominent card on dashboard",
+        "Tapping opens symptom category selector",
+        "After selection shows specific symptom options",
+        "Optional notes field",
+        "Save shows related insights",
+        "Typecheck passes"
+      ],
+      "priority": 31,
+      "passes": true,
+      "notes": "Completed 2026-01-21"
+    },
+    {
+      "id": "US-032",
+      "title": "Create Alert Card component for dashboard",
+      "description": "As a developer, I need alert cards for maintenance, equipment, and rebates.",
+      "acceptanceCriteria": [
+        "Compact card with icon, title, brief description",
+        "Urgency indicator (color-coded left border)",
+        "Tappable to navigate to relevant detail",
+        "Dismissible if not urgent",
+        "Typecheck passes"
+      ],
+      "priority": 32,
+      "passes": true,
+      "notes": "Completed 2026-01-21"
+    },
+    {
+      "id": "US-033",
+      "title": "Create Improvement Path component",
+      "description": "As a developer, I need a component showing sequenced improvement steps.",
+      "acceptanceCriteria": [
+        "Timeline or stepped layout",
+        "Sections: Now, Soon, Later, Major",
+        "Each step shows: action, estimated cost, impact indicator",
+        "Steps link to rebates or Pearl Pros when relevant",
+        "Typecheck passes"
+      ],
+      "priority": 33,
+      "passes": true,
+      "notes": "Completed 2026-01-21"
+    },
+    {
+      "id": "US-034",
+      "title": "Create Pearl Pro Card component",
+      "description": "As a developer, I need a contractor card for Pearl Recognized Professionals.",
+      "acceptanceCriteria": [
+        "Card with business name, specialty, contact info",
+        "Contact button (phone or message)",
+        "Request Quote button",
+        "Work history on this home (if any)",
+        "Typecheck passes"
+      ],
+      "priority": 34,
+      "passes": true,
+      "notes": "Completed 2026-01-21"
+    },
+    {
+      "id": "US-035",
+      "title": "Create Pearl Pros directory screen",
+      "description": "As a user, I can find Pearl Recognized Professionals in my area.",
+      "acceptanceCriteria": [
+        "List of Pearl Pro cards",
+        "Filter by specialty (HVAC, insulation, solar, etc.)",
+        "Search by name",
+        "Empty state if none in area",
+        "Typecheck passes"
+      ],
+      "priority": 35,
+      "passes": true,
+      "notes": "Completed 2026-01-21"
+    },
+    {
+      "id": "US-036",
+      "title": "Wire up onboarding flow navigation",
+      "description": "As a user, I experience smooth onboarding from splash to dashboard.",
+      "acceptanceCriteria": [
+        "Splash -> Sign Up (if new) or Login (if returning)",
+        "Sign Up -> Address Entry -> Symptom Selection -> Insights -> Dashboard",
+        "Login -> Dashboard (skip onboarding)",
+        "Back navigation works correctly",
+        "Typecheck passes"
+      ],
+      "priority": 36,
+      "passes": true,
+      "notes": "Completed 2026-01-21"
+    },
+    {
+      "id": "US-037",
+      "title": "Add skeleton loading states to major screens",
+      "description": "As a user, I see skeleton loaders instead of spinners while content loads.",
+      "acceptanceCriteria": [
+        "Dashboard shows skeleton cards while loading",
+        "My Home shows skeleton score and pillar cards",
+        "Improve shows skeleton rebate cards",
+        "Consistent animation style",
+        "Typecheck passes"
+      ],
+      "priority": 37,
+      "passes": true,
+      "notes": "Completed 2026-01-21"
+    },
+    {
+      "id": "US-038",
+      "title": "Add empty states to lists",
+      "description": "As a user, I see helpful empty states when lists have no content.",
+      "acceptanceCriteria": [
+        "Equipment list: No equipment added with Add prompt",
+        "Maintenance list: No reminders with Use suggested schedule option",
+        "Rebates: No rebates found with Check back suggestion",
+        "Symptoms logged: No symptoms with Log your first prompt",
+        "Typecheck passes"
+      ],
+      "priority": 38,
+      "passes": true,
+      "notes": "Completed 2026-01-21"
+    },
+    {
+      "id": "US-039",
+      "title": "Add error states to screens",
+      "description": "As a user, I see clear error messages with retry options when things fail.",
+      "acceptanceCriteria": [
+        "Generic error component: message + Retry button",
+        "Applied to Dashboard, My Home, Improve, Maintenance",
+        "Maintains cached data when available",
+        "Typecheck passes"
+      ],
+      "priority": 39,
+      "passes": true,
+      "notes": "Completed 2026-01-21"
+    },
+    {
+      "id": "US-040",
+      "title": "Add score change animation",
+      "description": "As a user, I see my score animate when it changes after adding equipment.",
+      "acceptanceCriteria": [
+        "Count-up animation from old to new score (500ms)",
+        "Shows +X points earned badge briefly",
+        "Triggers after equipment save success",
+        "Typecheck passes"
+      ],
+      "priority": 40,
+      "passes": true,
+      "notes": "Completed 2026-01-21"
+    }
+  ]
+}

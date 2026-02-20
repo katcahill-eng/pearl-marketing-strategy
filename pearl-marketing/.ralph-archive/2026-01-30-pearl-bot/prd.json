@@ -1,0 +1,342 @@
+{
+  "project": "MarcomsBot",
+  "branchName": "ralph/pearl-bot",
+  "description": "Slack bot that handles marketing intake via conversation or form, generates briefs, creates Google Drive folders, sets up Monday.com tasks, and notifies the marketing team",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Initialize Node.js project with TypeScript and Bolt.js",
+      "description": "As a developer, I need a project scaffold with Slack Bolt.js SDK, TypeScript, and basic configuration.",
+      "acceptanceCriteria": [
+        "package.json with dependencies: @slack/bolt, @anthropic-ai/sdk, typescript, tsx, dotenv",
+        "tsconfig.json configured for Node.js with strict mode",
+        "src/index.ts with Bolt app initialization (socket mode)",
+        ".env.example listing required env vars: SLACK_BOT_TOKEN, SLACK_APP_TOKEN, SLACK_SIGNING_SECRET, ANTHROPIC_API_KEY",
+        ".gitignore excludes node_modules, .env, dist",
+        "npm run dev script starts the bot with tsx watch",
+        "npm run build compiles TypeScript",
+        "Typecheck passes"
+      ],
+      "priority": 1,
+      "passes": true,
+      "notes": "Foundation — everything else depends on this. Use Bolt.js socket mode for local dev."
+    },
+    {
+      "id": "US-002",
+      "title": "Add SQLite database with conversations and projects tables",
+      "description": "As a developer, I need a database to store conversation state and project records.",
+      "acceptanceCriteria": [
+        "Install better-sqlite3 dependency",
+        "src/lib/db.ts creates SQLite database at data/marcomsbot.db",
+        "conversations table with columns: id, user_id, user_name, channel_id, thread_ts, status (gathering|confirming|complete|cancelled), current_step, collected_data (JSON text), classification (quick|full|undetermined), created_at, updated_at, expires_at",
+        "projects table with columns: id, name, type (quick|full), requester_name, requester_slack_id, requester_email, division, status, drive_folder_url, brief_doc_url, monday_item_id, monday_url, source (conversation|form), created_at, due_date",
+        "divisions table with columns: id, name, slack_channel (nullable)",
+        "Database initializes tables on first run",
+        "Export helper functions: getConversation, upsertConversation, createProject, getProject, searchProjects",
+        "Typecheck passes"
+      ],
+      "priority": 2,
+      "passes": true,
+      "notes": "Same SQLite pattern as pearl-command-center. No migrations — create tables if not exists."
+    },
+    {
+      "id": "US-003",
+      "title": "Handle Slack @mention events and route by intent",
+      "description": "As a Pearl staff member, I want to @mention MarcomsBot and have it understand what I need.",
+      "acceptanceCriteria": [
+        "Bot listens for app_mention events via Bolt.js",
+        "Bot also listens for direct messages (message.im)",
+        "When mentioned with no clear intent, bot sends greeting with chat vs form options (numbered list)",
+        "When mentioned with 'help', bot sends help menu listing capabilities",
+        "When mentioned with status keywords ('status of', 'where are we on', 'update on'), route to status handler (stub for now)",
+        "When mentioned with search keywords ('find the brief', 'link to'), route to search handler (stub for now)",
+        "Otherwise, route to intake conversation handler",
+        "All bot replies are threaded (reply in thread, not channel)",
+        "Typecheck passes"
+      ],
+      "priority": 3,
+      "passes": true,
+      "notes": "UX spec: bot must always reply in-thread. Greeting must offer chat vs form. Intent detection can be simple keyword matching for now."
+    },
+    {
+      "id": "US-004",
+      "title": "Implement conversation state machine for intake flow",
+      "description": "As a developer, I need a state machine to track where each user is in the intake conversation.",
+      "acceptanceCriteria": [
+        "src/lib/conversation.ts exports ConversationManager class",
+        "Tracks state per user_id: gathering, confirming, complete, cancelled",
+        "collected_data tracks: division, request_type, description, deliverables[], due_date, due_date_parsed, urgency, details, assets_mentioned[], additional_info",
+        "getNextQuestion() returns the next unanswered required field",
+        "markFieldCollected(field, value) updates collected_data",
+        "isComplete() returns true when all required fields are populated",
+        "toSummary() returns formatted Slack mrkdwn summary matching UX spec confirmation template",
+        "State persists to SQLite via db helpers",
+        "Conversations expire after 24 hours of inactivity (expires_at field)",
+        "Typecheck passes"
+      ],
+      "priority": 4,
+      "passes": true,
+      "notes": "Core state machine. Does not include Claude interpretation yet — that comes next."
+    },
+    {
+      "id": "US-005",
+      "title": "Add Claude API for natural language interpretation",
+      "description": "As a Pearl staff member, I want to describe my request naturally and have the bot understand me.",
+      "acceptanceCriteria": [
+        "src/lib/claude.ts exports interpretMessage(message, conversationState) function",
+        "Uses Anthropic SDK to call Claude API with system prompt explaining MarcomsBot's role",
+        "Claude extracts structured data from free-text: division, request_type, description, deliverables, due_date, urgency, assets",
+        "Returns JSON with extracted fields and confidence",
+        "Handles bundled responses (user provides multiple fields at once) — extracts all available info",
+        "Handles natural date parsing ('Friday' → next Friday, 'end of month' → date, 'ASAP' → urgent flag)",
+        "Handles natural division detection ('I'm on the people team' → HR)",
+        "Export classifyRequest(collectedData) that returns 'quick' | 'full' | 'undetermined' based on deliverable count, keywords, complexity",
+        "Typecheck passes"
+      ],
+      "priority": 5,
+      "passes": true,
+      "notes": "UX spec Pass 4: bot must skip questions when info already provided. Claude handles the intelligent extraction."
+    },
+    {
+      "id": "US-006",
+      "title": "Wire up conversational intake flow end-to-end",
+      "description": "As a Pearl staff member, I want to chat with @MarcomsBot, answer questions conversationally, and have my request captured.",
+      "acceptanceCriteria": [
+        "When intake conversation starts, bot asks first unanswered question with examples",
+        "Each user reply is sent to Claude for interpretation",
+        "Extracted fields are saved to conversation state",
+        "Bot skips questions for fields already collected (says 'Got most of what I need!' when applicable)",
+        "When all required fields collected, bot sends confirmation summary matching UX spec format",
+        "User can reply 'yes' to confirm",
+        "User can describe changes ('actually make it due Thursday') — bot updates and re-confirms",
+        "User can say 'start over' to reset conversation",
+        "User can say 'cancel' to cancel",
+        "Bot never auto-submits — always requires explicit 'yes'",
+        "Bot identifies itself as intake assistant, not a creative worker (UX spec constraint #9)",
+        "Typecheck passes"
+      ],
+      "priority": 6,
+      "passes": true,
+      "notes": "This wires together US-003, US-004, US-005 into the full chat flow. Critical UX constraint: never auto-submit."
+    },
+    {
+      "id": "US-007",
+      "title": "Add brief generation via Claude API",
+      "description": "As a developer, I need Claude to generate mini-briefs and full creative briefs from collected intake data.",
+      "acceptanceCriteria": [
+        "src/lib/brief-generator.ts exports generateBrief(collectedData, classification) function",
+        "For 'quick' classification: generates mini-brief with fields: requester, division, date, request summary, deliverable, key details, due date, assets/references",
+        "For 'full' classification: generates full creative brief with fields: requester, division, dates, project overview, objectives, target audience, deliverables list, key messages, specifications, timeline table, brand/style notes, assets provided, references, additional notes",
+        "Returns brief as markdown string",
+        "Brief content is generated by Claude based on collected_data — not just template fill-in",
+        "Typecheck passes"
+      ],
+      "priority": 7,
+      "passes": true,
+      "notes": "Templates from PRD. Claude generates the narrative sections, not just slot-filling."
+    },
+    {
+      "id": "US-008",
+      "title": "Add Google Drive integration — create folders and docs",
+      "description": "As a developer, I need to create Google Drive folders and save generated briefs as Google Docs.",
+      "acceptanceCriteria": [
+        "src/lib/google-drive.ts using googleapis SDK with service account auth",
+        "For quick requests: create Google Doc in configured 'Quick Requests' folder",
+        "For full projects: create folder structure — /Pearl Projects/[YYYY]/[Project Name]/ with subfolders: 01 - Brief, 02 - Assets (from client), 03 - Working Files, 04 - Deliverables, 05 - Feedback",
+        "Save brief as Google Doc in appropriate location (Quick Requests folder or 01 - Brief subfolder)",
+        "Return shareable links for folder and doc",
+        "Env vars: GOOGLE_SERVICE_ACCOUNT_JSON, GOOGLE_PROJECTS_FOLDER_ID, GOOGLE_QUICK_REQUESTS_FOLDER_ID",
+        "Graceful error handling — if Drive fails, return error message but don't crash",
+        "Typecheck passes"
+      ],
+      "priority": 8,
+      "passes": true,
+      "notes": "Service account auth — no user OAuth needed. UX spec constraint: errors must include fallback."
+    },
+    {
+      "id": "US-009",
+      "title": "Add Monday.com integration — create tasks and projects",
+      "description": "As a developer, I need to create Monday.com items from confirmed requests.",
+      "acceptanceCriteria": [
+        "src/lib/monday.ts using Monday.com GraphQL API",
+        "For quick requests: create single item on configured quick requests board with columns for name, status, due date, requester, division, Drive folder link, brief doc link",
+        "For full projects: create group on full projects board with items for each deliverable, plus columns for status, due date, assignee, links",
+        "Return Monday.com item/board URL",
+        "Search function: searchItems(query) searches Monday boards by name and returns matching items with status and links",
+        "Env vars: MONDAY_API_TOKEN, MONDAY_QUICK_BOARD_ID, MONDAY_FULL_BOARD_ID",
+        "Graceful error handling — if Monday fails, return error but don't crash",
+        "Typecheck passes"
+      ],
+      "priority": 9,
+      "passes": true,
+      "notes": "Monday GraphQL API. Column mappings will be configured via env or config file."
+    },
+    {
+      "id": "US-010",
+      "title": "Wire up post-confirmation workflow execution",
+      "description": "As a Pearl staff member, when I confirm my request, I want the bot to create the brief, folder, tasks, and notify the team.",
+      "acceptanceCriteria": [
+        "When user confirms ('yes'), bot immediately sends 'Setting everything up...' message (UX spec: never leave user in silence)",
+        "Bot executes in sequence: generate brief → create Drive folder/doc → create Monday task/project → save project record to DB",
+        "On full success: bot sends completion message with all 3 links (brief, folder, Monday) matching UX spec format",
+        "Completion message includes 'The marketing team has been notified' and 'Reply to me anytime to check on status'",
+        "Completion message distinguishes infrastructure from work: says 'All set! Here's everything' not 'Everything is done' (UX spec constraint #10)",
+        "On partial failure: bot reports what succeeded and what failed, offers form as fallback (UX spec constraint #8)",
+        "Project record saved to projects table",
+        "Conversation status updated to 'complete'",
+        "Typecheck passes"
+      ],
+      "priority": 10,
+      "passes": true,
+      "notes": "Critical flow. UX spec constraints: never silent during processing, always show all 3 links, distinguish infrastructure from work."
+    },
+    {
+      "id": "US-011",
+      "title": "Post notifications to #marketing-requests channel",
+      "description": "As a marketing team member, I want to see new requests in #marketing-requests with summary and links.",
+      "acceptanceCriteria": [
+        "After successful project creation, bot posts formatted notification to configured channel",
+        "Quick request format: ':inbox_tray: *Quick Request: [Title]*' with from, type, due, summary, links",
+        "Full project format: ':inbox_tray: *New Project: [Title]*' with from, type, due, summary, deliverables list, links",
+        "Notification includes 'React with :eyes: to claim this request'",
+        "Env var: SLACK_MARKETING_CHANNEL_ID",
+        "Typecheck passes"
+      ],
+      "priority": 11,
+      "passes": true,
+      "notes": "UX spec: notification IS the handoff — must contain everything needed to start work."
+    },
+    {
+      "id": "US-012",
+      "title": "Implement status check workflow",
+      "description": "As a Pearl staff member, I want to ask MarcomsBot about the status of my request.",
+      "acceptanceCriteria": [
+        "When user sends status-related message, bot extracts project/request identifier",
+        "Bot searches Monday.com for matching item using searchItems()",
+        "Also searches local projects table for matching records",
+        "If found: returns formatted status with project name, status, assignee, due date, latest update, and links (matching UX spec status response format)",
+        "If not found: returns 'I couldn't find a project matching...' with suggestions (try different keywords, check #marketing-requests, ask in #marketing-team)",
+        "If multiple matches: returns list and asks user to pick",
+        "Typecheck passes"
+      ],
+      "priority": 12,
+      "passes": true,
+      "notes": "UX spec: status check is the #1 reason someone returns to the bot."
+    },
+    {
+      "id": "US-013",
+      "title": "Implement search and retrieval workflow",
+      "description": "As a Pearl staff member, I want to ask MarcomsBot to find a brief or project link.",
+      "acceptanceCriteria": [
+        "When user sends search-related message ('find the brief for', 'link to', 'where's the'), bot extracts search terms",
+        "Searches local projects table and Monday.com",
+        "Returns matching project with brief doc link, folder link, and Monday link",
+        "If not found: suggests alternatives",
+        "If project predates bot: 'I can only find projects created through me. For older projects, check Monday directly'",
+        "Typecheck passes"
+      ],
+      "priority": 13,
+      "passes": true,
+      "notes": "UX spec flow risk: user asks about project that predates bot."
+    },
+    {
+      "id": "US-014",
+      "title": "Add conversation timeout and resume handling",
+      "description": "As a Pearl staff member, I want the bot to remember my incomplete request if I walk away and come back.",
+      "acceptanceCriteria": [
+        "Scheduled job checks for conversations where status='gathering' or 'confirming' AND updated_at > 24 hours ago",
+        "Bot sends timeout message to the original thread: 'Hey! We started a marketing request yesterday but didn't finish.' with what was collected and options to continue, start over, or cancel",
+        "If user replies 'continue', conversation resumes from where it left off",
+        "If user replies 'start over', conversation resets",
+        "If user replies 'cancel', conversation marked cancelled",
+        "If no response to timeout message after another 24 hours, conversation auto-cancelled silently",
+        "Typecheck passes"
+      ],
+      "priority": 14,
+      "passes": true,
+      "notes": "UX spec: timeout prompt after 24h. Don't auto-submit incomplete requests."
+    },
+    {
+      "id": "US-015",
+      "title": "Add duplicate thread detection",
+      "description": "As a developer, I need to handle users who message the bot from multiple threads simultaneously.",
+      "acceptanceCriteria": [
+        "When a new conversation starts, check if user_id has an active (non-complete, non-cancelled) conversation",
+        "If active conversation exists in another thread: 'We have an open request in another thread — want to continue there or start fresh here?'",
+        "If user says 'continue there', bot links to the original thread",
+        "If user says 'start fresh', previous conversation is cancelled and new one begins",
+        "Typecheck passes"
+      ],
+      "priority": 15,
+      "passes": true,
+      "notes": "UX spec flow risk: user messages bot from multiple threads."
+    },
+    {
+      "id": "US-016",
+      "title": "Add webhook endpoint for form submissions",
+      "description": "As a Pearl staff member, I want to submit the intake form and have MarcomsBot automatically process it.",
+      "acceptanceCriteria": [
+        "src/lib/webhook.ts exports Express or Bolt receiver route at /webhook/intake",
+        "Accepts POST with form fields: name, email, slack_username, division, request_type, description, deliverables, due_date, urgency, target_audience, key_messages, assets, references, notes",
+        "Maps form fields to same collected_data structure used by conversation flow",
+        "Classifies as quick or full using same classifyRequest() function",
+        "Executes same workflow: generate brief → Drive folder/doc → Monday task → notification",
+        "If slack_username provided, DMs user with confirmation and links",
+        "Project record saved with source='form'",
+        "Typecheck passes"
+      ],
+      "priority": 16,
+      "passes": true,
+      "notes": "Both paths (chat and form) use the same downstream workflow. Form just skips the conversation."
+    },
+    {
+      "id": "US-017",
+      "title": "Add error handling and fallback messaging",
+      "description": "As a Pearl staff member, I want clear error messages with alternatives when something goes wrong.",
+      "acceptanceCriteria": [
+        "All external API calls (Claude, Google Drive, Monday) wrapped in try/catch",
+        "Error messages match UX spec format: describe what happened, say info is saved, offer form link as backup, offer #marketing-team as alternative",
+        "If Claude can't interpret a message: 'I didn't quite catch that. Could you rephrase? Or fill out the form instead: [link]'",
+        "If Drive fails during creation: continue with Monday, note Drive failure in completion message",
+        "If Monday fails during creation: continue with Drive, note Monday failure in completion message",
+        "Never show raw error messages or stack traces to users",
+        "Log all errors to console with context for debugging",
+        "Typecheck passes"
+      ],
+      "priority": 17,
+      "passes": true,
+      "notes": "UX spec constraints: every error must include fallback, never leave user with zero output on partial failure."
+    },
+    {
+      "id": "US-018",
+      "title": "Add configuration file and environment validation",
+      "description": "As a developer, I need a clean configuration system that validates all required credentials on startup.",
+      "acceptanceCriteria": [
+        "src/lib/config.ts loads and validates all env vars on startup",
+        "Required vars: SLACK_BOT_TOKEN, SLACK_APP_TOKEN, SLACK_SIGNING_SECRET, SLACK_MARKETING_CHANNEL_ID, ANTHROPIC_API_KEY, GOOGLE_SERVICE_ACCOUNT_JSON, GOOGLE_PROJECTS_FOLDER_ID, GOOGLE_QUICK_REQUESTS_FOLDER_ID, MONDAY_API_TOKEN, MONDAY_QUICK_BOARD_ID, MONDAY_FULL_BOARD_ID",
+        "Optional vars: INTAKE_FORM_URL (defaults to empty string)",
+        "If any required var missing, process exits with clear error listing which vars are missing",
+        "Export typed config object used by all modules",
+        "Typecheck passes"
+      ],
+      "priority": 18,
+      "passes": true,
+      "notes": "Should be one of the first things loaded. Clear error on missing config prevents confusing runtime failures."
+    },
+    {
+      "id": "US-019",
+      "title": "Add README with setup and deployment instructions",
+      "description": "As a developer, I need documentation to set up and deploy MarcomsBot.",
+      "acceptanceCriteria": [
+        "README.md covers: project overview, prerequisites, Slack app setup steps (permissions, event subscriptions, socket mode), Google service account setup, Monday.com API token setup, environment variables reference, local development instructions, deployment options (Railway, Render, Fly.io)",
+        "Includes architecture diagram showing: Slack events → Bot → Claude/Drive/Monday → Slack notifications",
+        "Lists all required Slack bot scopes: app_mentions:read, chat:write, im:read, im:write, channels:read, reactions:read",
+        "Lists all required Slack event subscriptions: app_mention, message.im",
+        "Typecheck passes"
+      ],
+      "priority": 19,
+      "passes": true,
+      "notes": "Documentation for the team. Covers the Configuration Needed section of the PRD."
+    }
+  ]
+}

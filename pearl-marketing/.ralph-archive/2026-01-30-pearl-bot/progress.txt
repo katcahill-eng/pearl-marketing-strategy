@@ -1,0 +1,457 @@
+# Ralph Progress Log
+Started: Fri Jan 30 11:31:02 EST 2026
+
+## Codebase Patterns
+- MarcomsBot lives in `pearl-bot/` directory with its own package.json
+- Intake flow handler in `src/handlers/intake.ts` — central dispatch for all conversation messages (gathering, confirming, complete, cancelled)
+- DM handler checks for active conversation BEFORE intent detection — ongoing conversations route directly to intake
+- `event.user` in Bolt.js `app_mention` events can be `undefined` — always use `?? ''` fallback
+- Uses Bolt.js socket mode for Slack connectivity
+- TypeScript strict mode enabled, target ES2022
+- Run `npm run typecheck` (tsc --noEmit) to verify types
+- Run `npm run build` (tsc) to compile to dist/
+- Run `npm run dev` (tsx watch) for local development
+- Database: better-sqlite3 with WAL mode, stored at `pearl-bot/data/marcomsbot.db`
+- Export `Database` type from better-sqlite3 as `DatabaseType` to avoid TS4023 export naming errors
+- Prepared statements are pre-compiled in a `stmts` object for performance
+- All helper functions are named exports; `db` instance is the default export
+- Event handlers go in `pearl-bot/src/handlers/` — one file per event type, registered in index.ts
+- Intent detection uses keyword regex patterns in `handlers/intent.ts`
+- All bot replies must use `thread_ts` (either `event.thread_ts` or `event.ts`) to stay threaded
+- DM handler filters on `event.channel_type === 'im'` and skips `event.subtype` for edits/bots
+- ConversationManager is the central state machine class — load/create via static `load()` or `new`, persist with `.save()`
+- Required intake fields in order: division, request_type, description, deliverables, due_date, urgency
+- `collected_data` is JSON-stringified CollectedData; array fields (deliverables, assets_mentioned) need Array.isArray checks
+- Claude integration in `src/lib/claude.ts`: `interpretMessage()` for NLP extraction, `classifyRequest()` for quick/full classification
+- Anthropic SDK auto-reads ANTHROPIC_API_KEY from env — no explicit config needed
+- Claude model for real-time Slack: claude-sonnet-4-20250514 (fast, cost-effective)
+- Brief generation in `src/lib/brief-generator.ts`: `generateBrief(collectedData, classification, requesterName?)` → markdown string
+- Brief templates use system prompts with exact markdown structure; Claude fills narrative sections from collected data
+- Monday.com integration in `src/lib/monday.ts`: GraphQL API at `https://api.monday.com/v2`, exports `createQuickRequestItem()`, `createFullProjectGroup()`, `searchItems()`
+- Monday.com `column_values` must be JSON-stringified when passed as mutation variable
+- No extra npm deps for Monday — uses native `fetch`
+- Post-confirmation workflow in `src/lib/workflow.ts`: `executeWorkflow()` orchestrates brief → Drive → Monday → DB; `buildCompletionMessage()` formats Slack output
+- Both conversation and form intake paths should use `executeWorkflow()` for the downstream pipeline
+- Bolt.js event handlers provide `client` (WebClient) alongside `say` — use `client.chat.postMessage` for posting to arbitrary channels
+- Channel notifications are built by `src/lib/notifications.ts` (pure formatting) — Slack posting is done by the handler
+- Status/search handlers in `src/handlers/status.ts` and `src/handlers/search.ts` — search local DB + Monday.com in parallel, merge results by name
+- Search handler focuses on links (brief, folder, Monday URL); status handler focuses on progress (status, assignee, due date)
+- Schema evolution: use `ALTER TABLE ADD COLUMN` wrapped in try/catch for adding columns without migration framework
+- Timeout handler in `src/handlers/timeout.ts`: `checkTimeouts(client)` runs on 15-min interval via `setInterval` in index.ts
+- `timeout_notified` column (0/1) on conversations table tracks two-phase timeout: notify → auto-cancel
+- Duplicate thread detection: `pendingDuplicateChecks` in-memory Map in intake.ts tracks prompts; both messages.ts and mentions.ts check `hasPendingDuplicateCheck()` before intent detection
+- Slack deep links: `https://slack.com/archives/{channelId}/p{tsWithoutDot}` — remove dots from thread_ts
+- Webhook server in `src/lib/webhook.ts`: standalone HTTP server on WEBHOOK_PORT (default 3100), POST /webhook/intake for form submissions — uses same `executeWorkflow()` as conversation path
+- Error handling: all Slack event handlers (mentions.ts, messages.ts) have top-level try/catch; intake.ts uses inner function pattern for error isolation; all user-facing errors include form link fallback (INTAKE_FORM_URL) and #marketing-team alternative
+- Never expose raw error messages to users — all external-facing error responses are sanitized; console.error with `[module]` prefix for debugging
+- Configuration: `src/lib/config.ts` centralizes all env var access — import `config` object, never use `process.env` directly in other modules
+- Config validates required env vars on startup (exits with clear error) — import config early in index.ts (right after dotenv)
+
+---
+
+## 2026-01-30 - US-001
+- Initialized Node.js project with TypeScript and Bolt.js
+- Files created:
+  - `pearl-bot/package.json` — dependencies: @slack/bolt, @anthropic-ai/sdk, dotenv, typescript, tsx
+  - `pearl-bot/tsconfig.json` — strict mode, ES2022 target, commonjs modules
+  - `pearl-bot/src/index.ts` — Bolt app with socket mode initialization
+  - `pearl-bot/.env.example` — lists SLACK_BOT_TOKEN, SLACK_APP_TOKEN, SLACK_SIGNING_SECRET, ANTHROPIC_API_KEY
+  - `pearl-bot/.gitignore` — excludes node_modules, dist, .env, data
+- **Learnings for future iterations:**
+  - Bolt.js App constructor requires `token`, `appToken`, `signingSecret`, and `socketMode: true`
+  - `dotenv/config` import handles env loading without explicit dotenv.config() call
+---
+
+## 2026-01-30 - US-002
+- Added SQLite database with conversations, projects, and divisions tables
+- Files created:
+  - `pearl-bot/src/lib/db.ts` — database init, schema, types, and helper functions
+- Dependencies added: better-sqlite3, @types/better-sqlite3
+- **Learnings for future iterations:**
+  - Use `Database as DatabaseType` import alias to avoid TS4023 export naming error with strict declarations
+  - better-sqlite3 prepared statements use `.get()` for single row, `.all()` for arrays, `.run()` for inserts/updates
+  - `db.pragma('journal_mode = WAL')` improves concurrent read performance
+  - Data directory is created automatically if it doesn't exist
+---
+
+## 2026-01-30 - US-003
+- Handle Slack @mention events and route by intent
+- Files created:
+  - `pearl-bot/src/handlers/intent.ts` — intent detection (greeting, help, status, search, intake) with keyword patterns + greeting/help message builders
+  - `pearl-bot/src/handlers/mentions.ts` — `app_mention` event handler, routes to intent-based responses
+  - `pearl-bot/src/handlers/messages.ts` — `message` event handler for DMs (filters `channel_type === 'im'`)
+- Files modified:
+  - `pearl-bot/src/index.ts` — imports and registers mention + message handlers
+- **Learnings for future iterations:**
+  - Bolt.js `app.event('message')` receives all message types; filter by `event.channel_type` and `event.subtype` to handle only DMs
+  - Use `event.thread_ts ?? event.ts` for `thread_ts` in replies to ensure threading in both channels and DMs
+  - Status/search handlers are stubs — they return placeholder messages pending US-012/US-013
+  - Intake handler is a stub — will be wired to conversation flow in US-006
+---
+
+## 2026-01-30 - US-004
+- Implemented ConversationManager class in `pearl-bot/src/lib/conversation.ts`
+- Features:
+  - `CollectedData` interface with all intake fields: division, request_type, description, deliverables[], due_date, due_date_parsed, urgency, details, assets_mentioned[], additional_info
+  - `ConversationManager` class with state tracking (gathering → confirming → complete/cancelled)
+  - `getNextQuestion()` returns next unanswered required field with question text and example
+  - `markFieldCollected(field, value)` updates collected data (handles both string and array fields)
+  - `isComplete()` checks all required fields are populated
+  - `toSummary()` generates Slack mrkdwn confirmation summary matching UX spec format
+  - `save()` persists state to SQLite via existing db helpers
+  - `reset()` clears all data for "start over" flow
+  - Static `load()` factory method to restore from DB
+  - 24-hour expiry handled via existing `expires_at` column
+- **Learnings for future iterations:**
+  - Required fields ordered: division → request_type → description → deliverables → due_date → urgency
+  - Array fields (deliverables, assets_mentioned) need special handling in `markFieldCollected` — check `Array.isArray`
+  - `collected_data` stored as JSON string in DB; `parseCollectedData()` safely deserializes with defaults
+  - `isFieldPopulated` checks both null and empty string for strings, and length > 0 for arrays
+  - ConversationManager is the central state object — US-005 (Claude) and US-006 (wiring) will use it
+---
+
+## 2026-01-30 - US-005
+- Added Claude API integration for natural language interpretation
+- Files created:
+  - `pearl-bot/src/lib/claude.ts` — interpretMessage() and classifyRequest() functions
+- Features:
+  - `interpretMessage(message, conversationState)` sends user text to Claude with system prompt explaining MarcomsBot's role
+  - Claude extracts structured fields: division, request_type, description, deliverables[], due_date, due_date_parsed, urgency, details, assets_mentioned[], additional_info
+  - Handles bundled responses — extracts all available fields from a single message
+  - Natural date parsing via Claude (Friday → next Friday, end of month → date, ASAP → urgent)
+  - Natural division detection ("I'm on the people team" → HR)
+  - `classifyRequest(collectedData)` returns 'quick' | 'full' | 'undetermined' based on deliverable count and keyword matching
+  - Classification logic: campaign/launch/event keywords → full; single deliverable + simple asset type → quick; 3+ deliverables → full
+  - Returns confidence score (0-1) from Claude's extraction
+  - Graceful fallback: unparseable Claude responses return empty fields with 0 confidence
+- **Learnings for future iterations:**
+  - Anthropic SDK `new Anthropic()` auto-reads ANTHROPIC_API_KEY from env
+  - Claude model used: claude-sonnet-4-20250514 for speed/cost balance in real-time Slack interactions
+  - System prompt must instruct Claude to return ONLY JSON (no markdown, no code blocks) to ensure parseable responses
+  - `parseExtractedFields()` strips markdown code fences as a safety net
+  - `buildUserPrompt()` includes already-collected fields so Claude has conversation context and skips re-extraction
+  - `classifyRequest()` is pure logic (no API call) — keyword lists for quick vs full classification
+---
+
+## 2026-01-30 - US-006
+- Wired up conversational intake flow end-to-end
+- Files created:
+  - `pearl-bot/src/handlers/intake.ts` — main intake handler with gathering/confirming state logic
+- Files modified:
+  - `pearl-bot/src/handlers/mentions.ts` — replaced intake stub with handleIntakeMessage call
+  - `pearl-bot/src/handlers/messages.ts` — added active conversation check before intent detection, wired intake handler
+- Features implemented:
+  - `handleIntakeMessage()` — central entry point for all intake conversation messages
+  - Loads or creates ConversationManager per user/thread
+  - Gathering state: interprets messages via Claude, applies extracted fields, asks next question, handles bundled responses ("Got most of what I need!")
+  - Confirming state: handles yes/confirm, change requests (re-interpret via Claude), start over, cancel
+  - Cancel/reset keywords detected via regex patterns
+  - Never auto-submits — always requires explicit "yes"
+  - Bot identifies as intake assistant in completion message (UX spec constraint #9)
+  - DM handler checks for active conversation before intent detection — ongoing threads route directly to intake
+  - Completion message is a stub placeholder — full workflow (brief, Drive, Monday) comes in US-010
+- **Learnings for future iterations:**
+  - `event.user` in Bolt.js `app_mention` events is typed as `string | undefined` — use `?? ''` fallback
+  - DM handler must check for existing active conversation FIRST, before intent detection, otherwise mid-conversation replies get routed to greeting/help instead of continuing the intake flow
+  - Confirmation state changes (describing updates) use the same `interpretMessage()` + `applyExtractedFields()` pipeline as gathering
+  - `applyExtractedFields()` returns count of newly applied fields — useful for UX messaging ("captured N details")
+---
+
+## 2026-01-30 - US-007
+- Added brief generation via Claude API
+- Files created:
+  - `pearl-bot/src/lib/brief-generator.ts` — generateBrief() function with mini-brief and full creative brief templates
+- Features:
+  - `generateBrief(collectedData, classification, requesterName?)` generates a markdown brief using Claude
+  - For 'quick' classification: mini-brief with metadata table, request summary, deliverable, key details, due date, assets/references
+  - For 'full' classification: full creative brief with project overview, objectives, target audience, deliverables, key messages, specifications, timeline table, brand/style notes, assets, references, additional notes
+  - Claude generates narrative content from collected data — not just template slot-filling
+  - Uses same Anthropic SDK pattern as claude.ts (auto-reads ANTHROPIC_API_KEY from env)
+  - Uses claude-sonnet-4-20250514 for speed/cost balance, max_tokens 2048 for longer brief output
+- **Learnings for future iterations:**
+  - Brief generator follows same Anthropic client pattern as `claude.ts` — shared `new Anthropic()` client at module level
+  - System prompts contain exact markdown structure templates so Claude produces consistent formatting
+  - `classification` type imported from `claude.ts` (`RequestClassification`) to keep types aligned
+  - `requesterName` is optional param — defaults to 'Unknown' if not provided (will come from ConversationManager in US-010)
+  - Brief output is raw markdown string — Google Drive module converts to Google Doc via `text/plain` media upload
+- Google Drive integration in `src/lib/google-drive.ts`: service account auth, exports `createQuickRequestDrive()` and `createFullProjectDrive()` — both return `DriveResult`
+- googleapis SDK uses `google.auth.fromJSON()` with service account JSON from env var
+---
+
+## 2026-01-30 - US-009
+- Added Monday.com integration for creating tasks and projects
+- Files created:
+  - `pearl-bot/src/lib/monday.ts` — GraphQL client, quick request items, full project groups, search
+- Files modified:
+  - `pearl-bot/.env.example` — added MONDAY_API_TOKEN, MONDAY_QUICK_BOARD_ID, MONDAY_FULL_BOARD_ID
+- Features:
+  - `createQuickRequestItem(params)` — creates single item on quick requests board with columns: name, date, requester, division, brief link, folder link
+  - `createFullProjectGroup(params)` — creates group on full projects board, then creates item per deliverable with shared column values
+  - `searchItems(query)` — searches both boards by item name, returns status/date/assignee/links
+  - `MondayResult` interface: `{ success, itemId?, boardUrl?, error? }` — same pattern as `DriveResult`
+  - `MondaySearchResult` interface for search results with id, name, status, dueDate, assignee, boardUrl, updatedAt
+  - All external calls wrapped in try/catch — returns error on failure, never crashes
+  - Search silently skips boards that fail — partial results are better than no results
+- **Learnings for future iterations:**
+  - Monday.com API v2 uses GraphQL at `https://api.monday.com/v2` — Authorization header is just the token (no Bearer prefix)
+  - `create_item` mutation uses `column_values` param as a JSON string of column ID → value mappings
+  - Column IDs for Monday boards depend on board configuration — using common defaults: `date`, `text`, `text6`, `link`, `link6`, `status`
+  - `create_group` mutation returns group ID which is then used as `group_id` param in `create_item`
+  - Board URLs follow pattern: `https://pearl-certification.monday.com/boards/{boardId}/pulses/{itemId}`
+  - No additional npm dependencies needed — uses native `fetch` (Node 18+)
+  - Monday.com integration in `src/lib/monday.ts`: exports `createQuickRequestItem()`, `createFullProjectGroup()`, `searchItems()`
+---
+
+## 2026-01-30 - US-008
+- Added Google Drive integration for creating folders and docs
+- Files created:
+  - `pearl-bot/src/lib/google-drive.ts` — service account auth, folder/doc creation, quick & full project workflows
+- Files modified:
+  - `pearl-bot/.env.example` — added GOOGLE_SERVICE_ACCOUNT_JSON, GOOGLE_PROJECTS_FOLDER_ID, GOOGLE_QUICK_REQUESTS_FOLDER_ID
+  - `pearl-bot/package.json` — added googleapis dependency
+- Features:
+  - `createQuickRequestDrive(projectName, briefMarkdown)` — creates Google Doc in Quick Requests folder, returns doc URL
+  - `createFullProjectDrive(projectName, briefMarkdown)` — creates year folder, project folder with 5 subfolders (01-Brief through 05-Feedback), saves brief doc in 01-Brief
+  - `findOrCreateFolder()` — avoids duplicate year folders by searching before creating
+  - `DriveResult` interface: `{ success, folderUrl?, docUrl?, error? }`
+  - Service account auth via GOOGLE_SERVICE_ACCOUNT_JSON env var (parsed JSON)
+  - All external calls wrapped in try/catch — returns error message on failure, never crashes
+- **Learnings for future iterations:**
+  - googleapis SDK: `google.auth.fromJSON()` with scopes for service account auth, no user OAuth needed
+  - Google Drive API: use `mimeType: 'application/vnd.google-apps.document'` with `media.mimeType: 'text/plain'` to create a Google Doc from plain text content
+  - `drive.files.create` returns `webViewLink` for shareable URLs (request via `fields` param)
+  - Folder search query syntax: `name='X' and 'parentId' in parents and mimeType='application/vnd.google-apps.folder' and trashed=false`
+  - Single quotes in folder names must be escaped in Drive API queries with `\'`
+---
+
+## 2026-01-30 - US-010
+- Wired up post-confirmation workflow execution
+- Files created:
+  - `pearl-bot/src/lib/workflow.ts` — `executeWorkflow()` orchestrator and `buildCompletionMessage()` formatter
+- Files modified:
+  - `pearl-bot/src/handlers/intake.ts` — replaced stub confirmation with real workflow execution
+- Features:
+  - `executeWorkflow()` runs sequential pipeline: generate brief → create Drive folder/doc → create Monday.com task/project → save project record to DB
+  - On full success: sends completion message with all 3 links (brief, folder, Monday) and "The marketing team has been notified"
+  - On partial failure: reports what succeeded and what failed, offers manual fallback guidance
+  - Sends "Setting everything up..." immediately on confirmation (UX spec: never leave user in silence)
+  - Distinguishes infrastructure from work: "All set! Here's everything" not "Everything is done" (UX spec constraint #10)
+  - Bot identifies as intake assistant in completion message (UX spec constraint #9)
+  - Conversation marked complete regardless of partial failures (info is always saved)
+  - `WorkflowResult` interface with success flag, URLs, project ID, and error array
+- **Learnings for future iterations:**
+  - `executeWorkflow()` is the central orchestrator — both conversation and form paths (US-016) should use it
+  - Workflow continues on partial failure — each step is independent except Drive URLs feed into Monday columns
+  - `effectiveClassification` maps 'undetermined' → 'quick' as a safe default
+  - `buildCompletionMessage()` is a pure function (no API calls) — easy to test
+  - Project name derived from description (first 80 chars) falling back to request_type
+---
+
+## 2026-01-30 - US-011
+- Post notifications to #marketing-requests channel after successful project creation
+- Files created:
+  - `pearl-bot/src/lib/notifications.ts` — `buildNotificationMessage()` with quick request and full project notification formats
+- Files modified:
+  - `pearl-bot/src/handlers/intake.ts` — added `client: WebClient` param, posts notification to marketing channel after workflow success
+  - `pearl-bot/src/handlers/mentions.ts` — passes `client` from Bolt event args to `handleIntakeMessage`
+  - `pearl-bot/src/handlers/messages.ts` — passes `client` from Bolt event args to `handleIntakeMessage`
+  - `pearl-bot/.env.example` — added SLACK_MARKETING_CHANNEL_ID
+- Features:
+  - Quick request notification: `:inbox_tray: *Quick Request: [Title]*` with from, type, division, due, urgency, summary, links
+  - Full project notification: `:inbox_tray: *New Project: [Title]*` with from, type, division, due, urgency, summary, deliverables list, links
+  - Both formats include "React with :eyes: to claim this request"
+  - Notification only posts on full workflow success (no partial-failure notifications)
+  - Graceful error handling — notification failure is logged but doesn't affect user-facing completion message
+- **Learnings for future iterations:**
+  - Bolt.js event handlers provide `client` (WebClient) alongside `say` — use `client.chat.postMessage` for posting to arbitrary channels
+  - `say` is scoped to the current conversation thread; `client.chat.postMessage` is needed for cross-channel notifications
+  - Notification module is pure formatting (no Slack SDK dependency) — the handler owns the Slack posting logic
+  - `SLACK_MARKETING_CHANNEL_ID` env var controls notification destination — notification skipped if not set
+---
+
+## 2026-01-30 - US-012
+- Implemented status check workflow
+- Files created:
+  - `pearl-bot/src/handlers/status.ts` — `handleStatusCheck()` with search, merge, and formatted responses
+- Files modified:
+  - `pearl-bot/src/handlers/mentions.ts` — replaced status stub with real `handleStatusCheck` call
+  - `pearl-bot/src/handlers/messages.ts` — replaced status stub with real `handleStatusCheck` call
+- Features:
+  - `extractSearchQuery()` strips bot mentions, status prefixes, articles, and quotes to get clean search terms
+  - Searches local projects table AND Monday.com in parallel via `Promise.all()`
+  - `mergeResults()` deduplicates by name (case-insensitive), prefers Monday data for live status, enriches with local DB links
+  - Single match: formatted status card with name, status, assignee, due date, last updated, and links (brief, Drive folder, Monday.com)
+  - Multiple matches: numbered list (up to 5) asking user to pick
+  - No matches: suggestions to try different keywords, check #marketing-requests, or ask in #marketing-team
+  - No query provided: help text with example queries
+  - All external searches wrapped in try/catch — graceful degradation on failure
+- **Learnings for future iterations:**
+  - Status handler only needs `say` (not `client`) since responses are always in-thread
+  - `mergeResults()` joins Monday search results with local DB projects by name or `monday_item_id` — deduplication key is lowercased name
+  - `extractSearchQuery()` must handle many natural prefixes ("status of", "where are we on", "update on", "check on", etc.)
+  - Search is text-based fuzzy match (SQL LIKE in local DB, name column search in Monday) — not exact match
+---
+
+## 2026-01-30 - US-013
+- Implemented search and retrieval workflow
+- Files created:
+  - `pearl-bot/src/handlers/search.ts` — `handleSearchRequest()` with search, merge, and formatted link responses
+- Files modified:
+  - `pearl-bot/src/handlers/mentions.ts` — replaced search stub with real `handleSearchRequest` call
+  - `pearl-bot/src/handlers/messages.ts` — replaced search stub with real `handleSearchRequest` call
+- Features:
+  - `extractSearchQuery()` strips bot mentions and search prefixes ("find the brief for", "link to", "where's the", etc.)
+  - Searches local projects table AND Monday.com in parallel via `Promise.all()`
+  - `mergeResults()` deduplicates by name (case-insensitive), enriches Monday results with local DB links
+  - Single match: formatted link card with brief doc, Drive folder, and Monday.com links (with emoji icons)
+  - Multiple matches: numbered list (up to 5) asking user to pick
+  - No matches: explains bot can only find projects created through it, suggests alternatives
+  - No query provided: help text with example queries
+  - All external searches wrapped in try/catch — graceful degradation on failure
+- **Learnings for future iterations:**
+  - Search handler follows same architecture as status handler — parallel search, merge, format
+  - Key difference from status: search focuses on returning *links* (brief, folder, Monday) rather than *status* (assignee, due date, progress)
+  - "Pre-bot project" edge case handled explicitly: "I can only find projects created through me"
+  - `extractSearchQuery()` also strips trailing keywords like "brief", "folder", "link" that are part of the search phrase, not the project name
+---
+
+## 2026-01-30 - US-014
+- Added conversation timeout and resume handling
+- Files created:
+  - `pearl-bot/src/handlers/timeout.ts` — `checkTimeouts()` scheduled job with timeout notification and auto-cancel logic
+- Files modified:
+  - `pearl-bot/src/lib/db.ts` — added `timeout_notified` column (ALTER TABLE migration), plus queries: `getTimedOutConversations`, `getAutoCancelConversations`, `markTimeoutNotified`, `cancelConversation`
+  - `pearl-bot/src/lib/conversation.ts` — added `getChannelId()` getter
+  - `pearl-bot/src/handlers/intake.ts` — added `CONTINUE_PATTERNS` for resume keyword detection; handles "continue" in both gathering and confirming states
+  - `pearl-bot/src/index.ts` — wired up `setInterval` to run `checkTimeouts()` every 15 minutes
+- Features:
+  - Two-phase timeout: Phase 1 sends reminder to thread after 24h inactivity, Phase 2 auto-cancels after another 24h of no response
+  - Timeout message shows what was collected so far and offers continue/start over/cancel options
+  - `timeout_notified` column added via ALTER TABLE (with try/catch for idempotency)
+  - Continue/resume keywords in intake handler re-ask next question (gathering) or re-show summary (confirming)
+  - Auto-cancel runs silently — no message sent, just status set to cancelled
+- **Learnings for future iterations:**
+  - SQLite `ALTER TABLE ADD COLUMN` wrapped in try/catch is idempotent — safe for schema evolution without migrations
+  - Two-phase timeout uses `timeout_notified` flag: 0 = first expiry sends message, 1 = second expiry auto-cancels
+  - `setInterval` in index.ts runs after `app.start()` — uses `app.client` (WebClient) for posting timeout messages
+  - Continue/resume handling must exist in BOTH gathering and confirming states — different UX for each (ask next question vs re-show summary)
+  - `expires_at` is reset to +24h when timeout notification is sent, giving the user another 24h window
+---
+
+## 2026-01-30 - US-015
+- Added duplicate thread detection when users message bot from multiple threads
+- Files modified:
+  - `pearl-bot/src/lib/db.ts` — added `getActiveConversationForUser()` query + exported helper
+  - `pearl-bot/src/handlers/intake.ts` — added `pendingDuplicateChecks` map, duplicate detection on new conversation start, response handling for "continue there" / "start fresh", exported `hasPendingDuplicateCheck()`
+  - `pearl-bot/src/handlers/messages.ts` — added pending duplicate check routing before intent detection
+  - `pearl-bot/src/handlers/mentions.ts` — added pending duplicate check routing before intent detection
+- Features:
+  - When intake starts in a new thread, checks if user has an active (gathering/confirming) conversation in another thread
+  - If duplicate found: prompts "continue there or start fresh here?"
+  - "Continue there" response: sends Slack deep link to original thread (https://slack.com/archives/{channel}/p{ts})
+  - "Start fresh" response: cancels old conversation via `cancelConversation()`, proceeds with new intake
+  - Unrecognized response after dup prompt: treats as "start fresh" to avoid blocking the user
+  - Both DM and mention handlers check `hasPendingDuplicateCheck()` to route dup-prompt responses to intake handler
+- **Learnings for future iterations:**
+  - In-memory `Map` is sufficient for transient pending-state tracking (dup checks) — no need for DB since it's short-lived
+  - Slack deep links use format: `https://slack.com/archives/{channelId}/p{tsWithoutDot}` — thread_ts dots must be removed
+  - Both `messages.ts` and `mentions.ts` must check for pending duplicate prompts BEFORE intent detection, otherwise replies get misrouted
+  - `getActiveConversationForUser(userId, excludeThreadTs)` uses `thread_ts != ?` to avoid matching the current thread
+---
+
+## 2026-01-30 - US-016
+- Added webhook endpoint for form submissions
+- Files created:
+  - `pearl-bot/src/lib/webhook.ts` — HTTP server with POST /webhook/intake route, form-to-CollectedData mapping, workflow execution
+- Files modified:
+  - `pearl-bot/src/index.ts` — starts webhook server after Bolt app start, configurable via WEBHOOK_PORT env var
+  - `pearl-bot/.env.example` — added WEBHOOK_PORT
+- Features:
+  - POST /webhook/intake accepts JSON with form fields: name, email, slack_username, division, request_type, description, deliverables, due_date, urgency, target_audience, key_messages, assets, references, notes
+  - Maps form fields to same `CollectedData` structure used by conversation flow
+  - Uses same `classifyRequest()` function for quick/full classification
+  - Executes same `executeWorkflow()` pipeline: brief → Drive → Monday → DB
+  - Project saved with `source='form'`
+  - If `slack_username` provided, DMs user with confirmation and links via `conversations.open` + `chat.postMessage`
+  - Posts notification to #marketing-requests channel (same as conversation flow)
+  - Validates required fields (name, description, request_type, division) and returns 400 on missing
+  - Returns structured JSON response with success status, URLs, and errors
+  - `normalizeArray()` handles both comma-separated strings and arrays for deliverables/assets
+  - `buildDetails()` combines target_audience, key_messages, references into details field
+  - Runs on separate HTTP port (default 3100) alongside Bolt's socket mode
+- **Learnings for future iterations:**
+  - Bolt.js socket mode doesn't expose an HTTP server — use Node's built-in `http` module for webhook endpoints
+  - No extra dependencies needed — `http` is a Node.js built-in
+  - `slackClient.conversations.open({ users })` takes a Slack user ID to open a DM channel, returns `channel.id` for posting
+  - Webhook returns 200 on full success, 207 (Multi-Status) on partial success, 400/500 on errors
+  - Both conversation and form paths use `executeWorkflow()` — single source of truth for the downstream pipeline
+  - Form submissions skip the conversation state machine entirely — no ConversationManager needed
+---
+
+## 2026-01-30 - US-017
+- Added comprehensive error handling and fallback messaging across all handlers
+- Files modified:
+  - `pearl-bot/src/handlers/mentions.ts` — added top-level try/catch around entire app_mention handler with user-friendly error message
+  - `pearl-bot/src/handlers/messages.ts` — added top-level try/catch around entire DM handler with user-friendly error message
+  - `pearl-bot/src/handlers/intake.ts` — wrapped `handleIntakeMessage` in try/catch with form link fallback; updated Claude interpretation error messages in both gathering and confirming states to include form link and #marketing-team alternative
+  - `pearl-bot/src/lib/workflow.ts` — updated partial-failure completion message to include form link fallback and #marketing-team reference
+  - `pearl-bot/src/lib/webhook.ts` — added top-level try/catch for HTTP server; removed raw error details from webhook error responses
+- Features:
+  - All error messages follow UX spec format: describe what happened → say info is saved → offer form as backup → offer #marketing-team as alternative
+  - Claude interpretation failures include form link fallback (`INTAKE_FORM_URL` env var) and #marketing-team channel reference
+  - Workflow partial failures include form link fallback in completion message
+  - Top-level handlers catch truly unexpected errors and present safe messages (never raw stack traces)
+  - Webhook error responses sanitized — no raw error messages exposed to external callers
+  - All console.error calls prefixed with module tag (`[intake]`, `[mentions]`, `[messages]`, `[webhook]`) for debugging context
+  - Drive/Monday failures already handled by workflow (continues with remaining steps, reports what failed) — verified and unchanged
+- **Learnings for future iterations:**
+  - Error recovery pattern: wrap `say()` in try/catch inside error handlers — if the error message itself fails to send, log but don't crash
+  - `INTAKE_FORM_URL` env var used by error messages — defaults to empty (no form link shown) if not set
+  - `handleIntakeMessage` uses inner function pattern: public function catches errors, inner function has the real logic
+  - Webhook `res.writableEnded` check prevents double-write errors when the response was already sent before an error
+---
+
+## 2026-01-30 - US-018
+- Added centralized configuration module with environment validation
+- Files created:
+  - `pearl-bot/src/lib/config.ts` — loads, validates, and exports typed config object from env vars
+- Files modified:
+  - `pearl-bot/src/index.ts` — imports config, uses typed values for Bolt app init and webhook port
+  - `pearl-bot/src/handlers/intake.ts` — replaced process.env refs with config imports (formUrl, marketingChannelId)
+  - `pearl-bot/src/handlers/status.ts` — replaced process.env ref with config.slackMarketingChannelId
+  - `pearl-bot/src/handlers/search.ts` — replaced process.env ref with config.slackMarketingChannelId
+  - `pearl-bot/src/lib/workflow.ts` — replaced process.env ref with config.intakeFormUrl
+  - `pearl-bot/src/lib/google-drive.ts` — replaced process.env refs with config properties for service account, folder IDs
+  - `pearl-bot/src/lib/monday.ts` — replaced process.env refs with config properties for API token, board IDs; removed unused searchQuery variable
+  - `pearl-bot/src/lib/webhook.ts` — replaced process.env ref with config.slackMarketingChannelId
+  - `pearl-bot/.env.example` — added INTAKE_FORM_URL optional var
+- Features:
+  - All 11 required env vars validated on startup; process exits with clear list of missing vars
+  - Optional vars: INTAKE_FORM_URL (defaults to ''), WEBHOOK_PORT (defaults to 3100)
+  - Typed `config` object exported for use by all modules — no more raw process.env access outside config.ts
+  - `validateEnv()` runs at import time (module top-level side effect)
+- **Learnings for future iterations:**
+  - Config module uses `as const` for the exported object to get narrow literal types
+  - `validateEnv()` runs as a top-level side effect when config.ts is imported — must be the first import after dotenv in index.ts
+  - All process.env access is now centralized in config.ts — other modules should never use process.env directly
+  - google-drive.ts getAuth() still returns null on JSON parse failure (graceful) — config validates the env var exists but not that it's valid JSON
+---
+
+## 2026-01-30 - US-019
+- Added README.md with setup and deployment instructions
+- Files created:
+  - `pearl-bot/README.md` — project overview, architecture diagram, prerequisites, setup guides, env vars reference, local dev instructions, project structure, deployment options
+- Features:
+  - ASCII architecture diagram showing: Slack events → Bot core (intent detection, conversation state, Claude NLP, workflow engine) → Claude/Drive/Monday → Slack channel notification
+  - Slack app setup walkthrough: create app, enable socket mode, bot token scopes (6 scopes), event subscriptions (app_mention, message.im), install to workspace
+  - Google service account setup: create project, enable Drive API, create service account, share folders
+  - Monday.com API setup: generate token, note board IDs
+  - Environment variables reference table: 11 required, 2 optional (with defaults)
+  - Local development: install, configure, dev/typecheck/build/start commands
+  - Full project structure tree with descriptions for every file
+  - Deployment guides: Railway, Render, Fly.io, Docker (generic)
+- **Learnings for future iterations:**
+  - README is documentation-only — no code changes, typecheck is a no-op verification
+  - Socket mode means no public URL needed for Slack events; only the webhook needs external reachability
+  - All 6 required Slack bot scopes documented: app_mentions:read, chat:write, im:read, im:write, channels:read, reactions:read
+---

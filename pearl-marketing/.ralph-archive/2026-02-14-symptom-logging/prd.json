@@ -1,0 +1,141 @@
+{
+  "project": "PearlApp",
+  "branchName": "ralph/symptom-logging",
+  "description": "Symptom Logging & Persistence - Add persistent symptom logging with SymptomContext, wire existing screens to real data, add 30-day follow-up notifications, and gate history behind premium",
+  "userStories": [
+    {
+      "id": "US-094",
+      "title": "Create Symptom model and types",
+      "description": "As a developer, I need a Symptom data model so logged symptoms have a consistent shape across the app.",
+      "acceptanceCriteria": [
+        "Create src/models/Symptom.ts with LoggedSymptom interface: id (string), symptomId (string), symptomLabel (string), categoryId (string), categoryLabel (string), affectedPillars (Pillar[]), notes (string), loggedAt (string, ISO), followUpScheduledAt (string | null, ISO), followUpDismissed (boolean), resolved (boolean)",
+        "Export LoggedSymptom type from src/models/index.ts",
+        "Typecheck passes"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": "Pillar type already exists in models/DeviceData.ts. Dates as ISO strings (no Date objects in AsyncStorage). Keep it minimal — just the type definition."
+    },
+    {
+      "id": "US-095",
+      "title": "Create SymptomContext with AsyncStorage persistence",
+      "description": "As a developer, I need a SymptomContext to persist logged symptoms across app restarts.",
+      "acceptanceCriteria": [
+        "Create src/context/SymptomContext.tsx following EquipmentContext pattern",
+        "AsyncStorage key: @pearl_symptoms",
+        "State: symptoms (LoggedSymptom[]), isLoaded (boolean)",
+        "Methods: addSymptom(symptom: LoggedSymptom), resolveSymptom(id: string), dismissFollowUp(id: string), deleteSymptom(id: string), getRecentSymptoms(days: number) returns symptoms within N days",
+        "Provider returns null until isLoaded is true",
+        "Export SymptomProvider and useSymptoms from src/context/index.ts",
+        "Add SymptomProvider to App.tsx provider chain",
+        "Typecheck passes"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": "Follow EquipmentContext pattern exactly: createContext → Provider with useState + useEffect for load/save → useCallback mutators → isLoaded gate → named hook. No Date objects — store ISO strings."
+    },
+    {
+      "id": "US-096",
+      "title": "Wire SymptomLogModal to save through SymptomContext",
+      "description": "As a user, I want my logged symptoms to persist so I can see them when I reopen the app.",
+      "acceptanceCriteria": [
+        "HomeScreen imports useSymptoms from context",
+        "handleSymptomLogSave creates a LoggedSymptom object with id (symptomId-timestamp), loggedAt (new Date().toISOString()), followUpScheduledAt (30 days from now as ISO string), followUpDismissed false, resolved false",
+        "Calls addSymptom() from context instead of local setState",
+        "Remove MOCK_LOGGED_SYMPTOMS constant entirely",
+        "Remove local loggedSymptoms useState — read from useSymptoms().symptoms instead",
+        "handleDismissSymptom calls deleteSymptom(id) on context",
+        "Symptom cards show relative dates computed from loggedAt: Just now (< 1 hour), X hours ago (< 24h), X days ago (< 30d), X weeks ago (30-60d), X months ago (60d+)",
+        "Typecheck passes"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": "Relative date formatting: compute diff between now and loggedAt, return appropriate string. affectedPillars comes from the SymptomLogModal's SYMPTOMS array (look up by symptomId to get affectedPillars, or pass it through the SymptomLogData — may need to extend SymptomLogData to include affectedPillars)."
+    },
+    {
+      "id": "US-097",
+      "title": "Wire GuidedQuestionsScreen to save answers to OnboardingContext",
+      "description": "As a user, I want my onboarding answers to persist so the dashboard can show personalized content.",
+      "acceptanceCriteria": [
+        "In RootNavigator.tsx, the GuidedQuestionsScreenWrapper calls useOnboarding().setAnswers() with the completed answers before navigating to CoachSummary",
+        "Answers are saved to OnboardingContext before navigation.navigate('CoachSummary') is called",
+        "On app restart, useOnboarding().answers returns the previously saved answers (already works via OnboardingContext AsyncStorage)",
+        "HomeScreen coach prompts render based on persisted answers (already works — just needs GuidedQuestions to save)",
+        "Typecheck passes"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": "OnboardingContext already persists to AsyncStorage and HomeScreen already reads answers. The only gap is GuidedQuestionsScreenWrapper not calling setAnswers(). This is a small edit to RootNavigator.tsx."
+    },
+    {
+      "id": "US-098",
+      "title": "Wire SymptomInsightsScreen to read from context",
+      "description": "As a user, after logging a symptom I want to see insights based on my logged data.",
+      "acceptanceCriteria": [
+        "SymptomInsightsScreen imports useSymptoms from context",
+        "When navigated with specific symptomId, shows details for that symptom from context",
+        "When navigated without symptomId, shows summary of all recent symptoms with affected pillars",
+        "Shows affected pillars based on the symptom's affectedPillars field from context data",
+        "Back button returns to previous screen via navigation.goBack()",
+        "Typecheck passes"
+      ],
+      "priority": 5,
+      "passes": false,
+      "notes": "SymptomInsightsScreen currently uses route params for selected symptoms. Wire it to also read from context for persistence. Keep existing UI structure — just change data source."
+    },
+    {
+      "id": "US-099",
+      "title": "Create SymptomFollowUpService for 30-day notifications",
+      "description": "As a user, I want Pearl to check in 30 days after I log a symptom to ask if it improved.",
+      "acceptanceCriteria": [
+        "Create src/services/SymptomFollowUpService.ts",
+        "Export checkSymptomFollowUps(preferences: NotificationPreferences): Promise<PearlNotification[]>",
+        "Reads symptoms from AsyncStorage key @pearl_symptoms",
+        "For each symptom where followUpScheduledAt is in the past AND followUpDismissed is false AND resolved is false, generate a PearlNotification",
+        "Notification category: symptom_followup",
+        "Notification title: How's your [symptomLabel]?",
+        "Notification body: You logged [symptomLabel] 30 days ago. Has it improved?",
+        "Notification data: { screen: 'SymptomInsights', symptomId: symptom.id }",
+        "Respects preferences.symptomFollowUp toggle and preferences.enabled master toggle",
+        "After generating notification, marks followUpDismissed as true in AsyncStorage to avoid re-sending",
+        "Export from src/services/index.ts",
+        "Typecheck passes"
+      ],
+      "priority": 6,
+      "passes": false,
+      "notes": "Follow EquipmentAgingService pattern: read data from AsyncStorage, evaluate conditions, return PearlNotification[]. Mark followUpDismissed=true after generating notification so it fires only once per symptom."
+    },
+    {
+      "id": "US-100",
+      "title": "Integrate SymptomFollowUpService into BackgroundSyncService",
+      "description": "As a developer, I need the background sync to check for symptom follow-ups.",
+      "acceptanceCriteria": [
+        "Import checkSymptomFollowUps in BackgroundSyncService.ts",
+        "Add step after equipment aging check that calls checkSymptomFollowUps(preferences)",
+        "Schedule returned notifications via scheduleLocalNotification",
+        "Include follow-up notification count in totalNotifs logging",
+        "Typecheck passes"
+      ],
+      "priority": 7,
+      "passes": false,
+      "notes": "Small integration: add import, add ~5 lines after the equipment aging block. Pattern identical to how checkEquipmentAging was added."
+    },
+    {
+      "id": "US-101",
+      "title": "Premium gate for symptom history",
+      "description": "As a free user, I can see symptoms from the last 30 days. Paid users see full history.",
+      "acceptanceCriteria": [
+        "HomeScreen reads @pearl_is_premium from AsyncStorage (default true for demo)",
+        "Free users: display symptoms filtered via getRecentSymptoms(30)",
+        "Paid users: display all symptoms from context",
+        "When free user has older symptoms beyond 30 days, show upgrade banner below the symptom list",
+        "Banner text: '[X] older symptoms — Upgrade for full history' with lock-closed-outline icon",
+        "Banner styled with accent+10% background, not aggressive",
+        "Typecheck passes"
+      ],
+      "priority": 8,
+      "passes": false,
+      "notes": "Follow same pattern as EquipmentDetailScreen premium gate: useState + useEffect with AsyncStorage.getItem(@pearl_is_premium). Use getRecentSymptoms(30) from context for free tier filtering."
+    }
+  ]
+}

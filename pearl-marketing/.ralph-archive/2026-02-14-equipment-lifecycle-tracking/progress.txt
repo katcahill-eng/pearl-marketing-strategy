@@ -1,0 +1,17 @@
+# Ralph Progress Log
+Started: Sat Feb 14 2026
+
+## Codebase Patterns
+- Pearl App lives in `pearl-app/` directory with Expo SDK 54, React Native 0.81.5, TypeScript strict
+- Context pattern: createContext → Provider with AsyncStorage → isLoaded gate → useCallback mutators → barrel export in index.ts → add to App.tsx chain
+- AsyncStorage keys: @pearl_equipment, @pearl_is_premium, @pearl_equipment_aging_notified
+- Date serialization: custom JSON replacer/reviver for Date fields in AsyncStorage
+- Theme: useTheme() returns { colors, spacing, typography }
+- Navigation: RootNavigator (NativeStackNavigator) with screen wrappers + BottomTabNavigator
+- EquipmentItem type, calculateEquipmentStatus, getTypicalLifespan already exported from components/EquipmentList.tsx
+- Existing screens: EquipmentEntryScreen (form), EquipmentDetailScreen (detail), MyHomeScreen (list with MOCK_EQUIPMENT)
+- InsightEngine pattern: function takes data array, returns Insight[] with id, title, body, severity, pillar, suggestedActions
+- BackgroundSyncService runs maintenance/seasonal/device checks — add equipment aging alongside
+
+---
+

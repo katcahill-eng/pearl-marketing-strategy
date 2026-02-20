@@ -1,0 +1,195 @@
+{
+  "project": "Pearl App",
+  "branchName": "ralph/claim-your-home-registry",
+  "description": "Claim Your Home — Pearl Registry Integration. App-side claim flow with mock registry API, document-based ownership verification, data import, and ownership transfer.",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Create RegistryHome data model",
+      "description": "As a developer, I need typed data models for registry home data so all registry-related code has a shared type foundation.",
+      "acceptanceCriteria": [
+        "Create src/models/RegistryHome.ts with interfaces: RegistryHome (id, address, score, claimStatus), ClaimStatus type ('unclaimed' | 'claimed' | 'claimed_by_other' | 'transfer_pending'), RegistryHomeData (score, pillarScores, verifiedFeatures, knownEquipment, climateRisk, energyProjections, neighborhoodComparisons), VerificationDocument (uri, type: 'utility_bill' | 'closing_docs' | 'tax_record', uploadedAt)",
+        "RegistryHomeData.verifiedFeatures is array of { name: string; value: string; verified: boolean }",
+        "RegistryHomeData.knownEquipment is array of { type: string; make?: string; model?: string; yearInstalled?: number }",
+        "RegistryHomeData.climateRisk is { floodZone: string; fireRisk: string; windRisk: string; overallRisk: 'low' | 'moderate' | 'high' }",
+        "RegistryHomeData.energyProjections is { annualCostEstimate: number; savingsOpportunity: number }",
+        "RegistryHomeData.neighborhoodComparisons is { averageScore: number; percentile: number; totalHomes: number }",
+        "Export all types from src/models/index.ts",
+        "Typecheck passes"
+      ],
+      "priority": 1,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-002",
+      "title": "Create RegistryApiService interface and MockRegistryService",
+      "description": "As a developer, I need a typed API contract and mock service so the app can be built against registry endpoints before the real backend exists.",
+      "acceptanceCriteria": [
+        "Create src/services/RegistryApiService.ts with interface RegistryApi defining: lookupHome(address: string): Promise<RegistryHome | null>, claimHome(homeId: string, userId: string, verificationDoc: VerificationDocument): Promise<{ success: boolean; homeData?: RegistryHomeData }>, getClaimStatus(homeId: string): Promise<ClaimStatus>, getHomeData(homeId: string): Promise<RegistryHomeData | null>, transferOwnership(homeId: string, newUserId: string, verificationDoc: VerificationDocument): Promise<{ success: boolean; pendingDuration?: string }>, syncAppData(homeId: string, appData: Record<string, unknown>): Promise<void>",
+        "Create src/services/MockRegistryService.ts implementing RegistryApi with realistic mock data",
+        "Mock lookupHome returns a home for any of the 4 existing mock addresses (Austin TX) with score 680, realistic pillar scores, 8+ verified features, 4+ known equipment items",
+        "Mock claimHome auto-approves after 500ms delay and returns full RegistryHomeData",
+        "Mock transferOwnership returns immediate success for utility_bill, pendingDuration '24 hours' for other doc types",
+        "Mock syncAppData logs to console after 300ms delay",
+        "All mock calls have randomized 300-800ms latency to simulate real API",
+        "Export MockRegistryService from src/services/index.ts",
+        "Typecheck passes"
+      ],
+      "priority": 2,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-003",
+      "title": "Create RegistryContext with AsyncStorage persistence",
+      "description": "As a developer, I need a context provider for registry state so claim status and imported data persist across app restarts.",
+      "acceptanceCriteria": [
+        "Create src/context/RegistryContext.tsx following existing context pattern (createContext, Provider, isLoaded gate, useCallback mutators)",
+        "State: claimStatus (ClaimStatus), registryHome (RegistryHome | null), registryData (RegistryHomeData | null), isLoading (boolean)",
+        "Provides: claimStatus, registryHome, registryData, isLoading, lookupHome(address), claimHome(verificationDoc), transferOwnership(verificationDoc), syncData(appData)",
+        "State persisted in AsyncStorage under @pearl_registry_home key",
+        "On mount: hydrate from AsyncStorage, then if a home exists, background-refresh claimStatus via getClaimStatus()",
+        "Export useRegistry hook and RegistryProvider from src/context/index.ts",
+        "Add RegistryProvider to App.tsx provider chain",
+        "Typecheck passes"
+      ],
+      "priority": 3,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-004",
+      "title": "Add navigation routes for claim flow screens",
+      "description": "As a developer, I need all new screens wired into the navigation stack so users can reach them.",
+      "acceptanceCriteria": [
+        "Add to RootStackParamList in RootNavigator.tsx: OwnershipVerification: { homeId: string; isTransfer?: boolean }, ClaimConfirmation: { homeId: string }, RegistryDetail: undefined",
+        "Add placeholder screen wrapper functions for OwnershipVerificationScreen, ClaimConfirmationScreen (can render empty View with screen name text for now)",
+        "Wire all 3 screens into RootNavigator Stack.Screen entries",
+        "Back navigation works from all new screens (hardware back + header back button)",
+        "Typecheck passes"
+      ],
+      "priority": 4,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-005",
+      "title": "Add registry lookup and claim CTA to AddressEntryScreen",
+      "description": "As a homeowner, when I select my address, I want to see whether this home exists in the Pearl Registry and its current claim status so I know what to expect.",
+      "acceptanceCriteria": [
+        "After address selection and globe zoom completes, call useRegistry().lookupHome(address)",
+        "Show loading skeleton card below selected address while lookup runs",
+        "If home found + unclaimed: show registry status card with Pearl SCORE badge and 'Found in Pearl Registry' text, plus 'Claim This Home' teal Button below",
+        "If home found + claimed by current user: show 'Claimed on Pearl Registry' card with teal checkmark icon",
+        "If home found + claimed by other: show amber-bordered card with 'This home has been claimed' and tappable 'Are you the new owner?' link",
+        "If home not found or API error: no registry card shown, app continues normally with existing Continue button",
+        "'Claim This Home' button navigates to OwnershipVerification screen with homeId param",
+        "'Are you the new owner?' link navigates to OwnershipVerification with homeId and isTransfer: true",
+        "Messaging uses 'Claim to unlock verified data about your home' — NOT score-improvement language",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 5,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-006",
+      "title": "Build OwnershipVerificationScreen with document upload",
+      "description": "As a homeowner claiming my home, I need to upload a document proving I own it so Pearl can verify my ownership.",
+      "acceptanceCriteria": [
+        "Create src/screens/OwnershipVerificationScreen.tsx with props: homeId, isTransfer (optional boolean), onVerified callback, onBack callback",
+        "Header: back button (48px), centered title 'Verify Ownership', 48px spacer",
+        "Document type section: 3 selectable cards — 'Utility Bill' (receipt-outline icon, pre-highlighted with 'Recommended' teal pill badge), 'Closing Documents' (document-outline), 'Property Tax Record' (business-outline)",
+        "Selected card has teal border + light teal background; unselected cards have default border",
+        "Guidance text above cards: 'Upload a clear photo showing your name and this address'",
+        "After doc type selected: show camera capture area reusing BillCaptureScreen pattern (dashed border target, camera icon, 'Or choose from photo library' link)",
+        "Uses expo-image-picker for camera and gallery (same launchCameraAsync/launchImageLibraryAsync pattern as BillCaptureScreen)",
+        "Photo preview state: full-width Image at 300px height + 'Retake' outline button + 'Submit for Verification' teal button",
+        "Submitting state: ActivityIndicator + 'Verifying ownership...' text, buttons disabled",
+        "On submit: call useRegistry().claimHome(verificationDoc) or transferOwnership(verificationDoc) if isTransfer",
+        "On success: navigate to ClaimConfirmation screen",
+        "On error: show 'We couldn't verify this document' message + 'Try Again' button + 'Try a different document' link that resets to doc type selection",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 6,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-007",
+      "title": "Build ClaimConfirmationScreen with data import summary",
+      "description": "As a homeowner who just claimed my home, I want to see what Pearl already knows about it and have that data pre-fill my app profile.",
+      "acceptanceCriteria": [
+        "Create src/screens/ClaimConfirmationScreen.tsx with props: homeId, onContinue callback",
+        "NO back button in header — this is a terminal success screen, only forward navigation",
+        "Celebration section: large teal checkmark icon (64px) with scale-in animation (Animated.spring), 'Your home is now claimed!' h2 text, 'Welcome home!' body text",
+        "Data summary Card showing: Pearl SCORE (large, accent color), pillar breakdown (5 small status indicators), count of verified features, count of known equipment items",
+        "Collapsible 'What Pearl already knows' section (reuse PillarAssessmentSection chevron pattern) listing each verified feature with checkmark icon + name + value",
+        "Non-collapsible 'What you can add' section with plus-circle icon items: 'Add equipment photos', 'Connect smart devices', 'Complete home assessments'",
+        "'Continue to My Home' full-width teal Button at bottom with safe area padding",
+        "On continue: registry data is merged into local app state via useRegistry context, then navigate to MyHomeScreen",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 7,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-008",
+      "title": "Add claim status badge to MyHomeScreen",
+      "description": "As a homeowner, I want to see my home's claim status on MyHomeScreen so I know whether my home is connected to the Pearl Registry.",
+      "acceptanceCriteria": [
+        "Add claim status section below ScoreDisplay on MyHomeScreen, above overall assessment progress",
+        "Import useRegistry hook to get claimStatus",
+        "Unclaimed state: teal text link with house-outline icon — 'Claim on Pearl Registry →' — tapping navigates to AddressEntryScreen or OwnershipVerification",
+        "Claimed state: subtle inline badge with house+checkmark icon (16px, muted teal) + 'Pearl Registry' text (caption, secondary color) — tapping navigates to RegistryDetail",
+        "Transfer pending state: amber inline badge with time-outline icon + 'Transfer pending' text (amber color) — tapping shows transfer status",
+        "No registry data state: nothing rendered (graceful absence, user unaware of registry)",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 8,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-009",
+      "title": "Wire navigation callbacks for all claim flow screens",
+      "description": "As a developer, I need all screen wrappers in RootNavigator to properly wire navigation callbacks so the claim flow works end to end.",
+      "acceptanceCriteria": [
+        "OwnershipVerificationScreen wrapper: receives homeId and isTransfer from route params, onVerified navigates to ClaimConfirmation with homeId, onBack calls navigation.goBack()",
+        "ClaimConfirmationScreen wrapper: receives homeId from route params, onContinue navigates to Main tab (MyHome tab)",
+        "AddressEntryScreen: 'Claim This Home' button navigates to OwnershipVerification with homeId",
+        "AddressEntryScreen: 'Are you the new owner?' navigates to OwnershipVerification with homeId and isTransfer: true",
+        "MyHomeScreen: unclaimed CTA navigates to OwnershipVerification",
+        "MyHomeScreen: claimed badge navigates to RegistryDetail",
+        "Back navigation works correctly from all new screens",
+        "Typecheck passes"
+      ],
+      "priority": 9,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-010",
+      "title": "Implement outbound data sync (app → registry)",
+      "description": "As a homeowner, when I add equipment or complete assessments in the app, I want that data to sync back to the registry so my registry profile stays current.",
+      "acceptanceCriteria": [
+        "In RegistryContext: add sync logic that watches for changes to equipment (via useEquipment), completed assessments (via AsyncStorage @pearl_completed_assessments)",
+        "After claiming, equipment additions trigger syncAppData(homeId, { equipment }) call",
+        "Assessment completions trigger syncAppData(homeId, { completedAssessments }) call",
+        "Sync is fire-and-forget: failures logged to console but do NOT disrupt app UX or show errors to user",
+        "Sync is debounced: batch changes, sync at most every 30 seconds using useRef timer",
+        "Mock service console.logs each sync call with payload summary for development visibility",
+        "Typecheck passes"
+      ],
+      "priority": 10,
+      "passes": true,
+      "notes": ""
+    }
+  ]
+}

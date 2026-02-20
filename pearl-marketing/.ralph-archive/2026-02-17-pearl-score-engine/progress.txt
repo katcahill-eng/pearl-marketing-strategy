@@ -1,0 +1,17 @@
+# Ralph Progress Log
+Started: Sat Feb 15 2026
+
+## Codebase Patterns
+- Pearl App lives in `pearl-app/` directory with Expo SDK 54, React Native 0.81.5, TypeScript strict
+- Context pattern: createContext → Provider with AsyncStorage → isLoaded gate → useCallback mutators → barrel export in index.ts → add to App.tsx chain
+- AsyncStorage keys: @pearl_rebates, @pearl_improvement_paths, @pearl_symptoms, @pearl_onboarding, @pearl_is_premium, @pearl_equipment
+- Theme: useTheme() returns { colors, spacing, typography, borderRadius, shadows }
+- Existing contexts: OnboardingContext, DeviceContext, InsightContext, NotificationContext, UtilityBillContext, EquipmentContext, SymptomContext, RebateContext, ImprovementPathContext
+- FactorEngine generates Factor[] from readings, equipment, symptoms, onboarding — pure functions
+- Factor model: { id, type: 'helping'|'hurting', pillar: Pillar, name, explanation, expandedContent?, actionLabel?, actionType?, source, severity: 'info'|'attention'|'action' }
+- Pillar type: 'safety' | 'comfort' | 'operations' | 'resilience' | 'energy'
+- ScoreDisplay component already supports: previousScore prop for animation, level labels, scale bar, points earned badge
+- MyHomeScreen has hardcoded homeScore = 625 that needs replacing
+
+---
+

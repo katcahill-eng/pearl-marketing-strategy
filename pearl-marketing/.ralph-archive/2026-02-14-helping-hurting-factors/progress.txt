@@ -1,0 +1,24 @@
+# Ralph Progress Log
+Started: Fri Feb 14 2026
+
+## Codebase Patterns
+- Pearl App lives in `pearl-app/` directory with Expo SDK 54, React Native 0.81.5, TypeScript strict
+- Context pattern: createContext → Provider with AsyncStorage → isLoaded gate → useCallback mutators → barrel export in index.ts → add to App.tsx chain
+- AsyncStorage keys: @pearl_rebates, @pearl_improvement_paths, @pearl_symptoms, @pearl_onboarding, @pearl_is_premium, @pearl_equipment
+- Dates stored as ISO strings in AsyncStorage (no Date objects in JSON)
+- Theme: useTheme() returns { colors, spacing, typography, borderRadius, shadows }
+- Navigation: RootNavigator (NativeStackNavigator) with screen wrappers + BottomTabNavigator (4 tabs: Home, My Home, Improve, Account)
+- Existing contexts: OnboardingContext, DeviceContext, InsightContext, NotificationContext, UtilityBillContext, EquipmentContext, SymptomContext, RebateContext, ImprovementPathContext
+- FactorCard component at src/components/FactorCard.tsx — production-ready, type: 'helping' | 'hurting', expandable with action buttons
+- PillarCard component shows pillar icon, name, status dot (good/typical/needsWork)
+- PillarDetailScreen has mock PILLAR_DATA with non-canonical IDs (health/efficiency/sustainability) — needs fixing to canonical SCORE IDs
+- MyHomeScreen has hardcoded PILLARS with static statuses — needs dynamic derivation
+- HomeScreen has hardcoded PILLARS with static statuses and local derivePillarStatuses() from readings
+- InsightEngine has EQUIPMENT_PILLAR_MAP and threshold rules — FactorEngine should reuse same mappings
+- PillarStatus type: 'good' | 'typical' | 'needsWork' (from components)
+- ReadingStatus type: 'good' | 'attention' | 'action' (from models/DeviceData)
+- Pillar type: 'safety' | 'comfort' | 'operations' | 'resilience' | 'energy' (canonical SCORE)
+- EquipmentItem has status: 'good' | 'aging' | 'replaceSoon' and type: EquipmentType
+
+---
+

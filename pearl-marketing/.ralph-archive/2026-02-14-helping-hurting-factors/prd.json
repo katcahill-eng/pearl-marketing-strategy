@@ -1,0 +1,109 @@
+{
+  "project": "Pearl App",
+  "branchName": "ralph/helping-hurting-factors",
+  "description": "Helping/Hurting Factor Engine & Dynamic Pillar Statuses — replace mock data with real factor generation",
+  "userStories": [
+    {
+      "id": "US-109",
+      "title": "Create Factor data model",
+      "description": "As a developer, I need a Factor interface so factors have a consistent shape across the app.",
+      "acceptanceCriteria": [
+        "Create src/models/Factor.ts with Factor interface: id (string), type ('helping' | 'hurting'), pillar (Pillar), name (string), explanation (string), expandedContent (string | undefined), actionLabel (string | undefined), actionType ('pearl_pro' | 'rebate' | 'improvement' | 'manual' | undefined), source ('reading' | 'equipment' | 'symptom' | 'onboarding'), severity ('info' | 'attention' | 'action')",
+        "Export Factor type from src/models/index.ts",
+        "Typecheck passes"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-110",
+      "title": "Create FactorEngine service",
+      "description": "As a developer, I need a pure service that generates helping/hurting factors from device readings, equipment, symptoms, and onboarding answers.",
+      "acceptanceCriteria": [
+        "Create src/services/FactorEngine.ts",
+        "Export generateFactorsFromReadings(readings: DeviceReading[]): Factor[] — good readings = helping, bad = hurting using SCORE thresholds",
+        "Export generateFactorsFromEquipment(equipment: EquipmentItem[]): Factor[] — good = helping, aging = hurting (attention), replaceSoon = hurting (action)",
+        "Export generateFactorsFromSymptoms(symptoms: LoggedSymptom[]): Factor[] — each symptom creates hurting factor per affected pillar",
+        "Export generateFactorsFromOnboarding(answers: OnboardingAnswers): Factor[] — good = helping, bad/some = hurting",
+        "Export generateAllFactors(params): Factor[] combining all 4 generators",
+        "Export derivePillarStatus(factors, pillar): PillarStatus — action-severity hurting = needsWork, attention = typical, else good",
+        "Export derivePillarStatuses(factors): Record<Pillar, PillarStatus> for all 5 SCORE pillars",
+        "All functions are pure (no side effects, no async)",
+        "Export from src/services/index.ts",
+        "Typecheck passes"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-111",
+      "title": "Wire PillarDetailScreen to use FactorEngine",
+      "description": "As a user, I want to see real helping/hurting factors on the pillar detail screen based on my actual home data.",
+      "acceptanceCriteria": [
+        "PillarDetailScreen imports useDevices, useEquipment, useSymptoms, useOnboarding from context",
+        "PillarDetailScreen imports generateAllFactors, derivePillarStatus from services",
+        "Remove PILLAR_DATA mock constant and local PillarInfo, FactorData, EquipmentData interfaces",
+        "Add PILLAR_INFO map with 5 canonical SCORE pillar IDs (safety/comfort/operations/resilience/energy) containing name, icon, explanation",
+        "Factors generated via generateAllFactors() with context data, filtered by pillarId",
+        "Pillar status derived via derivePillarStatus(factors, pillarId)",
+        "Helping/hurting sections render from filtered factors",
+        "Equipment section uses real equipment from EquipmentContext filtered by type-to-pillar mapping",
+        "If no factors for pillar, show existing empty state",
+        "FactorCard onAction calls onTakeAction prop",
+        "Typecheck passes"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-112",
+      "title": "Wire MyHomeScreen to derive pillar statuses dynamically",
+      "description": "As a user, I want the My Home tab pillar cards to reflect my actual home performance.",
+      "acceptanceCriteria": [
+        "MyHomeScreen imports useDevices, useSymptoms, useOnboarding from context (useEquipment already imported)",
+        "MyHomeScreen imports generateAllFactors, derivePillarStatuses from services",
+        "Remove hardcoded status from PILLARS array — compute dynamically",
+        "Compute factors and derive statuses via derivePillarStatuses(factors)",
+        "Each PillarCard receives its dynamic status",
+        "Default status is good when no data sources available",
+        "Typecheck passes"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-113",
+      "title": "Wire HomeScreen to derive pillar statuses dynamically",
+      "description": "As a user, I want the Home tab pillar summary to reflect my actual home performance.",
+      "acceptanceCriteria": [
+        "HomeScreen imports useEquipment from context (useDevices, useSymptoms, useOnboarding already imported)",
+        "HomeScreen imports generateAllFactors, derivePillarStatuses from services",
+        "Remove hardcoded status from PILLARS array — compute dynamically",
+        "Replace existing derivePillarStatuses() local function with FactorEngine version",
+        "DailySummaryCard receives pillar statuses mapped: PillarStatus good→ReadingStatus good, typical→attention, needsWork→action",
+        "Typecheck passes"
+      ],
+      "priority": 5,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-114",
+      "title": "Connect hurting factor actions to navigation",
+      "description": "As a user, I want to tap action buttons on hurting factors and be taken to relevant screens.",
+      "acceptanceCriteria": [
+        "PillarDetailScreenWrapper in RootNavigator passes onTakeAction that navigates based on factor ID",
+        "FactorEngine assigns actionType to factors: equipment replaceSoon → rebate, equipment aging → pearl_pro, symptom → improvement, reading action → pearl_pro",
+        "onTakeAction navigates: pearl_pro → PearlPros, rebate → RebateDetail (rebate-1), improvement → Main (Improve tab)",
+        "Typecheck passes"
+      ],
+      "priority": 6,
+      "passes": false,
+      "notes": ""
+    }
+  ]
+}

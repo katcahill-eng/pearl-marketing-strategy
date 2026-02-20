@@ -1,0 +1,123 @@
+# Ralph Progress Log
+Started: Tue Feb 17 2026
+
+## Codebase Patterns
+- Pearl App lives in `pearl-app/` directory with Expo SDK 54, React Native 0.81.5, TypeScript strict
+- Context pattern: createContext → Provider with AsyncStorage → isLoaded gate → useCallback mutators → barrel export in index.ts → add to App.tsx chain
+- AsyncStorage keys: @pearl_rebates, @pearl_improvement_paths, @pearl_symptoms, @pearl_onboarding, @pearl_is_premium, @pearl_equipment, @pearl_completed_assessments, @pearl_registry_home
+- Theme: useTheme() returns { colors, spacing, typography, borderRadius, shadows, textStyles, touchTarget }
+- ButtonVariant: 'primary' | 'secondary' (not 'outline')
+- colors.status has: good, typical, needsWork (no 'error' key)
+- Existing contexts: OnboardingContext, DeviceContext, InsightContext, NotificationContext, UtilityBillContext, EquipmentContext, SymptomContext, RebateContext, ImprovementPathContext, ScoreContext, MaintenanceContext, UserContext, RegistryContext
+- Model pattern: pure TS interfaces in src/models/, barrel export from index.ts, Date fields need custom serializer
+- Navigation: RootStackParamList in RootNavigator.tsx, wrapper functions per screen, callbacks via props (not useNavigation)
+- Camera pattern (BillCaptureScreen): expo-image-picker, launchCameraAsync/launchImageLibraryAsync, quality 0.8, dashed-border target, preview+retake+submit states
+
+---
+
+## US-001: Create RegistryHome data model ✅
+- Created src/models/RegistryHome.ts with: ClaimStatus, VerificationDocType, VerificationDocument, RegistryHome, VerifiedFeature, KnownEquipment, ClimateRisk, EnergyProjections, NeighborhoodComparisons, RegistryHomeData
+- Exported all types from src/models/index.ts
+- Typecheck passes
+
+## US-002: Create RegistryApiService interface and MockRegistryService ✅
+- Created src/services/RegistryApiService.ts with RegistryApi interface (6 methods)
+- Created src/services/MockRegistryService.ts with realistic mock data for 4 Austin TX addresses
+- Mock data: 9 verified features, 4 known equipment items, climate risk, energy projections, neighborhood comparisons
+- Randomized 300-800ms latency on all mock calls
+- Exported from src/services/index.ts
+- Typecheck passes
+
+## US-003: Create RegistryContext with AsyncStorage persistence ✅
+- Created src/context/RegistryContext.tsx following existing context pattern
+- State: claimStatus, registryHome, registryData, isLoading
+- Methods: lookupHome, claimHome, transferOwnership, syncData
+- AsyncStorage key: @pearl_registry_home with date serializer/reviver
+- Background-refreshes claim status on mount if home exists
+- Exported from src/context/index.ts
+- Added RegistryProvider to App.tsx provider chain
+- Typecheck passes
+
+## US-004: Add navigation routes for claim flow screens ✅
+- Added to RootStackParamList: OwnershipVerification, ClaimConfirmation, RegistryDetail
+- Created wrapper functions: OwnershipVerificationScreenWrapper, ClaimConfirmationScreenWrapper, RegistryDetailScreenWrapper
+- Wired all 3 as Stack.Screen entries in RootNavigator
+- Typecheck passes
+
+## US-005: Add registry lookup and claim CTA to AddressEntryScreen ✅
+- Added useRegistry() hook, registry lookup after zoom completes
+- Skeleton loading card during lookup
+- 4 states: unclaimed (score badge + claim CTA), claimed by me (checkmark), claimed by other (amber + transfer link), not found (no card)
+- Added onClaimHome and onTransferHome props
+- Messaging: "Claim to unlock verified data about your home"
+- Wired in AddressEntryScreenWrapper with navigation to OwnershipVerification
+- Typecheck passes
+
+## US-006: Build OwnershipVerificationScreen with document upload ✅
+- Created src/screens/OwnershipVerificationScreen.tsx (full implementation, not placeholder)
+- 3 document types with Utility Bill pre-highlighted as "Recommended"
+- Camera capture reusing BillCaptureScreen pattern (expo-image-picker)
+- States: select_doc, capture, preview, submitting, error
+- Calls claimHome or transferOwnership based on isTransfer prop
+- Error state with retry and "try different document" options
+- Typecheck passes
+
+## US-007: Build ClaimConfirmationScreen with data import summary ✅
+- Created src/screens/ClaimConfirmationScreen.tsx
+- NO back button (terminal success screen)
+- Animated checkmark (Animated.spring), celebration header
+- Data summary card with score, pillar breakdown, feature/equipment counts
+- Collapsible "What Pearl already knows" with chevron animation
+- "What you can add" section
+- "Continue to My Home" resets navigation to Main
+- Typecheck passes
+
+## US-008: Add claim status badge to MyHomeScreen ✅
+- Added useRegistry() import
+- Added onClaimHome and onRegistryDetail props
+- 3 badge states: unclaimed (teal CTA link), claimed (subtle badge), transfer pending (amber)
+- Null state: nothing rendered when no registry data
+- Positioned between quick links and assessment progress
+- Typecheck passes
+
+## US-009: Wire navigation callbacks for all claim flow screens ✅
+- OwnershipVerificationScreen wrapper: homeId + isTransfer from route params, onVerified → ClaimConfirmation
+- ClaimConfirmationScreen wrapper: homeId from route params, onContinue → reset to Main
+- AddressEntryScreen wrapper: onClaimHome → OwnershipVerification, onTransferHome → OwnershipVerification with isTransfer
+- MyHomeScreen via BottomTabNavigator: onClaimHome → OwnershipVerification, onRegistryDetail → RegistryDetail
+- RegistryDetailScreen wrapper: onBack → goBack
+- Typecheck passes
+
+## US-010: Implement outbound data sync (app → registry) ✅
+- Added debounced sync in RegistryContext using useRef timer
+- pendingSyncDataRef accumulates changes, flushes every 30 seconds
+- syncData merges new data into pending batch, resets timer
+- Fire-and-forget: failures logged but don't disrupt UX
+- Timer cleaned up on unmount
+- MockRegistryService.syncAppData logs payload keys to console
+- Typecheck passes
+
+---
+
+## Summary
+All 10 user stories complete. `npx tsc --noEmit` passes with zero errors.
+
+### Files created:
+- src/models/RegistryHome.ts
+- src/services/RegistryApiService.ts
+- src/services/MockRegistryService.ts
+- src/context/RegistryContext.tsx
+- src/screens/OwnershipVerificationScreen.tsx
+- src/screens/ClaimConfirmationScreen.tsx
+- src/screens/RegistryDetailScreen.tsx
+
+### Files modified:
+- src/models/index.ts (added RegistryHome exports)
+- src/services/index.ts (added MockRegistryService + RegistryApi exports)
+- src/context/index.ts (added RegistryProvider + useRegistry exports)
+- App.tsx (added RegistryProvider to provider chain)
+- src/screens/index.ts (added 3 new screen exports)
+- src/screens/AddressEntryScreen.tsx (added registry lookup + claim CTA)
+- src/screens/MyHomeScreen.tsx (added claim status badge)
+- src/navigation/RootNavigator.tsx (added 3 routes, 3 wrappers, 3 Stack.Screens, updated AddressEntry wrapper)
+- src/navigation/BottomTabNavigator.tsx (added claim nav callbacks to MyHomeScreen wrapper)

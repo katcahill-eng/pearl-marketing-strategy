@@ -1,0 +1,616 @@
+# Ralph Progress Log
+# Pearl Homeowner App Rebuild
+# Started: 2026-01-20
+
+## Codebase Patterns
+- React Native project is in `pearl-app/` subdirectory
+- Use `@react-navigation/bottom-tabs` for bottom tab navigation
+- Use `@react-navigation/native-stack` for stack navigation
+- Screens are in `pearl-app/src/screens/`, navigation in `pearl-app/src/navigation/`
+- Reusable components are in `pearl-app/src/components/` with barrel export via index.ts
+- Run typecheck with `npx tsc --noEmit` from pearl-app directory
+- Export components via index.ts barrel files for cleaner imports
+- Theme system is in `pearl-app/src/theme/` - use `useTheme()` hook to access theme values
+- Always wrap components needing theme access inside ThemeProvider (done in App.tsx)
+- RootNavigator manages app-level navigation (splash screen, auth flow, main app)
+- Use `colors.border.default` for border colors (not `colors.border` which is an object)
+
+---
+
+## 2026-01-20 - US-001
+- **What was implemented:** Initialized Expo React Native project with TypeScript and bottom tab navigation
+- **Files created:**
+  - `pearl-app/App.tsx` - Main app entry with NavigationContainer
+  - `pearl-app/src/navigation/BottomTabNavigator.tsx` - Bottom tab navigator with 4 tabs
+  - `pearl-app/src/screens/HomeScreen.tsx` - Home tab placeholder
+  - `pearl-app/src/screens/MyHomeScreen.tsx` - My Home tab placeholder
+  - `pearl-app/src/screens/ImproveScreen.tsx` - Improve tab placeholder
+  - `pearl-app/src/screens/AccountScreen.tsx` - Account tab placeholder
+- **Dependencies added:** @react-navigation/native, @react-navigation/bottom-tabs, react-native-screens, react-native-safe-area-context, @expo/vector-icons
+- **Learnings for future iterations:**
+  - Expo creates project in current directory when no path specified with `create-expo-app`
+  - @expo/vector-icons comes with Ionicons which has good outline/filled icon pairs
+  - Tab navigator screenOptions can take a function for dynamic icon rendering
+  - RootTabParamList type should be exported for type-safe navigation
+---
+
+## 2026-01-20 - US-002
+- **What was implemented:** Design system with colors, typography, and spacing
+- **Files created:**
+  - `pearl-app/src/theme/colors.ts` - Pearl brand colors (primary, accent, semantic status colors)
+  - `pearl-app/src/theme/typography.ts` - Font size scale (H1-Caption) and pre-composed text styles
+  - `pearl-app/src/theme/spacing.ts` - 4px base unit spacing, border radius, shadows, touch targets
+  - `pearl-app/src/theme/ThemeProvider.tsx` - React Context provider for theme
+  - `pearl-app/src/theme/index.ts` - Barrel export for all theme values
+- **Files modified:**
+  - `pearl-app/App.tsx` - Wrapped app with ThemeProvider
+- **Learnings for future iterations:**
+  - Use `as const` for theme objects to preserve literal types
+  - Pre-compose text styles for common typography patterns (e.g., `textStyles.h1`)
+  - Include semantic color aliases (helping/hurting/status/maintenance) for domain-specific use cases
+  - 44px minimum touch target is standard for accessibility
+---
+
+## 2026-01-20 - US-003
+- **What was implemented:** Reusable Card component for consistent UI
+- **Files created:**
+  - `pearl-app/src/components/Card.tsx` - Card component with white background, border radius, shadow
+  - `pearl-app/src/components/index.ts` - Barrel export for components
+- **Learnings for future iterations:**
+  - Components are in `pearl-app/src/components/`
+  - Use `useTheme()` hook to access theme values for consistent styling
+  - TouchableOpacity with activeOpacity={0.7} provides good tap feedback
+  - When tappable, cards enforce minHeight/minWidth of 44px for accessibility
+---
+
+## 2026-01-20 - US-004
+- **What was implemented:** Reusable Button component with primary and secondary variants
+- **Files created:**
+  - `pearl-app/src/components/Button.tsx` - Button with variants, disabled/loading states
+- **Files modified:**
+  - `pearl-app/src/components/index.ts` - Added Button export
+- **Learnings for future iterations:**
+  - Use `variant` prop pattern for component style variations (primary/secondary)
+  - Compute styles dynamically based on props rather than using multiple StyleSheet definitions
+  - Combine `disabled || loading` into single `isDisabled` check for cleaner logic
+  - ActivityIndicator with `size="small"` fits well inside 44px touch target buttons
+---
+
+## 2026-01-20 - US-005
+- **What was implemented:** Branded splash screen with Pearl logo on navy background
+- **Files created:**
+  - `pearl-app/src/screens/SplashScreen.tsx` - Splash screen with 2-second timer
+  - `pearl-app/src/navigation/RootNavigator.tsx` - Root navigator managing splash -> main flow
+- **Files modified:**
+  - `pearl-app/App.tsx` - Use RootNavigator instead of direct BottomTabNavigator
+  - `pearl-app/src/navigation/index.ts` - Export RootNavigator and types
+  - `pearl-app/src/screens/index.ts` - Export SplashScreen
+- **Dependencies added:** @react-navigation/native-stack
+- **Learnings for future iterations:**
+  - Use callback pattern (onFinish prop) for splash screen navigation instead of direct navigation
+  - RootNavigator uses state to conditionally render splash vs main app for smoother transition
+  - useCallback for timer callback prevents unnecessary re-renders
+  - splash-icon.png exists in assets/ folder for logo display
+---
+
+## 2026-01-20 - US-006
+- **What was implemented:** Sign Up screen with social auth and email/password options
+- **Files created:**
+  - `pearl-app/src/screens/SignUpScreen.tsx` - Complete sign up screen with social buttons, form inputs
+- **Files modified:**
+  - `pearl-app/src/screens/index.ts` - Added SignUpScreen export
+  - `pearl-app/src/navigation/RootNavigator.tsx` - Added SignUp route (now first screen after splash)
+- **Learnings for future iterations:**
+  - Use KeyboardAvoidingView with behavior="padding" on iOS for forms
+  - Ionicons provides logo-google and logo-apple for social auth buttons
+  - Password visibility toggle uses eye-outline/eye-off-outline icons
+  - Auth screens use callback props (onSignUp, onNavigateToLogin, etc.) for navigation flexibility
+  - RootStackParamList now includes SignUp route for auth flow
+---
+
+## 2026-01-20 - US-007
+- **What was implemented:** Login screen with email/password and social auth options
+- **Files created:**
+  - `pearl-app/src/screens/LoginScreen.tsx` - Login screen with email/password, social auth, forgot password link
+- **Files modified:**
+  - `pearl-app/src/screens/index.ts` - Added LoginScreen export
+  - `pearl-app/src/navigation/RootNavigator.tsx` - Added Login route to RootStackParamList
+- **Learnings for future iterations:**
+  - Login screen follows same patterns as SignUp screen for consistency
+  - Forgot password link positioned aligned right after password field for quick access
+  - Login callback props mirror SignUp props pattern: onLogin, onNavigateToSignUp, onForgotPassword, etc.
+---
+
+## 2026-01-20 - US-008
+- **What was implemented:** Address Entry screen for new users to enter their home address
+- **Files created:**
+  - `pearl-app/src/screens/AddressEntryScreen.tsx` - Address entry with search input and confirmation card
+- **Files modified:**
+  - `pearl-app/src/screens/index.ts` - Added AddressEntryScreen export
+  - `pearl-app/src/navigation/RootNavigator.tsx` - Added AddressEntry route to RootStackParamList
+- **Learnings for future iterations:**
+  - Use Card component for confirmation cards to maintain consistent styling
+  - Simulated autocomplete can be triggered by checking input length (real implementation would use API)
+  - Button row with gap spacing provides clean action button layout
+  - Continue button disabled state tied to foundAddress for proper UX flow
+---
+
+## 2026-01-20 - US-009
+- **What was implemented:** Symptom Card component for symptom selector
+- **Files created:**
+  - `pearl-app/src/components/SymptomCard.tsx` - Tappable card with icon, label, and checkbox states
+- **Files modified:**
+  - `pearl-app/src/components/index.ts` - Added SymptomCard and SymptomIconName type export
+- **Learnings for future iterations:**
+  - Export type aliases for icon names (SymptomIconName) to allow typed icon props
+  - Use minHeight: 80 for symptom cards, with ~28px icon size for visual balance
+  - Selected state combines accent border color + checkmark in a circular container
+  - Use flex: 1 on label for proper horizontal spacing between icon and checkbox
+---
+
+## 2026-01-21 - US-010
+- **What was implemented:** Symptom Selection screen for users to select home symptoms
+- **Files created:**
+  - `pearl-app/src/screens/SymptomSelectionScreen.tsx` - Full symptom selection with multi-select, 9 symptoms, and "Just exploring" option
+- **Files modified:**
+  - `pearl-app/src/screens/index.ts` - Added SymptomSelectionScreen export
+  - `pearl-app/src/navigation/RootNavigator.tsx` - Added SymptomSelection route to RootStackParamList
+- **Learnings for future iterations:**
+  - Use Set<string> for multi-select state management (efficient add/delete/has operations)
+  - Fixed button container at bottom with border-top separates it from scrollable content
+  - ScrollView with contentContainerStyle for padding, but gap spacing on child View for list items
+  - "Just exploring" styled as text link with underline, not a button variant
+---
+
+## 2026-01-21 - US-011
+- **What was implemented:** Pillar Card component for displaying home performance pillars with status
+- **Files created:**
+  - `pearl-app/src/components/PillarCard.tsx` - Pillar card with icon, name, and status dot indicator
+- **Files modified:**
+  - `pearl-app/src/components/index.ts` - Added PillarCard, PillarStatus, PillarIconName exports
+- **Learnings for future iterations:**
+  - typography object uses `fontSize` and `fontWeight` not `sizes` and `weights`
+  - Compact layout (compact=true prop) for row of 5 pillars with smaller icons and text
+  - Standard layout for 2-column grid with horizontal flex row
+  - Status colors from colors.status: good (green), typical (yellow), needsWork (red)
+  - Export type aliases (PillarStatus, PillarIconName) for typed props
+---
+
+## 2026-01-21 - US-012
+- **What was implemented:** Helping/Hurting Factor Card component with expandable state and action CTA
+- **Files created:**
+  - `pearl-app/src/components/FactorCard.tsx` - Factor card with colored left border, expandable content, action button
+- **Files modified:**
+  - `pearl-app/src/components/index.ts` - Added FactorCard and FactorType exports
+- **Learnings for future iterations:**
+  - Use LayoutAnimation for smooth expand/collapse animations (requires Android enablement)
+  - Colored left border uses borderLeftWidth + borderLeftColor for visual differentiation
+  - Conditional rendering for action buttons (only on hurting cards via type check)
+  - Use marginLeft on nested elements to align with content area (accounting for icon + spacing)
+  - Export FactorType ('helping' | 'hurting') for typed props
+---
+
+## 2026-01-21 - US-014
+- **What was implemented:** Dashboard screen (Home tab) with personalized content
+- **Files modified:**
+  - `pearl-app/src/screens/HomeScreen.tsx` - Complete dashboard with symptom card, quick actions, alerts, and pillar summary
+- **Learnings for future iterations:**
+  - Active symptom card displays when symptoms have been logged, links to symptom insights
+  - Quick actions section with "Log a Symptom" card and FAB (floating action button) for easy access
+  - Alerts section with urgency color-coding (high=red, medium=yellow, low=green) via left border
+  - 5 pillar summary row uses compact PillarCard components with status dots
+  - No score display on dashboard hero (per acceptance criteria)
+  - FAB positioned at bottom right with shadow for visual prominence
+  - SafeAreaView with edges={['top']} avoids notch but allows tab bar overlap
+---
+
+## 2026-01-21 - US-013
+- **What was implemented:** Symptom Insights screen showing relevant insights based on selected symptoms
+- **Files created:**
+  - `pearl-app/src/screens/SymptomInsightsScreen.tsx` - Insights screen with pillar connection, helping/hurting factors, and improvement suggestions
+- **Files modified:**
+  - `pearl-app/src/screens/index.ts` - Added SymptomInsightsScreen export
+  - `pearl-app/src/navigation/RootNavigator.tsx` - Added SymptomInsights route to RootStackParamList and navigator
+- **Learnings for future iterations:**
+  - Button component requires non-optional onPress prop - use `onPress ?? (() => {})` for optional callbacks
+  - Use Record<string, InsightData> pattern for mapping symptom IDs to related content
+  - Pillar badges can be styled with transparent accent color (e.g., `colors.accent + '15'` for 15% opacity)
+  - Section headers with icons provide visual hierarchy (helping=checkmark-circle, hurting=alert-circle, suggestions=bulb-outline)
+  - Numbered suggestion cards using flex row with circular number badge provide clear visual progression
+---
+
+## 2026-01-21 - US-015
+- **What was implemented:** Score Display component showing score value with level label and visual scale
+- **Files created:**
+  - `pearl-app/src/components/ScoreDisplay.tsx` - Score display with 48px score number, level label, and progress bar
+- **Files modified:**
+  - `pearl-app/src/components/index.ts` - Added ScoreDisplay and ScoreLevel exports
+- **Learnings for future iterations:**
+  - Score levels map to ranges: Compromised (0-124), Needs Improvement (125-249), Typical (250-374), Good (375-499), Very Good (500-624), Excellent (625-749), Exceptional (750-874), Outstanding (875-1000)
+  - Use conditional wrapper pattern: return TouchableOpacity if onPress provided, View otherwise
+  - Score colors: hurting for low scores, warning for Typical, accent for Good/Very Good, helping for Excellent+
+  - Visual scale uses percentage width calculation: (score / 1000) * 100
+  - Export ScoreLevel type for external use in other components
+---
+
+## 2026-01-21 - US-016
+- **What was implemented:** My Home screen (Profile tab) with score display, pillar cards, equipment list, and badges section
+- **Files modified:**
+  - `pearl-app/src/screens/MyHomeScreen.tsx` - Complete home profile with score, pillars, equipment list, and badges
+- **Learnings for future iterations:**
+  - Use `colors.border.default` not `colors.border` - border is an object with default/focused/error properties
+  - Compact PillarCard works well in a flex row with `gap: spacing.xs` for the 5-pillar summary
+  - Equipment list uses dividers between items with `marginLeft: 44` to align with content (past icon)
+  - Badge progress indicators use `opacity: 0.5` for non-earned badges and show progress bar
+  - For dashed borders use `borderStyle: 'dashed'` (works in React Native)
+  - SafeAreaView with `paddingBottom: 100` provides space for tab bar
+---
+
+## 2026-01-21 - US-017
+- **What was implemented:** Pillar Detail screen with header, explanation, helping/hurting factors, and related equipment
+- **Files created:**
+  - `pearl-app/src/screens/PillarDetailScreen.tsx` - Full pillar detail screen with all sections
+- **Files modified:**
+  - `pearl-app/src/screens/index.ts` - Added PillarDetailScreen export
+  - `pearl-app/src/navigation/RootNavigator.tsx` - Added PillarDetail route with pillarId param
+- **Learnings for future iterations:**
+  - Reuse FactorCard component for both helping and hurting factors in detail screens
+  - Mock data for all 5 pillars (comfort, health, safety, efficiency, sustainability) with different statuses
+  - Equipment status uses 'good' | 'aging' | 'replaceSoon' enum mapping to status colors
+  - Header with back button pattern: TouchableOpacity with 44x44 touch target
+  - PillarDetail route takes pillarId param to display correct pillar data
+---
+
+## 2026-01-21 - US-018
+- **What was implemented:** Equipment List component for displaying home equipment with lifecycle status
+- **Files created:**
+  - `pearl-app/src/components/EquipmentList.tsx` - Reusable equipment list with status indicators, icons, and add button
+- **Files modified:**
+  - `pearl-app/src/components/index.ts` - Added EquipmentList, EquipmentStatus, EquipmentType, EquipmentItem exports
+  - `pearl-app/src/screens/MyHomeScreen.tsx` - Replaced inline equipment rendering with EquipmentList component
+- **Learnings for future iterations:**
+  - EquipmentStatus type uses 'good' | 'aging' | 'replaceSoon' matching colors.equipment keys
+  - EquipmentType maps to specific Ionicons for each equipment category (hvac, waterHeater, insulation, etc.)
+  - EquipmentItem interface includes: id, name, type, typeLabel, status for comprehensive equipment data
+  - Status indicator shows both colored dot and label text for clarity
+  - Empty state with add prompt provides good UX when no equipment exists
+---
+
+## 2026-01-21 - US-019
+- **What was implemented:** Equipment Entry screen for adding or editing equipment details
+- **Files created:**
+  - `pearl-app/src/screens/EquipmentEntryScreen.tsx` - Full equipment entry form with type selector, fields, photo upload, and score preview
+- **Files modified:**
+  - `pearl-app/src/screens/index.ts` - Added EquipmentEntryScreen and EquipmentFormData type export
+  - `pearl-app/src/navigation/RootNavigator.tsx` - Added EquipmentEntry route with equipmentId and initialType params
+- **Learnings for future iterations:**
+  - Use Set<string> for tracking "I don't know" fields, toggle with add/delete
+  - EquipmentType from components can be imported as type for route params
+  - Form fields can use null to indicate "I don't know" vs empty string for "not filled in yet"
+  - Score impact preview can calculate estimated points based on which fields are filled
+  - Equipment type selector uses 3-column grid (30% width) with aspect ratio 1 for square tiles
+  - isEditing boolean derived from equipmentId presence to conditionally render type selector
+---
+
+## 2026-01-21 - US-020
+- **What was implemented:** Rebate Card component for displaying rebate information with savings, program details, and eligibility
+- **Files created:**
+  - `pearl-app/src/components/RebateCard.tsx` - Rebate card with equipment icon, savings amount, program name, eligibility, and save state
+- **Files modified:**
+  - `pearl-app/src/components/index.ts` - Added RebateCard, RebateEquipmentType, EligibilityStatus, RebateCardProps exports
+- **Learnings for future iterations:**
+  - RebateEquipmentType maps equipment types to Ionicons (hvac, waterHeater, insulation, windows, solar, heatPump, thermostat, appliance)
+  - EligibilityStatus enum: 'eligible' | 'likely' | 'check' | 'ineligible' with color-coded display
+  - Use Intl.NumberFormat for currency formatting (formatCurrency helper)
+  - Savings amount uses colors.helping (green) for positive emphasis per acceptance criteria
+  - Save/pin toggle uses bookmark/bookmark-outline icons with background highlight when saved
+  - Icon container uses accent color + '15' for 15% opacity background
+---
+
+## 2026-01-21 - US-021
+- **What was implemented:** Improve screen (Improve tab) with rebates and improvement paths
+- **Files modified:**
+  - `pearl-app/src/screens/ImproveScreen.tsx` - Complete Improve screen with savings summary, rebate cards, improvement paths, and Find Pearl Pros link
+- **Learnings for future iterations:**
+  - Rebate grid uses flexWrap with 48% width cards for 2-column responsive layout
+  - Total savings summary calculates from rebate array using reduce
+  - Improvement paths use same Card + icon + chevron pattern as other list screens
+  - Find Pearl Pros link uses primary background color with inverse text for CTA emphasis
+  - RebateCard onSaveToggle handler uses Set<string> for efficient save state management
+  - Reuse RebateEquipmentType and EligibilityStatus types from RebateCard component
+---
+
+## 2026-01-21 - US-022
+- **What was implemented:** Rebate Detail screen for viewing full rebate details and how to claim
+- **Files created:**
+  - `pearl-app/src/screens/RebateDetailScreen.tsx` - Full rebate detail screen with amount, eligibility, requirements, and claim steps
+- **Files modified:**
+  - `pearl-app/src/screens/index.ts` - Added RebateDetailScreen export
+  - `pearl-app/src/navigation/RootNavigator.tsx` - Added RebateDetail route with rebateId param
+- **Learnings for future iterations:**
+  - React Native Share API works well for simple share functionality
+  - Claim steps use numbered circular badges with connecting lines for visual flow
+  - Eligibility requirements list uses checkmark-circle-outline for consistent styling
+  - Additional info section uses tinted background (accent + '10') for visual emphasis
+  - Hero section with large savings amount follows same pattern as RebateCard but larger
+  - Reuse eligibilityConfig pattern from RebateCard for consistent status display
+---
+
+## 2026-01-21 - US-023
+- **What was implemented:** Maintenance Reminder Card component with status badge and action buttons
+- **Files created:**
+  - `pearl-app/src/components/MaintenanceReminderCard.tsx` - Maintenance card with item name, due date, status badge, and actions
+- **Files modified:**
+  - `pearl-app/src/components/index.ts` - Added MaintenanceReminderCard, MaintenanceStatus, MaintenanceReminderCardProps exports
+- **Learnings for future iterations:**
+  - colors.maintenance already defined in theme: overdue (red), dueSoon (yellow), upcoming (gray), completed (green)
+  - Use colored left border (borderLeftWidth + borderLeftColor) for status urgency indication
+  - Status badge uses color + '15' for tinted background with full color text and icon
+  - Action buttons conditionally rendered only when not completed status
+  - Export MaintenanceStatus type for use in other components (MaintenanceListScreen)
+---
+
+## 2026-01-21 - US-024
+- **What was implemented:** Maintenance List screen for viewing and managing maintenance reminders
+- **Files created:**
+  - `pearl-app/src/screens/MaintenanceListScreen.tsx` - Full maintenance list with urgency-sorted sections, empty state, and add custom item
+- **Files modified:**
+  - `pearl-app/src/screens/index.ts` - Added MaintenanceListScreen export
+  - `pearl-app/src/navigation/RootNavigator.tsx` - Added MaintenanceList route
+- **Learnings for future iterations:**
+  - Group items by status using filter() for each status category, display sections in urgency order (overdue → dueSoon → upcoming → completed)
+  - Section headers with count badges: flexDirection: 'row' with count badge in borderRadius.full for pill shape
+  - Empty state includes both "Use Suggested Schedule" and "Add Custom Item" buttons using Button component variants
+  - "All caught up" card for when all items completed: uses colors.helping + '15' background for success tint
+  - Add custom item button uses dashed border (borderStyle: 'dashed') for visual differentiation
+  - useCallback for handleMarkComplete and handleSnooze to prevent unnecessary re-renders
+---
+
+## 2026-01-21 - US-025
+- **What was implemented:** Badge component for displaying home achievement badges
+- **Files created:**
+  - `pearl-app/src/components/Badge.tsx` - Badge component with 60x60px icon, name label, earned/inProgress states
+- **Files modified:**
+  - `pearl-app/src/components/index.ts` - Added Badge, BadgeState, BadgeIconName, BadgeProps exports
+- **Learnings for future iterations:**
+  - Badge state uses 'earned' | 'inProgress' enum for clear state distinction
+  - Earned state: full accent color border (2px), tinted background (accent + '15'), solid icon
+  - In Progress state: default border (1px), outline icon, progress fill from bottom using absolute positioning
+  - Progress percentage shown as a small badge below name for in-progress badges
+  - BadgeIconName type maps to common achievement icons (ribbon, shield, leaf, trophy, etc.)
+  - Use `iconName-outline` pattern for non-earned badge icons
+---
+
+## 2026-01-21 - US-026
+- **What was implemented:** Badges section for My Home screen using BadgesSection component
+- **Files created:**
+  - `pearl-app/src/components/BadgesSection.tsx` - Horizontal scrollable row of Badge components with sorting logic
+- **Files modified:**
+  - `pearl-app/src/components/index.ts` - Added BadgesSection, BadgeData, BadgesSectionProps exports
+  - `pearl-app/src/screens/MyHomeScreen.tsx` - Replaced inline badge rendering with BadgesSection component
+- **Learnings for future iterations:**
+  - BadgesSection sorts badges: earned first, then by progress percentage (descending)
+  - Filter out locked badges (neither earned nor have progress > 0) to only show earned and in-progress
+  - useMemo for sorted/filtered badges list to prevent unnecessary recalculation on re-renders
+  - BadgeData interface extends Badge props with `earned` boolean and optional `progress` number
+  - Empty state handled internally by BadgesSection component, not by parent
+---
+
+## 2026-01-21 - US-027
+- **What was implemented:** Certification Progress component showing tier progress with visual bar
+- **Files created:**
+  - `pearl-app/src/components/CertificationProgress.tsx` - Certification tier display with progress bar, tier markers, and points-to-next calculation
+- **Files modified:**
+  - `pearl-app/src/components/index.ts` - Added CertificationProgress, CertificationTier exports
+- **Learnings for future iterations:**
+  - Certification tiers: Silver (500+), Gold (625+), Platinum (750+), Platinum Plus (875+)
+  - CertificationTier type exported for use in other components
+  - Progress bar shows overall 0-1000 scale with tier markers at threshold points
+  - Tier markers use position: 'absolute' with left percentage for placement on progress bar
+  - Color scheme: Silver=#9CA3AF, Gold=#F59E0B, Platinum=#14B8A6, Platinum Plus=#0B3D5C
+  - getCurrentTier() iterates backwards through tiers to find highest qualified tier
+---
+
+## 2026-01-21 - US-028
+- **What was implemented:** Account screen (Account tab) with settings and account functions
+- **Files modified:**
+  - `pearl-app/src/screens/AccountScreen.tsx` - Complete account screen with profile, menu rows, and logout
+- **Learnings for future iterations:**
+  - MenuRow helper component pattern for consistent settings menu items
+  - Use `colors.accent + '15'` for icon container background tinting
+  - Profile section uses circular avatar with initials from user data
+  - Dividers aligned with content using marginLeft matching icon container width + gap (68px)
+  - Logout button uses red (colors.hurting) for emphasis, styled as outline TouchableOpacity
+  - Button component uses `title` prop not children - use TouchableOpacity for custom button content
+  - No `xxs` in spacing system - use `xs` (4px) as smallest spacing unit
+---
+
+## 2026-01-21 - US-029
+- **What was implemented:** Documents screen for viewing certification, uploads, and tax documents
+- **Files created:**
+  - `pearl-app/src/screens/DocumentsScreen.tsx` - Documents screen with three sections and conditional tax documents
+- **Files modified:**
+  - `pearl-app/src/screens/index.ts` - Added DocumentsScreen export
+  - `pearl-app/src/navigation/RootNavigator.tsx` - Added Documents route
+- **Learnings for future iterations:**
+  - Tax season check uses JavaScript Date().getMonth() (0-indexed: 0=Jan through 3=Apr for tax season)
+  - DocumentsSection reusable component pattern: title, documents array, showUpload flag, onUpload callback
+  - DocumentRow helper component with icon, name, date, and preview button
+  - Upload button uses dashed border (borderStyle: 'dashed') with accent color for visual distinction
+  - Divider marginLeft: 72 aligns with content past 40px icon container + 16px gap + 16px padding
+  - Preview button uses smaller background area with borderRadius: 4 for compact action style
+---
+
+## 2026-01-21 - US-030
+- **What was implemented:** Upgrade Prompt component for contextual paid feature prompts
+- **Files created:**
+  - `pearl-app/src/components/UpgradePrompt.tsx` - Modal/sheet component with feature icon, benefit text, upgrade button, and dismiss option
+- **Files modified:**
+  - `pearl-app/src/components/index.ts` - Added UpgradePrompt and UpgradePromptProps exports
+- **Learnings for future iterations:**
+  - Use Modal with transparent background + Pressable overlay for dismissible modal pattern
+  - Pressable with onPress={e => e.stopPropagation()} prevents taps on content from dismissing modal
+  - Use hitSlop for close buttons to expand touch area beyond visible bounds
+  - UpgradePromptProps includes: visible, featureTitle, featureDescription, featureIcon, onUpgrade, onDismiss
+  - Feature icon uses same accent + '15' tinted background pattern as other components
+  - "Maybe later" dismiss link uses secondary text color for de-emphasis vs upgrade CTA
+---
+
+## 2026-01-21 - US-031
+- **What was implemented:** Symptom Log action flow with multi-step modal from dashboard
+- **Files created:**
+  - `pearl-app/src/components/SymptomLogModal.tsx` - Multi-step modal for logging symptoms with category selector, symptom picker, and notes field
+- **Files modified:**
+  - `pearl-app/src/components/index.ts` - Added SymptomLogModal, SymptomLogData, SymptomLogModalProps exports
+  - `pearl-app/src/screens/HomeScreen.tsx` - Integrated SymptomLogModal with FAB and quick action card
+- **Learnings for future iterations:**
+  - Use `presentationStyle="pageSheet"` for native iOS modal feel with swipe-to-dismiss
+  - Multi-step flows use state machine pattern: 'category' -> 'symptom' -> 'notes'
+  - SYMPTOM_CATEGORIES array for high-level grouping, SYMPTOMS array with categoryId for filtering
+  - SymptomLogData interface captures: symptomId, symptomLabel, categoryId, categoryLabel, notes
+  - Use `colors.text.disabled` for placeholder text color (no `text.tertiary` in theme)
+  - KeyboardAvoidingView with behavior="padding" ensures notes field stays visible when keyboard opens
+  - Reset state on dismiss AND on successful save to prepare for next use
+---
+
+## 2026-01-21 - US-032
+- **What was implemented:** Alert Card component for dashboard alerts (maintenance, equipment, rebates)
+- **Files created:**
+  - `pearl-app/src/components/AlertCard.tsx` - Reusable alert card with urgency indicator, dismiss button, and navigation
+- **Files modified:**
+  - `pearl-app/src/components/index.ts` - Added AlertCard, AlertType, AlertUrgency, AlertCardProps exports
+  - `pearl-app/src/screens/HomeScreen.tsx` - Replaced inline alert rendering with AlertCard component, added dismiss state management
+- **Learnings for future iterations:**
+  - AlertType enum: 'maintenance' | 'equipment' | 'rebate' for categorizing alerts
+  - AlertUrgency enum: 'high' | 'medium' | 'low' maps to colors.hurting, colors.warning, colors.helping
+  - Dismissible logic: only show dismiss button for non-urgent (urgency !== 'high') alerts
+  - Use setAlerts(prev => prev.filter(...)) pattern for dismissing alerts from state
+  - Color-coded left border (borderLeftWidth + borderLeftColor) for visual urgency indication
+  - Show chevron when not dismissible, circular X button when dismissible for clear affordances
+---
+
+## 2026-01-21 - US-033
+- **What was implemented:** Improvement Path component showing sequenced improvement steps
+- **Files created:**
+  - `pearl-app/src/components/ImprovementPath.tsx` - Timeline-based component with Now/Soon/Later/Major phases
+- **Files modified:**
+  - `pearl-app/src/components/index.ts` - Added ImprovementPath, ImprovementPhase, ImpactLevel, ImprovementStep, ImprovementPathProps exports
+- **Learnings for future iterations:**
+  - ImprovementPhase type: 'now' | 'soon' | 'later' | 'major' for timeline organization
+  - ImpactLevel type: 'low' | 'medium' | 'high' with visual dot indicators (1, 2, or 3 filled dots)
+  - ImprovementStep interface: id, action, description, estimatedCost, impact, phase, hasRebate, hasPearlPro
+  - Group steps by phase using reduce() with initial accumulator for all phase keys
+  - Timeline layout uses flexDirection: 'row' with timelineColumn for dots/lines and step content card
+  - phaseConfig maps each phase to label, color, and icon for consistent theming
+  - Link buttons (View Rebate, Find Pro) use tinted backgrounds (color + '15') with onPress handlers
+---
+
+## 2026-01-21 - US-034
+- **What was implemented:** Pearl Pro Card component for displaying contractor information
+- **Files created:**
+  - `pearl-app/src/components/PearlProCard.tsx` - Contractor card with business info, specialty badge, contact info, work history, and action buttons
+- **Files modified:**
+  - `pearl-app/src/components/index.ts` - Added PearlProCard, PearlProSpecialty, WorkHistoryItem, PearlProCardProps exports
+- **Learnings for future iterations:**
+  - PearlProSpecialty type includes: hvac, insulation, solar, windows, roofing, electrical, plumbing, general
+  - WorkHistoryItem interface: id, date, description for tracking previous work on a home
+  - specialtyConfig maps specialty to label and icon for consistent display
+  - Show work history only for first 2 items with slice(0, 2) to keep card compact
+  - Contact button dynamically shows phone icon if phoneNumber exists, message icon otherwise
+  - Action buttons use flex: 1 for equal width split in the row
+---
+
+## 2026-01-21 - US-035
+- **What was implemented:** Pearl Pros directory screen for finding Pearl Recognized Professionals
+- **Files created:**
+  - `pearl-app/src/screens/PearlProsScreen.tsx` - Full directory screen with search, specialty filters, and pro cards
+- **Files modified:**
+  - `pearl-app/src/screens/index.ts` - Added PearlProsScreen and PearlProsScreenProps exports
+  - `pearl-app/src/navigation/RootNavigator.tsx` - Added PearlPros route
+- **Learnings for future iterations:**
+  - Use SPECIALTY_FILTERS array with 'all' option for filter chip data
+  - useMemo for filtered list based on search query AND specialty filter
+  - ScrollView horizontal for filter chips with contentContainerStyle for gap spacing
+  - Empty state includes "Clear filters" button when filters are active
+  - Results count shows dynamic text based on active filters and search query
+  - PearlProCard accepts callbacks: onPress, onContact(type), onRequestQuote
+---
+
+## 2026-01-21 - US-036
+- **What was implemented:** Onboarding flow navigation wiring between all auth/onboarding screens
+- **Files modified:**
+  - `pearl-app/src/navigation/RootNavigator.tsx` - Added wrapper components for auth/onboarding screens with navigation callbacks
+- **Learnings for future iterations:**
+  - Use NativeStackScreenProps<ParamList, 'ScreenName'> for typed navigation props in wrapper components
+  - Wrapper component pattern: create screen-specific wrappers that receive navigation and pass callbacks to presentational screen
+  - navigation.reset({ index: 0, routes: [{ name: 'Main' }] }) clears navigation stack when transitioning to main app
+  - Update RootStackParamList to include route params (e.g., SymptomInsights needs { selectedSymptoms: string[] })
+  - Native stack navigator handles back navigation automatically via gesture/hardware back button
+  - For screens that should skip back (Login -> Dashboard), use navigation.reset instead of navigation.navigate
+---
+
+## 2026-01-21 - US-037
+- **What was implemented:** Skeleton loading states for Dashboard, My Home, and Improve screens
+- **Files created:**
+  - `pearl-app/src/components/Skeleton.tsx` - Base Skeleton component with shimmer animation and pre-built variants (SkeletonCard, SkeletonPillarRow, SkeletonScoreDisplay, SkeletonRebateCard, SkeletonRebateGrid, SkeletonEquipmentList, SkeletonBadgesSection, SkeletonSavingsSummary, SkeletonImprovementPaths)
+- **Files modified:**
+  - `pearl-app/src/components/index.ts` - Added Skeleton component exports
+  - `pearl-app/src/screens/HomeScreen.tsx` - Added isLoading prop and skeleton content renderer
+  - `pearl-app/src/screens/MyHomeScreen.tsx` - Added isLoading prop and skeleton content renderer
+  - `pearl-app/src/screens/ImproveScreen.tsx` - Added isLoading prop and skeleton content renderer
+- **Learnings for future iterations:**
+  - Use DimensionValue type from react-native for width props that accept both numbers and percentage strings
+  - Animated.loop with Animated.sequence creates smooth shimmer effect using opacity interpolation (0.3 to 0.7)
+  - Pre-built skeleton variants (SkeletonCard, SkeletonPillarRow, etc.) reduce code duplication across screens
+  - Pattern: add isLoading prop with default false, then conditionally render skeleton or real content
+  - Skeleton components match the visual dimensions of their real counterparts for smooth transition
+---
+
+## 2026-01-21 - US-038
+- **What was implemented:** Empty states for lists when they have no content
+- **Files created:**
+  - `pearl-app/src/components/EmptyState.tsx` - Reusable empty state component with icon, title, description, and action buttons
+- **Files modified:**
+  - `pearl-app/src/components/index.ts` - Added EmptyState and EmptyStateProps exports
+  - `pearl-app/src/screens/HomeScreen.tsx` - Added empty state for Symptoms Logged section with "Log Your First Symptom" prompt
+  - `pearl-app/src/screens/ImproveScreen.tsx` - Added empty state for Rebates section with "No Rebates Found" and check back message
+- **Learnings for future iterations:**
+  - EquipmentList and MaintenanceListScreen already had empty states built in from their initial implementation
+  - Reusable EmptyState component takes icon, title, description, and optional primary/secondary action buttons
+  - Use conditional rendering to show empty state vs content based on list length or data presence
+  - Empty states should have clear CTAs to guide users to the next action (e.g., "Log Your First Symptom")
+  - EmptyStateProps uses Ionicons name type for icon prop: `type IconName = React.ComponentProps<typeof Ionicons>['name']`
+---
+
+## 2026-01-21 - US-039
+- **What was implemented:** Error states for major screens with reusable ErrorState component
+- **Files created:**
+  - `pearl-app/src/components/ErrorState.tsx` - Reusable error state component with icon, title, message, and retry button
+- **Files modified:**
+  - `pearl-app/src/components/index.ts` - Added ErrorState and ErrorStateProps exports
+  - `pearl-app/src/screens/HomeScreen.tsx` - Added hasError, errorMessage, and onRetry props with error state rendering
+  - `pearl-app/src/screens/MyHomeScreen.tsx` - Added hasError, errorMessage, and onRetry props with error state rendering
+  - `pearl-app/src/screens/ImproveScreen.tsx` - Added hasError, errorMessage, and onRetry props with error state rendering
+  - `pearl-app/src/screens/MaintenanceListScreen.tsx` - Added hasError, errorMessage, and onRetry props with error state rendering
+- **Learnings for future iterations:**
+  - ErrorState follows same pattern as EmptyState but uses colors.hurting for error tint
+  - Error state rendering uses conditional: hasError first, then isLoading, then content
+  - ErrorStateProps includes optional title, message, icon, onRetry callback, and retryText customization
+  - Default error message provides helpful guidance about checking connection
+  - MaintenanceListScreen has header outside conditional so error shows below header
+---
+
+## 2026-01-21 - US-040
+- **What was implemented:** Score change animation with count-up effect and points earned badge
+- **Files modified:**
+  - `pearl-app/src/components/ScoreDisplay.tsx` - Added animation logic with previousScore prop, count-up animation, and points earned badge
+- **Learnings for future iterations:**
+  - Use Animated.timing with addListener to update state during animation (can't use animated value directly for text)
+  - Score animation props: previousScore (enables animation), animationDuration (default 500ms), onAnimationComplete callback
+  - Points earned badge uses Animated.parallel for simultaneous opacity fade-in and spring scale
+  - Badge shows for 1.5 seconds then fades out with opacity animation
+  - Use colors.helping + '20' for light green background tint on points badge
+  - displayScore state tracks the current animated value, separate from the final clampedScore
+  - Animation only triggers when previousScore is provided AND differs from current score
+---
+
