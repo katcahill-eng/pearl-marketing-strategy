@@ -29,6 +29,7 @@
 | Partnerships | In Planning | DOE, NAR, RESO, NASEO activation |
 | Pearl App | Active | React Native homeowner app (separate dev track) |
 | Pearl Bot | Complete | Slack intake bot for marketing requests |
+| Content QC | Active | Automated content review against brand guidelines (TypeScript/CLI) |
 | GAS Automation | Ongoing | Google Apps Script trackers and doc generators |
 
 <details><summary><strong>PR Dashboard</strong></summary>
@@ -79,9 +80,20 @@
 
 <details><summary><strong>Pearl Bot</strong></summary>
 
-- **Location:** `pearl-bot/`
+- **Repo:** Separate repo — `github.com/katcahill-eng/pearl-bot` (clone to `~/pearl-bot`)
 - **Stack:** TypeScript, Slack Bolt, Railway
 - **Status:** Complete and deployed
+- **Note:** Not included in this repo. See the standalone pearl-bot repo for source.
+</details>
+
+<details><summary><strong>Content QC</strong></summary>
+
+- **Location:** `pearl-content-qc/`
+- **Stack:** TypeScript, Anthropic SDK, ExcelJS
+- **Run:** `cd pearl-content-qc && npm install && npx tsx src/cli.ts --input <file>`
+- **Output:** Report card (stdout) + Excel workbook (`output/`)
+- **Key files:** `src/qc-runner.ts`, `src/prompt-builder.ts`, `strategy-docs/`
+- **Next:** Integrate with pearl-bot Slack workflow
 </details>
 
 <details><summary><strong>GAS Automation</strong></summary>
@@ -108,7 +120,10 @@ pearl-marketing/
 │   ├── output/             # Generated PDFs
 │   └── requirements.txt    # reportlab
 ├── pearl-app/              # React Native/Expo - consumer homeowner app
-├── pearl-bot/              # Slack intake bot (TypeScript/Railway)
+├── pearl-content-qc/       # Content QC tool (TypeScript/CLI)
+│   ├── src/                # CLI, QC runner, report card, Excel generator
+│   ├── strategy-docs/      # Brand reference docs (source of truth)
+│   └── output/             # Generated Excel reports
 ├── docs/                   # Marketing strategy & planning documents
 │   ├── strategy/           # Annual plans, sprint plans, budgets
 │   ├── messaging/          # PR messaging guides

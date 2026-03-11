@@ -1,0 +1,27 @@
+{
+  "name": "pearl-content-qc",
+  "version": "1.0.0",
+  "description": "Content quality control tool for Pearl marketing — reviews content against brand guidelines, positioning, and terminology standards",
+  "main": "dist/index.js",
+  "bin": {
+    "pearl-qc": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/cli.ts",
+    "test": "vitest run",
+    "qc": "tsx src/cli.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "exceljs": "^4.4.0",
+    "googleapis": "^171.0.0",
+    "dotenv": "^16.4.7"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
+    "vitest": "^4.0.18"
+  }
+}
