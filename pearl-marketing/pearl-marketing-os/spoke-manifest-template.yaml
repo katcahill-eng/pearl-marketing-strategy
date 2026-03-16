@@ -1,0 +1,54 @@
+# Pearl Marketing OS — Spoke Manifest Template
+# Copy this file to your spoke's root directory as spoke.yaml and fill in all fields.
+
+# Unique identifier for this spoke (kebab-case, used in code and registry)
+name: my-spoke
+
+# Human-readable name used in conversation and docs
+display_name: My Spoke Name
+
+# Semantic version
+version: 1.0.0
+
+# One-line description of what this spoke does
+description: Briefly describe this spoke's purpose and domain
+
+# Casual names the Director can use to match user requests to this spoke.
+# Include abbreviations, synonyms, and common shorthand.
+aliases:
+  - my-spoke
+  - alias1
+  - alias2
+
+# What this spoke can do. Each capability is a named action with a description.
+# The Director reads these to decide whether this spoke can handle a request.
+capabilities:
+  - do_something: "Description of what this capability does"
+  - do_another_thing: "Description of this second capability"
+
+# What this spoke accepts as input. Each input has a name and description.
+# Mark optional inputs with "(optional)" in the description.
+inputs:
+  - input_name: "Description of this input and its expected type/format"
+  - optional_input: "Description (optional)"
+
+# What this spoke returns. Each output has a name and description.
+outputs:
+  - output_name: "Description of this output and its type/format"
+
+# Shared services this spoke needs access to.
+# Available services: claude_api, brand_context, canva, google_workspace, asset_storage
+shared_services:
+  - claude_api
+  - brand_context
+
+# Other spokes this spoke depends on (invoked via the Director, never directly).
+# Use the spoke's name (not display_name). Leave empty if no dependencies.
+dependencies: []
+
+# How to invoke this spoke. Both CLI and library interfaces are required.
+invoke:
+  # Shell command to run this spoke. Use {input_name} for input placeholders.
+  cli: "npx tsx src/cli.ts --input {input_name}"
+  # JavaScript/TypeScript import statement for programmatic use.
+  library: "import { mainFunction } from 'my-spoke'"

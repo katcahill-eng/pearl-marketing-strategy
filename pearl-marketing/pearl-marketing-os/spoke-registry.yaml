@@ -1,0 +1,119 @@
+# Pearl Marketing OS — Spoke Registry
+# The Director reads this file to know which spokes are available and how to invoke them.
+# Status: active (built and ready) | planned (PRD exists but not yet built)
+
+spokes:
+  - name: content-qc
+    display_name: Content QC Specialist
+    status: active
+    aliases:
+      - qc
+      - content review
+      - brand check
+      - compliance
+      - review
+    location: pearl-content-qc/
+    invoke:
+      cli: "npx tsx src/cli.ts --input {content}"
+      library: "import { runQC } from 'pearl-content-qc'"
+
+  - name: social-media
+    display_name: Social Media Coordinator
+    status: planned
+    aliases:
+      - social
+      - social media
+      - scheduling
+      - sprout
+      - blog promotion
+      - posts
+    location: pearl-social/
+    invoke:
+      cli: "npx tsx src/cli.ts {blog_url}"
+      library: "import { runSocialWorkflow } from 'pearl-social'"
+
+  - name: pr-media
+    display_name: PR/Media Analyst
+    status: planned
+    aliases:
+      - pr
+      - media
+      - press
+      - coverage
+      - atkinson
+    location: pearl-pr/
+    invoke:
+      cli: "npx tsx src/cli.ts {command}"
+      library: "import { runPRAnalysis } from 'pearl-pr'"
+
+  - name: content-writer
+    display_name: Content Writer
+    status: planned
+    aliases:
+      - writer
+      - blog
+      - draft
+      - copy
+      - content creation
+    location: pearl-writer/
+    invoke:
+      cli: "npx tsx src/cli.ts {brief}"
+      library: "import { generateContent } from 'pearl-writer'"
+
+  - name: seo-monitor
+    display_name: SEO Monitor
+    status: planned
+    aliases:
+      - seo
+      - keywords
+      - rankings
+      - semrush
+      - search
+    location: pearl-seo/
+    invoke:
+      cli: "npx tsx src/cli.ts {command}"
+      library: "import { runSEOReport } from 'pearl-seo'"
+
+  - name: campaign-manager
+    display_name: Campaign Manager
+    status: planned
+    aliases:
+      - campaign
+      - campaigns
+      - geo-fencing
+      - surge
+      - events
+    location: pearl-campaigns/
+    invoke:
+      cli: "npx tsx src/cli.ts {command}"
+      library: "import { manageCampaign } from 'pearl-campaigns'"
+
+  - name: analytics-reporting
+    display_name: Analytics & Reporting
+    status: planned
+    aliases:
+      - analytics
+      - reporting
+      - kpi
+      - dashboard
+      - metrics
+      - board deck
+    location: pearl-analytics/
+    invoke:
+      cli: "npx tsx src/cli.ts {command}"
+      library: "import { generateReport } from 'pearl-analytics'"
+
+  - name: contractor-monitor
+    display_name: Contractor Monitor
+    status: planned
+    aliases:
+      - contractor
+      - contractors
+      - vendor
+      - fps
+      - deliverables
+      - sla
+    location: pearl-contractors/
+    invoke:
+      cli: "npx tsx src/cli.ts {command}"
+      library: "import { checkDeliverables } from 'pearl-contractors'"

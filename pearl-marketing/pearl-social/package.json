@@ -1,0 +1,25 @@
+{
+  "name": "pearl-social",
+  "version": "1.0.0",
+  "description": "Social Media Coordinator spoke for Pearl Marketing OS — generates social posts, matches Canva graphics, outputs Sprout Social CSV",
+  "main": "dist/index.js",
+  "bin": {
+    "pearl-social": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/cli.ts",
+    "test": "vitest run",
+    "social": "tsx src/cli.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "dotenv": "^16.4.7"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
+    "vitest": "^4.0.18"
+  }
+}

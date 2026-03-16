@@ -1,0 +1,44 @@
+name: social-media
+display_name: Social Media Coordinator
+version: 1.0.0
+description: Generates, QCs, and formats social media posts for blog promotion with Canva graphics and Sprout Social CSV output
+
+aliases:
+  - social
+  - social media
+  - scheduling
+  - sprout
+  - blog promotion
+  - posts
+
+capabilities:
+  - scrape_blog: "Reads a live blog post from pearl-score.com and extracts structured content"
+  - analyze_tone: "Builds per-platform tone profiles from recent published posts"
+  - generate_posts: "Creates platform-specific social posts from blog content"
+  - match_graphics: "Finds and exports matching Canva graphics for a blog post"
+  - build_csv: "Produces a Sprout Social bulk import CSV with copy, image URLs, and dates"
+
+inputs:
+  - blog_url: "URL of a live blog post on pearl-score.com (optional if draft_copy provided)"
+  - draft_copy: "Pre-written social post copy to use instead of generating (optional)"
+  - spacing_days: "Days between initial and follow-up posts (default: 4) (optional)"
+  - start_date: "First scheduled post date (optional, defaults to tomorrow)"
+
+outputs:
+  - csv_file: "Sprout Social bulk import CSV ready for drag-and-drop"
+  - image_urls: "Public Google Drive URLs for each graphic"
+  - qc_results: "Content QC results for each generated post"
+  - post_summary: "Summary of all posts created, by platform and schedule"
+
+shared_services:
+  - claude_api
+  - brand_context
+  - canva
+  - google_workspace
+
+dependencies:
+  - content-qc
+
+invoke:
+  cli: "npx tsx src/cli.ts {blog_url}"
+  library: "import { runSocialWorkflow } from 'pearl-social'"
