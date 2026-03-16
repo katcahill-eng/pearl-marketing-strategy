@@ -139,7 +139,7 @@ function groupByPlatform(rows: CSVRow[]): Record<Platform, string[]> {
     const platform = PLATFORM_ALIASES[networkRaw];
 
     // Get post text from common Sprout Social column names
-    const text = row['text'] || row['message'] || row['content'] || row['post text'] || row['post content'] || '';
+    const text = row['post'] || row['text'] || row['message'] || row['content'] || row['post text'] || row['post content'] || '';
 
     if (platform && text.trim()) {
       groups[platform].push(text.trim());

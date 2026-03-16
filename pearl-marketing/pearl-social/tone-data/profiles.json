@@ -1,0 +1,68 @@
+{
+  "linkedin": {
+    "avgLength": 151,
+    "usesEmojis": false,
+    "hashtagStyle": "none",
+    "ctaPatterns": [],
+    "formalityLevel": "conversational",
+    "examplePosts": [
+      "Buyer priorities shift—and agents who spot the shifts early serve their clients best.",
+      "We're excited to announce that Pearl will be attending Inman Connect New York February 3rd–5th! 🗽",
+      "For years, buyers were told to focus on price and finishes. Now they’re asking about operating costs, comfort, resilience, and how a home actually performs.",
+      "One thing was crystal clear at Inman Connect NYC: AI has arrived in real estate. It was on every stage, in every hallway conversation, and in every booth on the expo floor.",
+      "Thank you citybiz for the thoughtful conversation. We're thrilled to have had the opportunity to sit down and talk about what home performance transparency means for the real estate industry — and for the millions of homeowners whose homes tell a bigger story than what shows up in a listing."
+    ]
+  },
+  "x": {
+    "avgLength": 200,
+    "usesEmojis": false,
+    "hashtagStyle": "minimal (1-2 hashtags)",
+    "ctaPatterns": [
+      "check out",
+      "read more"
+    ],
+    "formalityLevel": "conversational",
+    "examplePosts": []
+  },
+  "meta": {
+    "avgLength": 118,
+    "usesEmojis": false,
+    "hashtagStyle": "none",
+    "ctaPatterns": [],
+    "formalityLevel": "conversational",
+    "examplePosts": [
+      "Two homes. Same price. Same neighborhood. Which one is right for you?",
+      "2025 was a year of big moments for Pearl—and we're so grateful for everyone who made it possible!",
+      "Thank you to Michele Lerner and Green Builder Media for this thoughtful piece on what we're building at Pearl.",
+      "When you're buying a home, wouldn't you want to know the full picture—not just the purchase price, but what it will actually cost to live there?",
+      "We're still processing all of the incredible take-aways from the biggest conference in real estate, and one thing was clear: AI is everywhere in the industry right now."
+    ]
+  },
+  "instagram": {
+    "avgLength": 76,
+    "usesEmojis": false,
+    "hashtagStyle": "none",
+    "ctaPatterns": [],
+    "formalityLevel": "conversational",
+    "examplePosts": [
+      "Another Pearlite going electric. 🔌",
+      "NYC energy. Big conversations. A few early mornings.",
+      "2025 was a year of big moments for Pearl—and we're so grateful for everyone who made it possible!",
+      "When the big storm rolls in, some people stay inside. This Pearlite laced up skates and hit the ice with her grandkids."
+    ]
+  },
+  "bluesky": {
+    "avgLength": 204,
+    "usesEmojis": false,
+    "hashtagStyle": "none",
+    "ctaPatterns": [],
+    "formalityLevel": "conversational",
+    "examplePosts": [
+      "Pearl's Pamela Brookstein is joining a panel tomorrow on high-performance green homes, hosted by the Chicago Association of REALTORS®.",
+      "Five years ago, asking about solar readiness, EV charging, and energy independence when buying a home was unusual. Today it's the new normal.",
+      "60% of homeowners are deferring maintenance. Pearl SCORE™ brings that kind of insight to light — giving agents another way to add value throughout the transaction. Our CEO Cynthia Adams shares more → https://bit.ly/3OJ1uRb",
+      "Just back from Inman Connect NYC. Three things stood out: The best agents focus on authenticity, not AI gimmicks. Top performers invest in educating past clients, not chasing cold leads. And a major shift in how homes are listed may be coming. We believe in more transparency, not less. More soon.",
+      "Huge thank you to Michele Lerner and Green Builder Media for this feature on Pearl. We're working to help people see how a home actually performs—not just what it looks like, but how it feels to live in. The market is heading that direction, and we're excited to be part of it. → tinyurl.com/5ejyc5z9"
+    ]
+  }
+}
