@@ -65,10 +65,21 @@ function extractTitle(html: string): string {
 }
 
 function extractBody(html: string): string {
-  // Try to find the article/entry content area (Craft CMS patterns)
   let content = '';
 
-  // Look for article tag, entry content, or main content area
+  // Pearl/Craft CMS: collect all rich-text blocks
+  const richTextPattern = /<div[^>]*class="[^"]*rich-text[^"]*"[^>]*>([\s\S]*?)<\/div>/gi;
+  const blocks: string[] = [];
+  let rtMatch;
+  while ((rtMatch = richTextPattern.exec(html)) !== null) {
+    const text = stripTags(rtMatch[1]).trim();
+    if (text.length > 50) blocks.push(text);
+  }
+  if (blocks.length > 0) {
+    return blocks.join('\n\n').replace(/\n{3,}/g, '\n\n').trim();
+  }
+
+  // Fall back to standard content area patterns
   const patterns = [
     /<article[^>]*>([\s\S]*?)<\/article>/i,
     /<div[^>]*class="[^"]*entry-content[^"]*"[^>]*>([\s\S]*?)<\/div>/i,
@@ -85,22 +96,14 @@ function extractBody(html: string): string {
     }
   }
 
-  // If no content area found, use the full body
   if (!content) {
     const bodyMatch = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
     content = bodyMatch ? bodyMatch[1] : html;
   }
 
-  // Strip nav, header, footer, script, style tags
   content = content.replace(/<(nav|header|footer|script|style|noscript)[^>]*>[\s\S]*?<\/\1>/gi, '');
-
-  // Convert paragraphs and headings to text with newlines
   content = content.replace(/<\/?(h[1-6]|p|div|br|li)[^>]*>/gi, '\n');
-
-  // Strip remaining HTML tags
   content = stripTags(content);
-
-  // Clean up whitespace
   content = content.replace(/\n{3,}/g, '\n\n').trim();
 
   return content;
