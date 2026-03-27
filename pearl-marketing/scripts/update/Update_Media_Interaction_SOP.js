@@ -12,7 +12,7 @@ function updateMediaInteractionSOP() {
   body.clear();
 
   // Colors
-  var darkBlue = '#1a3c5a';
+  var darkBlue = '#0c3860';
   var black = '#000000';
   var gray = '#666666';
 

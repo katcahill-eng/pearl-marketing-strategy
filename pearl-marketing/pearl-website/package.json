@@ -1,0 +1,25 @@
+{
+  "name": "pearl-website",
+  "version": "1.0.0",
+  "description": "Website Manager spoke for Pearl Marketing OS — website copy QC, landing page generation, SEO analysis",
+  "main": "dist/index.js",
+  "bin": {
+    "pearl-website": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/cli.ts",
+    "scan": "tsx src/cli.ts scan",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "exceljs": "^4.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
+    "vitest": "^4.0.18"
+  }
+}

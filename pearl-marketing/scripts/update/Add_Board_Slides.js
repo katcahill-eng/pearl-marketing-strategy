@@ -9,10 +9,10 @@ function addBoardSlides() {
   var presentationId = '1kz-4Xm7f4gQwab82nFlLqZSVjIkeFdJ-8zIIqX6hb_Y';
   var presentation = SlidesApp.openById(presentationId);
 
-  // Pearl brand colors
-  var darkBlue = '#1a3c5a';
-  var pearlBlue = '#2d5a7b';
-  var teal = '#2a9d8f';
+  // Pearl brand colors (Master Theme 2025)
+  var darkBlue = '#0c3860';
+  var pearlBlue = '#1c4c75';
+  var teal = '#04b290';
   var lightBlue = '#e8f4f8';
   var lightTeal = '#e6f5f3';
   var white = '#ffffff';

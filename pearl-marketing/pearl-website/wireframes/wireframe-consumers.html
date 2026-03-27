@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[WIREFRAME] Pearl SCORE Report — Buyers & Sellers</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black:    #111111;
+    --gray-900: #222222;
+    --gray-700: #444444;
+    --gray-500: #777777;
+    --gray-300: #aaaaaa;
+    --gray-200: #cccccc;
+    --gray-100: #e5e5e5;
+    --gray-50:  #f5f5f5;
+    --white:    #ffffff;
+    --accent:   #111111;
+    --wf-blue:  #3b82f6; /* annotation color only */
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--gray-50);
+    color: var(--black);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* ── WIREFRAME ANNOTATION LABEL ── */
+  .wf-label {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--wf-blue);
+    background: rgba(59,130,246,0.08);
+    border: 1px dashed rgba(59,130,246,0.4);
+    padding: 2px 8px; border-radius: 2px;
+    margin-bottom: 10px;
+    user-select: none;
+  }
+
+  /* ── WATERMARK ── */
+  body::before {
+    content: 'WIREFRAME — FOR APPROVAL';
+    position: fixed; top: 50%; left: 50%;
+    transform: translate(-50%, -50%) rotate(-30deg);
+    font-size: 80px; font-weight: 700; letter-spacing: 0.1em;
+    color: rgba(0,0,0,0.03); pointer-events: none; z-index: 0;
+    white-space: nowrap;
+  }
+
+  /* ── WF HEADER BAR ── */
+  .wf-header-bar {
+    background: var(--black); color: var(--white);
+    padding: 10px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 12px; letter-spacing: 0.06em;
+    position: sticky; top: 0; z-index: 200;
+  }
+  .wf-header-bar strong { color: var(--gray-300); }
+  .wf-page-label {
+    background: rgba(255,255,255,0.1);
+    padding: 3px 10px; border-radius: 2px;
+    font-size: 11px; letter-spacing: 0.08em;
+  }
+
+  /* ── LAYOUT ── */
+  .page { max-width: 1100px; margin: 0 auto; background: var(--white); }
+
+  /* ── COMPONENT BLOCKS ── */
+  .block {
+    border: 1px solid var(--gray-200);
+    border-radius: 0;
+    margin: 0;
+    position: relative;
+  }
+  .block + .block { border-top: none; }
+
+  /* Section label strip */
+  .block-label {
+    position: absolute; top: -1px; right: -1px;
+    background: var(--gray-100);
+    border: 1px solid var(--gray-200);
+    border-top: none; border-right: none;
+    font-size: 9px; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--gray-500);
+    padding: 3px 10px;
+  }
+
+  /* Image placeholder boxes */
+  .img-box {
+    background: var(--gray-100);
+    border: 1px solid var(--gray-200);
+    border-radius: 4px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    color: var(--gray-400); font-size: 12px;
+    gap: 6px; text-align: center; padding: 12px;
+  }
+  .img-box svg { opacity: 0.3; }
+  .img-box span { font-size: 11px; color: var(--gray-400); }
+
+  /* Text scaffolding */
+  .copy-kicker {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--gray-500);
+    margin-bottom: 10px;
+  }
+  .copy-h1 {
+    font-size: 36px; font-weight: 700; line-height: 1.1;
+    color: var(--black); margin-bottom: 16px;
+  }
+  .copy-h2 {
+    font-size: 28px; font-weight: 700; line-height: 1.15;
+    color: var(--black); margin-bottom: 14px;
+  }
+  .copy-h3 {
+    font-size: 18px; font-weight: 600; line-height: 1.2;
+    color: var(--black); margin-bottom: 10px;
+  }
+  .copy-body {
+    font-size: 15px; line-height: 1.7; color: var(--gray-700);
+    margin-bottom: 12px;
+  }
+  .copy-small {
+    font-size: 13px; line-height: 1.65; color: var(--gray-600);
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    border-radius: 3px; font-weight: 600; font-size: 14px;
+    padding: 12px 24px; text-decoration: none; cursor: pointer;
+    letter-spacing: 0.02em; border: none;
+  }
+  .btn-dark { background: var(--black); color: var(--white); }
+  .btn-outline { background: transparent; color: var(--black); border: 2px solid var(--black); }
+  .btn-sm { padding: 8px 16px; font-size: 13px; }
+
+  /* Tag/badge */
+  .badge {
+    display: inline-flex; align-items: center;
+    border: 1px solid var(--gray-300);
+    border-radius: 2px; padding: 3px 10px;
+    font-size: 11px; font-weight: 500; color: var(--gray-700);
+    letter-spacing: 0.04em;
+  }
+  .badge-dark { background: var(--black); color: var(--white); border-color: var(--black); }
+  .badge-alert { background: #fef3c7; color: #92400e; border-color: #fde68a; font-weight: 600; }
+
+  /* Divider */
+  hr { border: none; border-top: 1px solid var(--gray-100); margin: 24px 0; }
+
+  /* Checklist */
+  .check-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .check-list li {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 14px; color: var(--gray-700); line-height: 1.5;
+  }
+  .check-list li::before {
+    content: '✓'; font-size: 12px; font-weight: 700;
+    background: var(--black); color: var(--white);
+    width: 20px; height: 20px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
+  }
+
+  /* Step pills */
+  .step-pill {
+    display: flex; align-items: flex-start; gap: 16px;
+    padding: 20px 24px;
+    border: 1px solid var(--gray-200); border-radius: 6px;
+  }
+  .step-pill-num {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--black); color: var(--white);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; flex-shrink: 0;
+  }
+  .step-pill-body {}
+  .step-pill-title { font-size: 15px; font-weight: 600; color: var(--black); margin-bottom: 4px; }
+  .step-pill-desc { font-size: 13px; color: var(--gray-600); line-height: 1.55; }
+
+  /* Stat boxes */
+  .stat-box {
+    border: 1px solid var(--gray-200); border-radius: 4px;
+    padding: 24px 20px; text-align: center;
+  }
+  .stat-val { font-size: 40px; font-weight: 700; color: var(--black); line-height: 1; margin-bottom: 6px; }
+  .stat-lbl { font-size: 12px; color: var(--gray-500); line-height: 1.5; }
+
+  /* Score mock */
+  .score-mock {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200); border-radius: 8px;
+    padding: 28px;
+  }
+  .score-mock-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-500); margin-bottom: 16px; }
+  .score-mock-row { display: flex; align-items: center; gap: 20px; margin-bottom: 20px; }
+  .score-circle {
+    width: 80px; height: 80px; border-radius: 50%;
+    background: var(--gray-200);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; font-weight: 700; color: var(--gray-600);
+    flex-shrink: 0;
+  }
+  .score-grade-block .grade { font-size: 44px; font-weight: 700; color: var(--gray-700); line-height: 1; }
+  .score-grade-block .grade-lbl { font-size: 11px; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.08em; }
+  .score-bars { display: flex; flex-direction: column; gap: 8px; }
+  .score-bar-row { display: flex; align-items: center; gap: 10px; font-size: 11px; }
+  .score-bar-name { width: 100px; color: var(--gray-600); flex-shrink: 0; }
+  .score-bar-track { flex: 1; height: 6px; background: var(--gray-200); border-radius: 3px; }
+  .score-bar-fill { height: 100%; background: var(--gray-500); border-radius: 3px; }
+  .score-bar-val { width: 24px; text-align: right; color: var(--gray-600); font-weight: 600; font-size: 11px; }
+
+  /* Grid helpers */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+  /* Tabs mock */
+  .tab-bar { display: flex; border-bottom: 2px solid var(--gray-200); margin-bottom: 32px; }
+  .tab { padding: 12px 28px; font-size: 14px; font-weight: 500; color: var(--gray-500); cursor: pointer; }
+  .tab.active { color: var(--black); border-bottom: 2px solid var(--black); margin-bottom: -2px; font-weight: 600; }
+
+  /* Card */
+  .card {
+    border: 1px solid var(--gray-200); border-radius: 6px;
+    padding: 24px;
+  }
+  .card-icon { font-size: 24px; margin-bottom: 12px; }
+  .card-title { font-size: 15px; font-weight: 600; color: var(--black); margin-bottom: 8px; }
+  .card-body { font-size: 13px; line-height: 1.65; color: var(--gray-600); }
+
+  /* Nav wireframe */
+  .nav-wf {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 40px;
+    border-bottom: 2px solid var(--black);
+  }
+  .nav-logo-wf { font-size: 18px; font-weight: 700; color: var(--black); }
+  .nav-links-wf { display: flex; gap: 28px; }
+  .nav-links-wf a { font-size: 14px; color: var(--gray-600); text-decoration: none; }
+
+  /* Alert banner */
+  .alert-banner {
+    background: #fef3c7;
+    border: 1px solid #fde68a;
+    border-radius: 4px;
+    padding: 12px 20px;
+    display: flex; align-items: center; gap: 10px;
+    font-size: 14px; font-weight: 500; color: #92400e;
+  }
+  .alert-banner .alert-icon { font-size: 16px; }
+
+  /* Section paddings */
+  .pad { padding: 60px 40px; }
+  .pad-sm { padding: 40px 40px; }
+  .pad-lg { padding: 80px 40px; }
+
+  /* Footer annotation */
+  .wf-footnote {
+    background: var(--gray-50); border-top: 1px solid var(--gray-200);
+    padding: 12px 40px;
+    font-size: 11px; color: var(--gray-500);
+    display: flex; gap: 32px; flex-wrap: wrap;
+  }
+  .wf-footnote span { display: flex; align-items: center; gap: 6px; }
+
+  /* Horizontal rule between sections for clarity */
+  .section-divider {
+    height: 8px; background: var(--gray-100);
+    border-top: 1px solid var(--gray-200);
+    border-bottom: 1px solid var(--gray-200);
+  }
+</style>
+</head>
+<body>
+
+<!-- WF HEADER BAR -->
+<div class="wf-header-bar">
+  <div>
+    <strong>PEARL CERTIFICATION</strong> &nbsp;·&nbsp; Pearl SCORE Report
+  </div>
+  <div class="wf-page-label">PAGE 1 OF 2 · CONSUMERS (BUYERS & SELLERS)</div>
+  <div>Wireframe · For Approval · v1</div>
+</div>
+
+<div class="page">
+
+  <!-- ══════════════════════════════════════
+       SECTION: NAV
+  ══════════════════════════════════════ -->
+  <div class="block">
+    <div class="block-label">NAV</div>
+    <div class="nav-wf">
+      <div class="nav-logo-wf">Pearl SCORE</div>
+      <div class="nav-links-wf">
+        <a href="#">For Buyers</a>
+        <a href="#">For Sellers</a>
+        <a href="#">How It Works</a>
+      </div>
+      <button class="btn btn-dark btn-sm">Get Your Report →</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SECTION: HERO
+  ══════════════════════════════════════ -->
+  <div class="block">
+    <div class="block-label">HERO</div>
+    <div class="pad-lg" style="background: var(--gray-900); color: var(--white);">
+      <div class="grid-2" style="align-items: center; gap: 60px;">
+        <div>
+          <div style="font-size:11px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--gray-400); margin-bottom:14px;">Pearl SCORE Report</div>
+          <h1 style="font-size:46px; font-weight:700; line-height:1.08; color:var(--white); margin-bottom:20px;">Your home has a score.<br>Now you can see it.</h1>
+          <p style="font-size:17px; line-height:1.7; color:var(--gray-300); margin-bottom:36px; max-width:460px;">The Pearl SCORE Report reveals the true performance of any home — energy efficiency, comfort, air quality, and more — all in one clear, credible report.</p>
+          <div style="display:flex; gap:16px; align-items:center; flex-wrap:wrap;">
+            <button class="btn" style="background:white; color:black; font-size:15px; padding:14px 30px;">Get Your Report →</button>
+            <span style="font-size:13px; color:var(--gray-400);">Available in the Pearl App</span>
+          </div>
+        </div>
+        <div>
+          <div class="score-mock" style="background:rgba(255,255,255,0.06); border-color:rgba(255,255,255,0.12);">
+            <div class="score-mock-label" style="color:var(--gray-400);">Pearl SCORE Report · Sample</div>
+            <div class="score-mock-row">
+              <div class="score-circle" style="background:rgba(255,255,255,0.15); color:white;">74</div>
+              <div class="score-grade-block">
+                <div class="grade" style="color:white;">B+</div>
+                <div class="grade-lbl" style="color:var(--gray-400);">Performance Grade</div>
+              </div>
+            </div>
+            <div class="score-bars">
+              <div class="score-bar-row">
+                <span class="score-bar-name" style="color:var(--gray-400);">Heating & Cooling</span>
+                <div class="score-bar-track" style="background:rgba(255,255,255,0.1);"><div class="score-bar-fill" style="width:88%; background:white;"></div></div>
+                <span class="score-bar-val" style="color:white;">88</span>
+              </div>
+              <div class="score-bar-row">
+                <span class="score-bar-name" style="color:var(--gray-400);">Air Quality</span>
+                <div class="score-bar-track" style="background:rgba(255,255,255,0.1);"><div class="score-bar-fill" style="width:76%; background:white;"></div></div>
+                <span class="score-bar-val" style="color:white;">76</span>
+              </div>
+              <div class="score-bar-row">
+                <span class="score-bar-name" style="color:var(--gray-400);">Insulation</span>
+                <div class="score-bar-track" style="background:rgba(255,255,255,0.1);"><div class="score-bar-fill" style="width:65%; background:white;"></div></div>
+                <span class="score-bar-val" style="color:white;">65</span>
+              </div>
+              <div class="score-bar-row">
+                <span class="score-bar-name" style="color:var(--gray-400);">Energy Systems</span>
+                <div class="score-bar-track" style="background:rgba(255,255,255,0.1);"><div class="score-bar-fill" style="width:92%; background:white;"></div></div>
+                <span class="score-bar-val" style="color:white;">92</span>
+              </div>
+              <div class="score-bar-row">
+                <span class="score-bar-name" style="color:var(--gray-400);">Water Efficiency</span>
+                <div class="score-bar-track" style="background:rgba(255,255,255,0.1);"><div class="score-bar-fill" style="width:58%; background:white;"></div></div>
+                <span class="score-bar-val" style="color:white;">58</span>
+              </div>
+            </div>
+          </div>
+          <p style="font-size:11px; color:var(--gray-500); margin-top:10px; text-align:center;">[ APP SCREENSHOT OR PRODUCT IMAGE ]</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ══════════════════════════════════════
+       SECTION: WHAT IS PEARL SCORE
+  ══════════════════════════════════════ -->
+  <div class="block">
+    <div class="block-label">WHAT IS PEARL SCORE</div>
+    <div class="pad">
+      <div class="grid-2" style="align-items: start; gap: 60px;">
+        <div>
+          <div class="copy-kicker">What is Pearl SCORE</div>
+          <h2 class="copy-h2">A home's performance, finally quantified.</h2>
+          <p class="copy-body">Every home has hidden performance characteristics that affect your comfort, your utility bills, and your long-term investment. Until now, there's been no easy way to see them.</p>
+          <p class="copy-body">The Pearl SCORE Report translates your home's features — systems, materials, equipment, and certifications — into a clear numeric score and letter grade trusted by appraisers, lenders, and real estate professionals nationwide.</p>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-icon">🌡️</div>
+            <div class="card-title">Heating & Cooling</div>
+            <div class="card-body">HVAC efficiency, equipment age, duct performance, and smart controls.</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">💨</div>
+            <div class="card-title">Indoor Air Quality</div>
+            <div class="card-body">Ventilation systems, filtration, and healthy home features.</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">🏠</div>
+            <div class="card-title">Building Envelope</div>
+            <div class="card-body">Insulation, windows, air sealing, and the shell that holds it all together.</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">⚡</div>
+            <div class="card-title">Energy & Renewables</div>
+            <div class="card-body">Solar, batteries, EV charging, and grid-interactive features.</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">💧</div>
+            <div class="card-title">Water Efficiency</div>
+            <div class="card-body">Efficient fixtures, tankless systems, and smart irrigation.</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">📋</div>
+            <div class="card-title">Certifications</div>
+            <div class="card-body">ENERGY STAR, LEED, Pearl Certification, and other verified programs.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ══════════════════════════════════════
+       SECTION: TABS — BUYERS / SELLERS
+  ══════════════════════════════════════ -->
+  <div class="block">
+    <div class="block-label">AUDIENCE TABS</div>
+    <div class="pad">
+      <div class="copy-kicker">Built For You</div>
+      <h2 class="copy-h2" style="margin-bottom:32px;">Whether you're buying or selling</h2>
+
+      <div class="tab-bar">
+        <div class="tab active">🏡 &nbsp;Home Buyers</div>
+        <div class="tab">🔑 &nbsp;Home Sellers / Homeowners</div>
+      </div>
+
+      <!-- BUYERS TAB (visible by default) -->
+      <div id="tab-content-buyers">
+        <div class="grid-2" style="gap:60px; align-items:start;">
+          <div>
+            <h3 class="copy-h3">Buy with confidence. Know before you close.</h3>
+            <p class="copy-body">A listing price tells you what someone wants for a home. The Pearl SCORE Report tells you what you're actually getting — the efficiency, the comfort, and the systems that will cost or save you money for years to come.</p>
+            <ul class="check-list" style="margin-bottom:28px;">
+              <li>Understand the true operating costs of any home before you buy</li>
+              <li>Compare performance across listings — not just beds and square footage</li>
+              <li>Identify high-efficiency features that justify a home's asking price</li>
+              <li>Support appraisal and financing decisions with documented data</li>
+              <li>Negotiate from a position of knowledge, not guesswork</li>
+            </ul>
+
+            <!-- Free access alert -->
+            <div class="alert-banner" style="margin-bottom: 20px;">
+              <span class="alert-icon">🎉</span>
+              <div><strong>Free through May 8th.</strong> Access any home's Pearl SCORE Report for free until May 8th. Reports become a paid feature after that date.</div>
+            </div>
+
+            <button class="btn btn-dark">Get Your Report for Free →</button>
+            <p style="font-size:12px; color:var(--gray-500); margin-top:8px;">Available in the Pearl App · Free through May 8th</p>
+          </div>
+          <div>
+            <div class="score-mock">
+              <div class="score-mock-label">123 Maple St — Pearl SCORE Report</div>
+              <div class="score-mock-row">
+                <div class="score-circle">82</div>
+                <div class="score-grade-block">
+                  <div class="grade">A−</div>
+                  <div class="grade-lbl">Performance Grade</div>
+                </div>
+              </div>
+              <div class="score-bars">
+                <div class="score-bar-row">
+                  <span class="score-bar-name">Heating & Cooling</span>
+                  <div class="score-bar-track"><div class="score-bar-fill" style="width:91%"></div></div>
+                  <span class="score-bar-val">91</span>
+                </div>
+                <div class="score-bar-row">
+                  <span class="score-bar-name">Air Quality</span>
+                  <div class="score-bar-track"><div class="score-bar-fill" style="width:84%"></div></div>
+                  <span class="score-bar-val">84</span>
+                </div>
+                <div class="score-bar-row">
+                  <span class="score-bar-name">Insulation</span>
+                  <div class="score-bar-track"><div class="score-bar-fill" style="width:78%"></div></div>
+                  <span class="score-bar-val">78</span>
+                </div>
+                <div class="score-bar-row">
+                  <span class="score-bar-name">Solar & Energy</span>
+                  <div class="score-bar-track"><div class="score-bar-fill" style="width:95%"></div></div>
+                  <span class="score-bar-val">95</span>
+                </div>
+              </div>
+            </div>
+            <p style="font-size:11px; color:var(--gray-400); margin-top:8px; text-align:center;">[ APP SCREENSHOT — BUYER REPORT VIEW ]</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SELLERS TAB (shown below for wireframe review) -->
+      <div style="margin-top:48px; padding-top:40px; border-top:2px dashed var(--gray-200);">
+        <div class="wf-label">↓ SELLERS TAB CONTENT (toggled on click)</div>
+        <div class="grid-2" style="gap:60px; align-items:start;">
+          <div>
+            <h3 class="copy-h3">Your home performs better. Prove it.</h3>
+            <p class="copy-body">If you've invested in high-efficiency systems, solar, better insulation, or smart home upgrades, those features have real value — but only if buyers can see them. The Pearl SCORE Report makes your home's advantages undeniable.</p>
+            <ul class="check-list" style="margin-bottom:28px;">
+              <li>Document high-performance features that appraisers and lenders recognize</li>
+              <li>Differentiate your listing from neighbors with identical square footage</li>
+              <li>Attract buyers who care about comfort, efficiency, and long-term value</li>
+              <li>Justify your asking price with third-party verified data</li>
+              <li>Accelerate time-on-market with a report buyers and agents can trust</li>
+            </ul>
+            <button class="btn btn-dark">Get Your Home's Report →</button>
+            <p style="font-size:12px; color:var(--gray-500); margin-top:8px;">Available in the Pearl App</p>
+          </div>
+          <div>
+            <div class="score-mock">
+              <div class="score-mock-label">Your Home — Pearl SCORE Report</div>
+              <div class="score-mock-row">
+                <div class="score-circle">91</div>
+                <div class="score-grade-block">
+                  <div class="grade">A+</div>
+                  <div class="grade-lbl">Performance Grade</div>
+                </div>
+              </div>
+              <div class="score-bars">
+                <div class="score-bar-row">
+                  <span class="score-bar-name">New HVAC 2023</span>
+                  <div class="score-bar-track"><div class="score-bar-fill" style="width:96%"></div></div>
+                  <span class="score-bar-val">96</span>
+                </div>
+                <div class="score-bar-row">
+                  <span class="score-bar-name">Solar + Battery</span>
+                  <div class="score-bar-track"><div class="score-bar-fill" style="width:100%"></div></div>
+                  <span class="score-bar-val">100</span>
+                </div>
+                <div class="score-bar-row">
+                  <span class="score-bar-name">Triple Pane Windows</span>
+                  <div class="score-bar-track"><div class="score-bar-fill" style="width:88%"></div></div>
+                  <span class="score-bar-val">88</span>
+                </div>
+                <div class="score-bar-row">
+                  <span class="score-bar-name">ENERGY STAR Cert.</span>
+                  <div class="score-bar-track"><div class="score-bar-fill" style="width:100%"></div></div>
+                  <span class="score-bar-val">100</span>
+                </div>
+              </div>
+            </div>
+            <p style="font-size:11px; color:var(--gray-400); margin-top:8px; text-align:center;">[ APP SCREENSHOT — SELLER REPORT VIEW ]</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ══════════════════════════════════════
+       SECTION: HOW IT WORKS — BUYERS
+  ══════════════════════════════════════ -->
+  <div class="block">
+    <div class="block-label">HOW IT WORKS — BUYERS</div>
+    <div class="pad" style="background: var(--gray-50);">
+      <div class="copy-kicker">For Buyers</div>
+      <h2 class="copy-h2" style="margin-bottom: 8px;">How buyers get a report</h2>
+      <p class="copy-body" style="margin-bottom:36px; max-width:560px;">Getting a Pearl SCORE Report for any home you're considering takes just a few minutes. No technical knowledge required.</p>
+
+      <div class="grid-3" style="gap:16px;">
+        <div class="step-pill">
+          <div class="step-pill-num">1</div>
+          <div class="step-pill-body">
+            <div class="step-pill-title">Create a free account</div>
+            <div class="step-pill-desc">Download the Pearl App and create your free account in minutes.</div>
+          </div>
+        </div>
+        <div class="step-pill">
+          <div class="step-pill-num">2</div>
+          <div class="step-pill-body">
+            <div class="step-pill-title">Search for a home</div>
+            <div class="step-pill-desc">Enter the address of any home you're considering — whether you found it on Zillow, the MLS, or a yard sign.</div>
+          </div>
+        </div>
+        <div class="step-pill">
+          <div class="step-pill-num">3</div>
+          <div class="step-pill-body">
+            <div class="step-pill-title">Access your SCORE Report</div>
+            <div class="step-pill-desc">View the full Pearl SCORE Report instantly. Free through May 8th — paid access after that date.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert-banner" style="margin-top:28px; max-width:600px;">
+        <span class="alert-icon">📅</span>
+        <div><strong>Limited-time offer:</strong> Reports are free through May 8th. After May 8th, reports become a paid feature. Get yours now.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ══════════════════════════════════════
+       SECTION: HOW IT WORKS — HOMEOWNERS
+  ══════════════════════════════════════ -->
+  <div class="block">
+    <div class="block-label">HOW IT WORKS — HOMEOWNERS / SELLERS</div>
+    <div class="pad">
+      <div class="copy-kicker">For Homeowners & Sellers</div>
+      <h2 class="copy-h2" style="margin-bottom: 8px;">How homeowners build their report</h2>
+      <p class="copy-body" style="margin-bottom:36px; max-width:600px;">Already own your home? Add your home's features and upgrades directly in the Pearl App to generate your official SCORE Report — then share it when you're ready to sell.</p>
+
+      <div class="grid-4" style="gap:16px;">
+        <div class="step-pill" style="flex-direction:column; text-align:center; align-items:center;">
+          <div class="step-pill-num">1</div>
+          <div class="step-pill-body" style="text-align:left;">
+            <div class="step-pill-title">Create your account</div>
+            <div class="step-pill-desc">Download the Pearl App and set up your homeowner account.</div>
+          </div>
+        </div>
+        <div class="step-pill" style="flex-direction:column; text-align:center; align-items:center;">
+          <div class="step-pill-num">2</div>
+          <div class="step-pill-body" style="text-align:left;">
+            <div class="step-pill-title">Claim your home</div>
+            <div class="step-pill-desc">Enter your address. Pearl pulls available public data to start your profile automatically.</div>
+          </div>
+        </div>
+        <div class="step-pill" style="flex-direction:column; text-align:center; align-items:center;">
+          <div class="step-pill-num">3</div>
+          <div class="step-pill-body" style="text-align:left;">
+            <div class="step-pill-title">Add your home's assets</div>
+            <div class="step-pill-desc">Log your high-performance features — HVAC upgrades, solar, insulation, windows, certifications, and more — directly in the app.</div>
+          </div>
+        </div>
+        <div class="step-pill" style="flex-direction:column; text-align:center; align-items:center;">
+          <div class="step-pill-num">4</div>
+          <div class="step-pill-body" style="text-align:left;">
+            <div class="step-pill-title">Get & share your report</div>
+            <div class="step-pill-desc">Receive your Pearl SCORE Report with a numeric score, letter grade, and full breakdown — ready to share with buyers and agents.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ══════════════════════════════════════
+       SECTION: SOCIAL PROOF / STATS
+  ══════════════════════════════════════ -->
+  <div class="block">
+    <div class="block-label">STATS / SOCIAL PROOF</div>
+    <div class="pad-sm" style="background: var(--black);">
+      <div class="grid-3" style="gap:16px;">
+        <div class="stat-box" style="border-color:rgba(255,255,255,0.1); background:rgba(255,255,255,0.04);">
+          <div class="stat-val" style="color:white;">$10K+</div>
+          <div class="stat-lbl" style="color:var(--gray-400);">Average premium for documented high-performance homes vs. comparable listings</div>
+        </div>
+        <div class="stat-box" style="border-color:rgba(255,255,255,0.1); background:rgba(255,255,255,0.04);">
+          <div class="stat-val" style="color:white;">50K+</div>
+          <div class="stat-lbl" style="color:var(--gray-400);">Homes certified or scored on the Pearl platform</div>
+        </div>
+        <div class="stat-box" style="border-color:rgba(255,255,255,0.1); background:rgba(255,255,255,0.04);">
+          <div class="stat-val" style="color:white;">15%</div>
+          <div class="stat-lbl" style="color:var(--gray-400);">Faster time on market for Pearl-documented listings</div>
+        </div>
+      </div>
+      <p style="font-size:11px; color:var(--gray-600); margin-top:16px; text-align:center;">[ COPY TO BE VERIFIED — REPLACE WITH CONFIRMED PEARL DATA ]</p>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ══════════════════════════════════════
+       SECTION: CTA
+  ══════════════════════════════════════ -->
+  <div class="block">
+    <div class="block-label">PRIMARY CTA</div>
+    <div class="pad-lg" style="text-align:center; background:var(--gray-50);">
+      <div class="copy-kicker">Get Started</div>
+      <h2 class="copy-h2" style="max-width:600px; margin:0 auto 16px;">Your home's performance score is waiting.</h2>
+      <p class="copy-body" style="max-width:480px; margin:0 auto 36px;">Get your Pearl SCORE Report in minutes. Free to start — available now inside the Pearl App.</p>
+      <button class="btn btn-dark" style="font-size:16px; padding:16px 36px; margin-bottom:16px;">Get Your Report in the Pearl App →</button>
+      <br>
+      <div style="display:flex; justify-content:center; gap:20px; margin-top:16px; flex-wrap:wrap;">
+        <div class="img-box" style="width:140px; height:48px; flex-direction:row; gap:8px; border-radius:8px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2z"/></svg>
+          <span>App Store</span>
+        </div>
+        <div class="img-box" style="width:140px; height:48px; flex-direction:row; gap:8px; border-radius:8px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2z"/></svg>
+          <span>Google Play</span>
+        </div>
+      </div>
+      <p style="font-size:12px; color:var(--gray-500); margin-top:12px;">Free to get started · iOS & Android</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════ -->
+  <div class="block">
+    <div class="block-label">FOOTER</div>
+    <div class="pad-sm" style="border-top: 2px solid var(--black); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+      <div style="font-size:16px; font-weight:700;">Pearl Certification</div>
+      <div style="display:flex; gap:24px;">
+        <a href="#" style="font-size:13px; color:var(--gray-600); text-decoration:none;">For Agents</a>
+        <a href="#" style="font-size:13px; color:var(--gray-600); text-decoration:none;">For Contractors</a>
+        <a href="#" style="font-size:13px; color:var(--gray-600); text-decoration:none;">Privacy Policy</a>
+      </div>
+      <div style="font-size:12px; color:var(--gray-400);">© 2025 Pearl Certification. All rights reserved.</div>
+    </div>
+  </div>
+
+  <!-- WF FOOTNOTE -->
+  <div class="wf-footnote">
+    <span>📐 Page 1 of 2 · Consumers (Buyers & Sellers)</span>
+    <span>⚠️ Stats marked [VERIFY] need confirmation before going live</span>
+    <span>📸 Image placeholders need final app screenshots</span>
+    <span>📅 May 8th free-access deadline — confirm date is correct</span>
+  </div>
+
+</div><!-- /page -->
+</body>
+</html>

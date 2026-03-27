@@ -1,0 +1,42 @@
+name: strategy
+display_name: Marketing Strategist
+version: 1.0.0
+description: Senior marketing strategist providing strategy briefs, negotiation briefs, campaign planning, and strategic advisory grounded in Pearl's market position
+
+aliases:
+  - strategy
+  - strategic
+  - negotiate
+  - campaign strategy
+  - advisor
+  - department planning
+  - board deck
+
+capabilities:
+  - strategy_brief: "Generates structured strategy briefs with multiple options, tradeoffs, and framework references for any marketing topic"
+  - negotiation_brief: "Produces negotiation briefs with partner profiles, leverage analysis, value-add asks, and sequencing for partnership discussions"
+  - campaign_strategy: "Creates campaign strategies with audience targeting, channel mix, messaging, and KPIs"
+  - doc_update: "Updates strategy documents (board deck, annual plan, sprint plans) with current data"
+  - advisory: "Provides on-demand strategic guidance on department operations, team structure, vendor strategy, and growth planning"
+
+inputs:
+  - topic: "Topic or question for strategy brief or advisory (required for brief/advise commands)"
+  - partner: "Partner or vendor name for negotiation brief (required for negotiate command)"
+  - context: "Additional context about the situation, partner, or topic (optional)"
+  - output_dir: "Override default output directory (optional)"
+
+outputs:
+  - brief_markdown: "Strategy or negotiation brief as a markdown document saved to output/"
+  - console_output: "Full brief printed to console for immediate review"
+
+shared_services:
+  - claude_api
+  - brand_context
+  - google_workspace
+
+dependencies:
+  - content-qc
+
+invoke:
+  cli: "npx tsx src/cli.ts {command} --topic {topic}"
+  library: "import { generateStrategyBrief, generateNegotiationBrief } from 'pearl-strategy'"

@@ -1,0 +1,35 @@
+name: content-qc
+display_name: Content QC Specialist
+version: 1.0.0
+description: Reviews marketing content against Pearl brand guidelines, positioning standards, and terminology rules
+
+aliases:
+  - qc
+  - content review
+  - brand check
+  - compliance
+  - review
+
+capabilities:
+  - review_content: "Analyzes text content for brand compliance, terminology, positioning violations, and Duck/Bunny framing"
+  - generate_report: "Produces a graded report card (A-F) with issues, suggested fixes, and one-paragraph summary"
+  - generate_excel: "Creates an Excel workbook with detailed QC findings, color-coded by severity"
+
+inputs:
+  - content: "Text content to review (string, file path, or Google Doc URL)"
+  - format: "Output format: text | markdown | excel (optional, defaults to text)"
+
+outputs:
+  - qc_result: "Structured QCResult with grade, issues array, and summary"
+  - report: "Formatted report card (plain text or markdown)"
+  - excel_path: "Path to generated Excel file (if format is excel)"
+
+shared_services:
+  - claude_api
+  - brand_context
+
+dependencies: []
+
+invoke:
+  cli: "npx tsx src/cli.ts --input {content}"
+  library: "import { runQC } from 'pearl-content-qc'"

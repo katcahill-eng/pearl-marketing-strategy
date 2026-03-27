@@ -319,12 +319,13 @@ When a moment occurs, Pearl activates ALL channels simultaneously:
 - PR firm continues background pitching
 - Content creation for next moment
 
-### 2026 Moment Calendar (Preliminary)
+### 2026 Moment Calendar
 
 | Month | Moment | Type |
 |-------|--------|------|
-| January | Inman Connect NYC + State of Home Performance launch | Conference + Report |
-| March | Spring buying season push | Seasonal |
+| January | Inman Connect NYC + Pearl SCORE buyer awareness launch | Conference + Content |
+| April | April 2 data launch | Product |
+| April/May | BPA conference + spring events | Conference |
 | May | NAR event presence | Conference |
 | June/July | Partnership announcement (TBD) | Partnership |
 | September | Fall buying season + resilience messaging | Seasonal |
@@ -412,42 +413,73 @@ When a moment occurs, Pearl activates ALL channels simultaneously:
 
 ### Pillar Content Model
 
-One flagship piece monthly creates an ecosystem of derivative content:
+Pearl-produced content follows a series-based model: multi-part blog series that build authority around a theme, with each post generating derivative social and email content. Series run on a biweekly cadence, giving each post time to build organic traction before the next publishes.
 
 ```
-MONTHLY PILLAR (Gated/Flagship)
+SERIES (3-5 part blog series around a theme)
         │
-        ├── Blog Posts (3-4 from pillar themes)
-        ├── Social Posts (20+ snippets, stats, quotes)
-        ├── Email Nurture Sequence (3-5 emails)
-        ├── Ad Copy (5-10 variants)
-        └── PR Hook (pitch angle for media)
+        ├── Individual Blog Posts (published biweekly on pearlscore.com)
+        ├── Social Posts (snippets, stats, quotes per post)
+        ├── Email Nurture Sequence (per series)
+        ├── Ad Copy (variants per series theme)
+        └── PR Hook (pitch angle tied to series theme)
 ```
 
-### 2026 Pillar Calendar
+**Workflow:** Drafted internally (Marketing + Claude) → Reviewed → Built in Craft CMS → Promoted through Sprout Social
 
-| Month | Pillar Topic | Supports |
-|-------|--------------|----------|
-| January | "State of Home Performance 2026" | Inman NYC |
-| February | Agent guide to Pearl SCORE | Spring prep |
-| March | "What Buyers Want That Listings Don't Show" | Spring season |
-| April | Partnership deep-dive (TBD) | Partnership announcement |
-| May | "Home Performance Standards in MLS" | NAR event |
-| July | "Home Resilience Before Storm Season" | Seasonal news hook |
-| September | "True Cost of Homeownership" | Fall season |
-| November | "Year in Review / 2027 Preview" | Year-end |
+### 2026 Content Calendar
+
+#### Pearl-Produced Content
+
+**B2C Pillar Series** (pearlscore.com/news)
+
+| Quarter | Series | Posts | SCORE Pillar Coverage |
+|---------|--------|-------|----------------------|
+| Q1 | "What Every Buyer Needs to Know" | 5 parts | Safety, Comfort, Operations, Resilience, Energy |
+| Q2 | Series 2 (TBD) | 4-5 parts | Deeper dives by pillar |
+| Q3 | Series 3 (TBD) | 4-5 parts | Seasonal/resilience focus |
+| Q4 | Series 4 (TBD) | 4-5 parts | Year-end / 2027 preview |
+
+**B2B Blog** (pearlscore.com/news/industries/blogs)
+
+| Quarter | Cadence | Theme |
+|---------|---------|-------|
+| Q1 | 1/month | Agent awareness — why home performance data matters |
+| Q2 | 2-3/month | Agent activation — how to use Pearl in transactions |
+| Q3 | 2-3/month | Market positioning — differentiation through data |
+| Q4 | 2-3/month | Year-end wrap + 2027 outlook |
+
+#### Front Page Sage (FPS) — SEO/GEO Content Partner
+
+**[FPS Editorial Calendar](https://docs.google.com/spreadsheets/d/1sFvleRcz_DwQuSMkdOsT8PjEmNA0DxU1mUtCz0t8x04/edit?usp=sharing)** (FPS-managed — view only)
+
+**Strategy:** FPS produces SEO- and GEO-optimized content targeting consumer search queries related to home performance. Content is structured around keyword hubs (Energy, Operating Cost, Safety, Resilience, Comfort, Real Estate) to build topical authority. FPS also places AI Exchange Q+A articles on external sites to strengthen Pearl's authority signals in LLM citation results.
+
+**Deliverables:**
+- ~2 articles/week delivered for Pearl review (7 credits/month)
+- Content types: Metrics articles (1 credit), comparison blogs (1 credit), hub/pillar pages (2 credits), Q+A/AI Exchange placements (1 credit), landing pages (1 credit)
+- Weekly consulting calls + monthly performance reports included
+
+**Audience:** B2C / homebuyers and homeowners (TOFU and MOFU)
+
+**Hub Progression (2026):**
+- Months 1-2: Energy + Operating Cost
+- Months 3-4: Safety + Resilience
+- Month 5: Comfort
+- Months 6-9: Real Estate + Product pages
+- Months 9-12: Research Center dominance
 
 ### Content Responsibilities
 
 | Type | Owner | Volume |
 |------|-------|--------|
-| B2C SEO blog | Front Page Sage | ~4/month |
-| LinkedIn posting | Front Page Sage | Weekly ⚠️ (see flag above) |
-| B2B agent/broker content | Marketing + Claude | 2-3/month |
-| Social (Instagram, BlueSky) | Marketing + Claude | Daily during surges |
-| Email sequences | Marketing + Claude | Per moment |
+| B2C pillar series | Marketing + Claude | 4-5 posts/quarter (biweekly) |
+| B2B blog | Marketing + Claude | 1-3/month (ramping) |
+| B2C SEO/GEO blog | Front Page Sage | ~2/week delivered |
+| AI Exchange placements | Front Page Sage | 1/month |
+| Social (LinkedIn, X, BlueSky, Meta) | Marketing + Claude | By platform cadence |
+| Email sequences | Marketing + Claude | Per series/moment |
 | Ad copy variants | Marketing + Claude | Per campaign |
-| Pillar/gated content | Marketing + Claude | 1/month |
 
 ### AI Efficiency Tools
 
@@ -469,40 +501,50 @@ MONTHLY PILLAR (Gated/Flagship)
 
 **Key Moments:**
 - Inman Connect NYC (January)
-- State of Home Performance 2026 launch
+- Pearl SCORE buyer awareness launch
 
-**Activities:**
-- [ ] Launch State of Home Performance report
-- [ ] Execute first geo-fencing campaign at Inman
-- [ ] LinkedIn surge around Inman
-- [ ] Secure 2+ podcast appearances for each spokesperson
-- [ ] Begin local TV outreach in Denver, NYC
-- [ ] Complete partnership audit
-- [ ] Build B2B content library (agent-focused)
+**Content Delivered:**
+- [x] B2C pillar series: "What Every Buyer Needs to Know" (5-part series covering all SCORE pillars)
+- [x] B2B blog series: 3 agent-focused thought leadership posts
+- [x] FPS SEO content: 5+ published, pipeline scaling to 2/week delivery
+- [x] FPS AI Exchange: Skaggs Walsh Q+A published
+- [x] Execute first geo-fencing campaign at Inman
+- [x] LinkedIn surge around Inman
+- [x] Secure podcast appearances
+- [x] Begin local TV outreach in Denver, NYC
+- [x] Complete partnership audit
+- [x] Speaker support kit created
 
 **Success Metrics:**
 - 2+ Tier-1 media mentions
-- 500+ report downloads
 - 10+ podcast appearances booked
+- B2C pillar series complete (all 5 SCORE pillars covered)
+- B2B content library established (3 posts)
 
 ### Q2 2026 (April - June)
 
-**Theme:** Partnership & Expansion
+**Theme:** Data Launch & Expansion
 
 **Key Moments:**
-- NAR event (May)
-- Partnership announcement (TBD)
+- April 2 data launch
+- BPA conference
+- Spring events (RESO, T3, NAR)
 
 **Activities:**
-- [ ] Execute NAR geo-fencing + LinkedIn surge
-- [ ] Coordinate partnership announcement with PR
+- [ ] Execute April 2 data launch campaign
+- [ ] Launch B2C pillar series 2 (deeper SCORE pillar dives)
+- [ ] Ramp B2B blog to 2-3/month
+- [ ] Execute conference geo-fencing + LinkedIn surges
+- [ ] Coordinate partnership announcements with PR
 - [ ] Build case studies from early claiming data
 - [ ] Launch spring buyer campaign
-- [ ] Develop founder speaker training program
+- [ ] Q2 sprint plan build-out (Boston offsite)
 
 **Success Metrics:**
-- 1+ major partnership announced
+- Data launch media coverage
 - 25% increase in website traffic
+- B2B blog at 2-3/month cadence
+- B2C series 2 launched
 - Claiming rate improvement (baseline TBD)
 
 ### Q3 2026 (July - September)

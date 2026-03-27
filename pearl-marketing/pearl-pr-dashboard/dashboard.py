@@ -74,7 +74,7 @@ rr(c, 0, H-hh, W, hh, 0, DN)
 c.setFont("Lato-Bold", 14); c.setFillColor(WH)
 c.drawString(M, H-28, "Pearl PR KPIs  |  90-Day Sprint Dashboard")
 c.setFont("Lato", 7); c.setFillColor(SL)
-c.drawString(M, H-39, "Jan 1 – Apr 1, 2026  |  Updated Feb 27, 2026")
+c.drawString(M, H-39, "Jan 1 – Apr 1, 2026  |  Updated Mar 2, 2026")
 rr(c, W-90, H-34, 66, 16, 8, TEAL)
 c.setFont("Lato-Bold", 7); c.setFillColor(WH); c.drawCentredString(W-57, H-34 + 16/2 - 7*0.35, "ON TRACK")
 
@@ -91,7 +91,7 @@ for lb, st, off in [("Complete","complete",34),("In Approval","approval",82),("I
 ty = H - hh - 24
 c.setFont("Lato-Bold", 8.5); c.setFillColor(DN); c.drawString(M, ty, "Sprint Timeline")
 
-tl_top = ty - 8; tl_h = 88; tl_w = W - 2*M
+tl_top = ty - 8; tl_h = 96; tl_w = W - 2*M
 rr(c, M, tl_top-tl_h, tl_w, tl_h, 5, WH, LS)
 
 # TWO LINES: main expanded line (past) and a compressed mini-line (future)
@@ -101,7 +101,7 @@ mini_line_y = tl_top - tl_h + 16  # compressed future strip
 lx1 = M + 18; lx2 = M + tl_w - 18; ll = lx2 - lx1
 
 # Sprint: Jan 1 (day 0) to Apr 1 (day 90). Today = Feb 27 = day 57.
-TODAY_DAY = 57
+TODAY_DAY = 60  # Mar 2
 SPRINT_DAYS = 90
 
 def past_x(day):
@@ -114,7 +114,7 @@ def future_x(day):
 c.setStrokeColor(TEAL); c.setLineWidth(3); c.line(lx1, main_line_y, lx2, main_line_y)
 
 # Month markers
-for lb, dn in [("Jan 1", 0), ("Jan 15", 14), ("Feb 1", 31), ("Feb 18", 48), ("Feb 27", 57)]:
+for lb, dn in [("Jan 1", 0), ("Jan 15", 14), ("Feb 1", 31), ("Feb 18", 48), ("Mar 1", 59)]:
     mx = past_x(dn)
     c.setStrokeColor(HexColor("#04b290")); c.setLineWidth(0.3)
     c.line(mx, main_line_y+3, mx, main_line_y-3)
@@ -124,18 +124,20 @@ for lb, dn in [("Jan 1", 0), ("Jan 15", 14), ("Feb 1", 31), ("Feb 18", 48), ("Fe
 c.setFillColor(TEAL)
 p = c.beginPath(); p.moveTo(lx2-4, main_line_y+9); p.lineTo(lx2+4, main_line_y+9); p.lineTo(lx2, main_line_y+3.5); p.close()
 c.drawPath(p, fill=1, stroke=0)
-c.setFont("Lato-Bold", 5); c.setFillColor(TEAL); c.drawRightString(lx2, main_line_y+24, "TODAY Feb 27")
+c.setFont("Lato-Bold", 5); c.setFillColor(TEAL); c.drawRightString(lx2, main_line_y+24, "TODAY Mar 2")
 
 # Start label
 c.setFont("Lato", 4.5); c.setFillColor(SL); c.drawCentredString(lx1, main_line_y+6, "Jan 1")
 
-# Past events — Jan 7: Chicago Agent (day 6), Feb 4: Inman PR (day 34), Feb 18: Casey (day 48)
+# Past events — alternate above/below to avoid label overlap
 past_evts_above = [
     (6, "Chicago Agent Op-Ed (Jan 7)", "complete", "coverage"),
-    (34, "Inman Award PR Released (Feb 4)", "complete", "milestone"),
     (48, "Casey Murphy Interview (Feb 18)", "complete", "milestone"),
+    (57, "Robin LeBaron Interview (Feb 27)", "complete", "milestone"),
 ]
 past_evts_below = [
+    (34, "Inman Award PR Released (Feb 4)", "complete", "milestone"),
+    (54, "Citybiz Q&A Published (Feb 24)", "complete", "coverage"),
 ]
 
 for dn, label, st, etype in past_evts_above:
@@ -148,15 +150,19 @@ for dn, label, st, etype in past_evts_above:
         sicon(c, ex, main_line_y, st, 3.5)
     c.setStrokeColor(use_cl); c.setLineWidth(0.25); c.line(ex, main_line_y+4, ex, main_line_y+14)
     c.setFont("Lato-Bold", 5); c.setFillColor(use_cl)
-    if dn == 48:
-        c.drawRightString(ex, main_line_y+16, label)
+    if dn >= 48:
+        c.drawRightString(ex+2, main_line_y+16, label)
     else:
         c.drawCentredString(ex, main_line_y+16, label)
 
 for dn, label, st, etype in past_evts_below:
     ex = past_x(dn)
-    use_cl = scol(st)
-    sicon(c, ex, main_line_y, st, 3.5)
+    use_cl = NAVY if etype == "coverage" else scol(st)
+    if etype == "coverage":
+        dot(c, ex, main_line_y, 4, NAVY)
+        c.setFont("Lato-Bold", 5); c.setFillColor(WH); c.drawCentredString(ex, main_line_y-1.8, "\u2605")
+    else:
+        sicon(c, ex, main_line_y, st, 3.5)
     c.setStrokeColor(use_cl); c.setLineWidth(0.25); c.line(ex, main_line_y-4, ex, main_line_y-12)
     c.setFont("Lato-Bold", 5); c.setFillColor(use_cl)
     c.drawCentredString(ex, main_line_y-19, label)
@@ -165,7 +171,7 @@ for dn, label, st, etype in past_evts_below:
 c.setStrokeColor(LS); c.setLineWidth(2); c.line(lx1, mini_line_y, lx2, mini_line_y)
 
 # Month markers
-for lb, dn in [("Feb 27", 57), ("Mar 1", 59), ("Mar 15", 73), ("Apr 1", 90)]:
+for lb, dn in [("Mar 2", 60), ("Mar 15", 73), ("Apr 1", 90)]:
     mx = future_x(dn)
     c.setStrokeColor(SL); c.setLineWidth(0.3)
     c.line(mx, mini_line_y+3, mx, mini_line_y-3)
@@ -174,9 +180,14 @@ for lb, dn in [("Feb 27", 57), ("Mar 1", 59), ("Mar 15", 73), ("Apr 1", 90)]:
 c.setFont("Lato", 4); c.setFillColor(SL)
 c.drawString(lx1, mini_line_y+11, "Upcoming")
 
-# Robin ~Mar 3 = day 61, Early Access ~late Mar = day 78, Sprint Ends = day 90
+# PR ramp-up span bar (last week of Mar through Apr 1)
+ramp_x1 = future_x(83); ramp_x2 = future_x(90)
+rr(c, ramp_x1, mini_line_y-5, ramp_x2-ramp_x1, 10, 3, HexColor("#e0f5ef"), TEAL)
+c.setFont("Lato-Bold", 4); c.setFillColor(TEAL)
+c.drawCentredString((ramp_x1+ramp_x2)/2, mini_line_y-13, "Atlanta PR Ramp-Up")
+
+# Robin done, Early Access ~late Mar = day 78, Sprint Ends = day 90
 future_evts = [
-    (61, "Robin LeBaron Interview", "on_deck"),
     (78, "Early Access (On Hold)", "on_hold"),
     (90, "Sprint Ends", "on_deck"),
 ]
@@ -282,12 +293,12 @@ rr(c, ring_x, ring_top - ring_card_h, ring_w, ring_card_h, 5, WH, LS)
 # Stats from tracker
 # type: "ring" = progress toward target, "count" = simple total
 stats = [
-    ("Media\nPitching", "49", "60", 49/60, TEAL, "ring"),
+    ("Media\nPitching", "42", "60", 42/60, TEAL, "ring"),
     ("Story\nConcepts", "10", "15", 10/15, TEAL, "ring"),
-    ("Press\nReleases", "1", "3", 1/3, TEAL, "ring"),
-    ("Pearl SME\nInterviews", "1", "4", 1/4, TEAL, "ring"),
-    ("Stories\nPublished", "1", None, None, TEAL, "count"),
-    ("Reporter\nContacts", "29", None, None, TEAL, "count"),
+    ("Press\nReleases", "1", "4", 1/4, TEAL, "ring"),
+    ("Pearl SME\nInterviews", "3", "4", 3/4, TEAL, "ring"),
+    ("Stories\nPublished", "2", None, None, TEAL, "count"),
+    ("Reporter\nContacts", "38", None, None, TEAL, "count"),
 ]
 
 n_stats = len(stats)
@@ -304,7 +315,25 @@ for idx, (label, actual, target, pct, color, stype) in enumerate(stats):
     cx = ring_area_x + col * cell_w + cell_w/2
     cy = ring_top - 8 - row * cell_h - cell_h/2 + 4
 
-    if stype == "ring":
+    if stype == "status_ring":
+        # Multi-segment status ring — color is a list of (status, count)
+        radius = 14
+        c.setStrokeColor(LS); c.setLineWidth(3.5)
+        c.circle(cx, cy, radius, fill=0, stroke=1)
+        segments = color  # [(status, count), ...]
+        total = sum(cnt for _, cnt in segments)
+        start_angle = 90  # 12 o'clock
+        for seg_st, seg_cnt in segments:
+            seg_extent = -(seg_cnt / total) * 360
+            c.setStrokeColor(scol(seg_st)); c.setLineWidth(3.5)
+            c.arc(cx-radius, cy-radius, cx+radius, cy+radius, start_angle, seg_extent)
+            start_angle += seg_extent
+        c.setFont("Lato-Bold", 8); c.setFillColor(DN)
+        c.drawCentredString(cx, cy - 3, actual)
+        if target:
+            c.setFont("Lato", 4); c.setFillColor(SL)
+            c.drawCentredString(cx, cy + radius + 5, f"/ {target}")
+    elif stype == "ring":
         # Progress ring
         radius = 14
         c.setStrokeColor(LS); c.setLineWidth(3.5)
@@ -352,6 +381,7 @@ rels = [
      "https://www.globenewswire.com/news-release/2026/02/03/3231003/0/en/Pearl-Named-Winner-of-Inman-s-Best-of-Proptech-Award-for-Sustainability-Climate-Resilience.html"),
     ("Early Access Program Launch","Feb 28 → On Hold (Tim)","On Hold","on_hold", None),
     ("Pearl Score Data Analysis","TBD","On Deck","on_deck", None),
+    ("SCORE Report Launch","May","On Deck","on_deck", None),
 ]
 ry = r3 - 16
 for i, (ti, dt, sl, st, url) in enumerate(rels):
@@ -396,6 +426,7 @@ cov_hdr = left_after_rels - 12
 c.setFont("Lato-Bold", 8.5); c.setFillColor(DN); c.drawString(M, cov_hdr, "Earned Media Coverage")
 
 covs_2026 = [
+    ("Feb 24","Citybiz","Cynthia Adams, CEO: What is a Home Performance Score?", None),
     ("Jan 7","Chicago Agent Magazine","Pearl SCORE Op-Ed Published",
      "https://chicagoagentmagazine.com/2026/01/07/pearl-score-2/"),
 ]
@@ -420,7 +451,8 @@ for i, (dt, out, ti, url) in enumerate(covs_2026):
     c.setFont("Lato-Bold", 5.5); c.setFillColor(DN); c.drawString(M+12, y, dt)
     c.setFont("Lato-Bold", 5.5); c.setFillColor(TEAL); c.drawString(M+38, y, out)
     ow = c.stringWidth(out, "Lato-Bold", 5.5)
-    c.linkURL(url, (M+38, y-2, M+38+ow, y+7), relative=0)
+    if url:
+        c.linkURL(url, (M+38, y-2, M+38+ow, y+7), relative=0)
     c.setFont("Lato", 5); c.setFillColor(SL)
     disp = ti; mw = cl_w - 44 - ow
     while c.stringWidth(disp, "Lato", 5) > mw and len(disp) > 10: disp = disp[:-4]+"..."
@@ -447,19 +479,21 @@ for i, (dt, out, ti, url) in enumerate(covs_2025):
 left_bot_r3 = cy2 - len(covs_2025)*12
 
 # ── RIGHT: Thought Leadership Pipeline ──
-c.setFont("Lato-Bold", 8.5); c.setFillColor(DN); c.drawString(cr_x, r3, "Thought Leadership & Content Pipeline")
+c.setFont("Lato-Bold", 8.5); c.setFillColor(DN); c.drawString(cr_x, r3, "Thought Leadership & Commentary Pipeline")
 
 arts = [
-    ("Citybiz Q&A Feature (Cynthia)","In Approval","approval","Feb"),
-    ("Hidden Reality of America's Aging Housing Stock","In Progress","in_progress","Feb"),
-    ("92M Homes Scored: What the Data Reveals","Pending Interview","on_deck","Mar"),
+    # Feb — complete
+    ("Citybiz Q&A Feature (Cynthia)","Complete","complete","Feb"),
+    # Mar — 2 articles (in progress)
+    ("Hidden Reality of U.S. Housing Stock (Cynthia)","In Progress","in_progress","Mar"),
     ("5 Steps to Improving Home Performance (Casey)","In Progress","in_progress","Mar"),
-    ("The Blind Spot in Every Home Purchase","On Deck","on_deck","Mar"),
-    ("What Buyers Ask That Listings Don't Show","On Deck","on_deck","Mar"),
-    ("The Missing Piece in Every Home Buying Decision","On Deck","on_deck","Apr"),
-    ("Why Energy Performance Is the Next Square Footage","On Deck","on_deck","Apr"),
-    ("Inside the First-Ever Home Performance Registry","On Deck","on_deck","Apr"),
-    ("Robin LeBaron Q&A / Thought Leadership","On Deck","on_deck","Apr"),
+    # May
+    ("Habitat for Humanity: Home Performance Partnership","In Progress","in_progress","May"),
+    ("92M Homes Scored: What the Data Reveals (Robin)","In Progress","in_progress","May"),
+    ("The Blind Spot in Every Home Purchase","On Deck","on_deck","May"),
+    ("What Buyers Ask That Listings Don't Show","On Deck","on_deck","Jun"),
+    ("Why Energy Performance Is the Next Square Footage","On Deck","on_deck","Jun"),
+    ("Inside the First-Ever Home Performance Registry","On Deck","on_deck","Jul"),
 ]
 
 ay = r3 - 16
@@ -479,14 +513,18 @@ right_after_arts = ay - len(arts)*13
 
 # ── RIGHT: Opportunities + Publications ──
 opp_hdr = right_after_arts - 12
-c.setFont("Lato-Bold", 8.5); c.setFillColor(DN); c.drawString(cr_x, opp_hdr, "Active Media Conversations")
+c.setFont("Lato-Bold", 8.5); c.setFillColor(DN); c.drawString(cr_x, opp_hdr, "Active Pitches & Media Engagement")
 
 opps2 = [
     ("KeyCrew Media Partnership — Cynthia profile, data stories","In Progress","in_progress","Mar"),
+    ("WSJ — 3 reporters opened (Ebling, Clarke, Brandt)","Following Up","in_progress","Mar"),
+    ("Axios / Sami Sparber — opened both pitches","Following Up","in_progress","Mar"),
+    ("RealtyTimes / Terri Murphy — opened, podcast pitch","Following Up","in_progress","Mar"),
+    ("Green Home Builder / Hanna Heiss — opened, following up","Following Up","in_progress","Mar"),
 ]
-oy2 = opp_hdr - 14
+oy2 = opp_hdr - 12
 for i, (ti, sl, st, dt) in enumerate(opps2):
-    y = oy2 - i*12
+    y = oy2 - i*10
     sicon(c, cr_x+4, y+3, st, 2.5)
     c.setFont("Lato", 6); c.setFillColor(DN)
     disp = ti; mw = cr_w - 80
@@ -495,9 +533,9 @@ for i, (ti, sl, st, dt) in enumerate(opps2):
     c.setFont("Lato", 5); c.setFillColor(scol(st)); c.drawRightString(cr_x+cr_w-22, y+1, sl)
     c.setFont("Lato", 5); c.setFillColor(SL); c.drawRightString(cr_x+cr_w, y+1, dt)
 
-pub_hdr = oy2 - len(opps2)*12 - 10
+pub_hdr = oy2 - len(opps2)*10 - 6
 c.setFont("Lato-Bold", 6.5); c.setFillColor(TEAL); c.drawString(cr_x, pub_hdr, "Pitching:")
-pubs_text = "NYT, WSJ, WaPo, NPR, Wired, CNET, HousingWire, Kiplinger, Bloomberg, WBAL, WUSA"
+pubs_text = "NPR, NYT, WSJ, Washington Post, AP, Axios, Canary Media, Consumer Reports, Housing Wire, Realtor Magazine, Inman, RealtyTimes, Green Home Builder, BUILT, AARP, Citybiz, KeyCrew, Business Journals"
 c.setFont("Lato", 5.5); c.setFillColor(SL)
 words = pubs_text.split(", ")
 line = ""; py2 = pub_hdr - 9; mw2 = cr_w - 4

@@ -17,6 +17,20 @@ spokes:
       cli: "npx tsx src/cli.ts --input {content}"
       library: "import { runQC } from 'pearl-content-qc'"
 
+  - name: website-manager
+    display_name: Website Manager
+    status: active
+    aliases:
+      - website
+      - web
+      - site
+      - seo
+      - landing page
+    location: pearl-website/
+    invoke:
+      cli: "npx tsx src/cli.ts {command}"
+      library: "import { runWebsiteScan } from 'pearl-website'"
+
   - name: social-media
     display_name: Social Media Coordinator
     status: planned
@@ -102,6 +116,22 @@ spokes:
     invoke:
       cli: "npx tsx src/cli.ts {command}"
       library: "import { generateReport } from 'pearl-analytics'"
+
+  - name: strategy
+    display_name: Marketing Strategist
+    status: active
+    aliases:
+      - strategy
+      - strategic
+      - negotiate
+      - campaign strategy
+      - advisor
+      - department planning
+      - board deck
+    location: pearl-strategy/
+    invoke:
+      cli: "npx tsx src/cli.ts {command} --topic {topic}"
+      library: "import { generateStrategyBrief, generateNegotiationBrief } from 'pearl-strategy'"
 
   - name: contractor-monitor
     display_name: Contractor Monitor

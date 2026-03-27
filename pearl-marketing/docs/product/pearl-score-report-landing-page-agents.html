@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[WIREFRAME] Pearl SCORE™ Report — Real Estate Professionals</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black:   #111111;
+    --g900:    #1a1a1a;
+    --g700:    #444444;
+    --g600:    #555555;
+    --g500:    #777777;
+    --g400:    #999999;
+    --g300:    #bbbbbb;
+    --g200:    #d4d4d4;
+    --g150:    #e0e0e0;
+    --g100:    #ebebeb;
+    --g50:     #f5f5f5;
+    --white:   #ffffff;
+    --blue:    #3b82f6;
+  }
+
+  body { font-family: 'Inter', sans-serif; background: var(--g50); color: var(--black); font-size: 14px; line-height: 1.5; }
+
+  body::before {
+    content: 'WIREFRAME';
+    position: fixed; top: 50%; left: 50%;
+    transform: translate(-50%, -50%) rotate(-25deg);
+    font-size: 130px; font-weight: 800; letter-spacing: 0.12em;
+    color: rgba(0,0,0,0.035); pointer-events: none; z-index: 0; white-space: nowrap;
+  }
+
+  .wf-bar {
+    background: var(--black); color: white; padding: 9px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 11px; letter-spacing: 0.07em;
+    position: sticky; top: 0; z-index: 200;
+  }
+  .wf-pill { background: rgba(255,255,255,0.12); padding: 3px 10px; border-radius: 2px; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; }
+
+  .page { max-width: 1100px; margin: 0 auto; background: var(--white); position: relative; z-index: 1; }
+
+  .block { border-left: 1px solid var(--g200); border-right: 1px solid var(--g200); position: relative; }
+  .block + .block { border-top: 1px solid var(--g150); }
+  .block-tag {
+    position: absolute; top: 0; right: 0;
+    background: var(--g100); border-left: 1px solid var(--g200); border-bottom: 1px solid var(--g200);
+    font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--g400); padding: 4px 10px; user-select: none;
+  }
+
+  /* ── IMAGE PLACEHOLDER ── */
+  .img-ph {
+    background: var(--g100); border: 2px dashed var(--g300);
+    border-radius: 8px; position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .img-ph-lines { position: absolute; inset: 0; overflow: hidden; }
+  .img-ph-lines::before, .img-ph-lines::after { content: ''; position: absolute; background: var(--g200); width: 160%; height: 1px; top: 50%; left: -30%; }
+  .img-ph-lines::before { transform: rotate(22deg); }
+  .img-ph-lines::after  { transform: rotate(-22deg); }
+  .img-ph-content {
+    position: relative; z-index: 1; background: rgba(240,240,240,0.9);
+    border: 1px solid var(--g200); border-radius: 5px; padding: 14px 22px;
+    display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center;
+  }
+  .img-ph-icon { font-size: 24px; opacity: 0.55; }
+  .img-ph-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--g500); }
+  .img-ph-sub { font-size: 10px; color: var(--g400); line-height: 1.5; }
+
+  .wf-note {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--blue); background: rgba(59,130,246,0.08);
+    border: 1px dashed rgba(59,130,246,0.4);
+    padding: 3px 9px; border-radius: 2px; user-select: none;
+  }
+
+  /* ── TYPE ── */
+  .kicker { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--g500); margin-bottom: 10px; }
+  .h1 { font-size: 44px; font-weight: 700; line-height: 1.08; color: var(--black); margin-bottom: 18px; }
+  .h2 { font-size: 30px; font-weight: 700; line-height: 1.12; color: var(--black); margin-bottom: 14px; }
+  .h3 { font-size: 19px; font-weight: 600; line-height: 1.2; color: var(--black); margin-bottom: 10px; }
+  .body-t { font-size: 15px; line-height: 1.72; color: var(--g600); }
+  .small { font-size: 12px; color: var(--g400); }
+
+  /* ── BUTTONS ── */
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: 3px; font-size: 14px; font-weight: 600; border: none; cursor: pointer; }
+  .btn-dk { background: var(--black); color: white; }
+  .btn-gh { background: transparent; color: white; border: 1px solid rgba(255,255,255,0.25); }
+  .btn-gl { background: transparent; color: var(--black); border: 1px solid var(--g300); }
+  .btn-lg { padding: 16px 32px; font-size: 16px; }
+  .btn-sm { padding: 8px 14px; font-size: 12px; }
+
+  /* ── CHECKLIST ── */
+  .chk { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+  .chk li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--g600); line-height: 1.5; }
+  .chk li::before { content: '✓'; font-size: 11px; font-weight: 700; width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0; margin-top: 1px; background: var(--black); color: white; display: flex; align-items: center; justify-content: center; }
+
+  /* ── REASON CARDS ── */
+  .reason { border: 1px solid var(--g200); border-radius: 6px; padding: 26px 22px; }
+  .reason-n { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; color: var(--g400); margin-bottom: 12px; }
+  .reason-t { font-size: 16px; font-weight: 600; color: var(--black); margin-bottom: 10px; }
+  .reason-b { font-size: 14px; line-height: 1.65; color: var(--g500); }
+
+  /* ── FEATURE ROWS ── */
+  .feat { display: flex; gap: 18px; padding: 22px 0; border-bottom: 1px solid var(--g100); align-items: flex-start; }
+  .feat:first-child { padding-top: 0; }
+  .feat:last-child { border-bottom: none; }
+  .feat-icon { width: 38px; height: 38px; border-radius: 6px; background: var(--g100); border: 1.5px dashed var(--g300); display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--g400); flex-shrink: 0; }
+  .feat-t { font-size: 15px; font-weight: 600; color: var(--black); margin-bottom: 5px; }
+  .feat-b { font-size: 13px; line-height: 1.65; color: var(--g500); }
+  .feat-tag { display: inline-block; margin-top: 7px; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--g500); border: 1px solid var(--g200); padding: 2px 8px; border-radius: 2px; }
+
+  /* ── STEP PILLS ── */
+  .step { display: flex; align-items: flex-start; gap: 16px; padding: 18px 20px; border: 1px solid var(--g200); border-radius: 6px; }
+  .step-n { width: 34px; height: 34px; border-radius: 4px; background: var(--black); color: white; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .step-title { font-size: 15px; font-weight: 600; color: var(--black); margin-bottom: 4px; }
+  .step-desc { font-size: 13px; color: var(--g500); line-height: 1.55; }
+
+  /* ── DASHBOARD MOCK ── */
+  .dash { background: var(--g900); border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08); }
+  .dash-top { background: rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.07); padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; }
+  .dash-top-title { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.35); }
+  .dash-live { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #4ade80; }
+  .dash-dot { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; }
+  .dash-body { padding: 16px 20px; }
+  .dash-row { display: flex; align-items: center; gap: 14px; padding: 11px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .dash-row:last-child { border-bottom: none; }
+  .dash-av { width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.45); flex-shrink: 0; }
+  .dash-info { flex: 1; min-width: 0; }
+  .dash-name { font-size: 13px; font-weight: 500; color: white; margin-bottom: 2px; }
+  .dash-addr { font-size: 11px; color: rgba(255,255,255,0.3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .dash-score { text-align: right; flex-shrink: 0; }
+  .dash-score-n { font-size: 22px; font-weight: 700; color: white; line-height: 1; }
+  .dash-score-g { font-size: 11px; color: rgba(255,255,255,0.35); }
+  .dash-badge { font-size: 9px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 8px; border-radius: 2px; flex-shrink: 0; }
+  .b-ready { background: rgba(74,222,128,0.12); color: #4ade80; border: 1px solid rgba(74,222,128,0.2); }
+  .b-draft { background: rgba(251,191,36,0.12); color: #fbbf24; border: 1px solid rgba(251,191,36,0.2); }
+  .dash-foot { background: rgba(255,255,255,0.03); border-top: 1px solid rgba(255,255,255,0.07); padding: 12px 20px; display: flex; justify-content: space-around; }
+  .dm-v { font-size: 20px; font-weight: 700; color: white; text-align: center; }
+  .dm-l { font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.3); text-align: center; margin-top: 2px; }
+
+  /* ── REPORT PANEL ── */
+  .report-panel { background: var(--g900); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
+  .rp-top { background: rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.07); padding: 12px 20px; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.35); }
+  .rp-body { padding: 24px; }
+  .rp-addr { font-size: 11px; color: rgba(255,255,255,0.35); letter-spacing: 0.04em; margin-bottom: 14px; }
+  .rp-score-row { display: flex; align-items: flex-end; gap: 12px; margin-bottom: 20px; }
+  .rp-num { font-size: 64px; font-weight: 700; color: white; line-height: 1; }
+  .rp-grade { font-size: 32px; font-weight: 700; color: rgba(255,255,255,0.6); line-height: 1; }
+  .rp-grade-l { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.3); }
+  .rp-bars { display: flex; flex-direction: column; gap: 9px; margin-bottom: 20px; }
+  .rp-bar-row { display: flex; align-items: center; gap: 10px; }
+  .rp-bar-n { font-size: 11px; color: rgba(255,255,255,0.35); width: 110px; flex-shrink: 0; }
+  .rp-bar-t { flex: 1; height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; }
+  .rp-bar-f { height: 100%; background: rgba(255,255,255,0.5); border-radius: 2px; }
+  .rp-bar-v { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.5); width: 22px; text-align: right; }
+  .rp-actions { display: flex; gap: 8px; }
+
+  /* ── STAT STRIP ── */
+  .stat-v { font-size: 44px; font-weight: 700; color: white; line-height: 1; margin-bottom: 8px; }
+  .stat-l { font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.5; }
+
+  /* ── GRIDS ── */
+  .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+  .g3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+  .g4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; }
+
+  .p { padding: 64px 48px; }
+  .psm { padding: 48px 48px; }
+  .plg { padding: 80px 48px; }
+  .divider { height: 10px; background: var(--g100); border-top: 1px solid var(--g200); border-bottom: 1px solid var(--g200); }
+  .wf-foot { background: var(--g100); border-top: 2px solid var(--g200); padding: 10px 40px; display: flex; gap: 28px; flex-wrap: wrap; font-size: 11px; color: var(--g500); }
+</style>
+</head>
+<body>
+
+<div class="wf-bar">
+  <div><strong style="color:#ccc">PEARL</strong> &nbsp;·&nbsp; Pearl SCORE™ Report</div>
+  <div class="wf-pill">Page 2 of 2 · Real Estate Professionals</div>
+  <div>Wireframe · For Approval · v2</div>
+</div>
+
+<div class="page">
+
+  <!-- ════ HERO ════ -->
+  <div class="block">
+    <div class="block-tag">HERO</div>
+    <div class="plg" style="background:var(--g900);">
+      <div class="g2" style="gap:60px; align-items:center;">
+        <div>
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:20px;">
+            <div style="width:24px; height:2px; background:rgba(255,255,255,0.3);"></div>
+            <div style="font-size:11px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.4);">Pearl SCORE™ Report · For Real Estate Professionals</div>
+          </div>
+          <div class="h1" style="color:white;">The home data your<br>clients have been missing.</div>
+          <p class="body-t" style="color:#999; max-width:480px; margin-bottom:32px;">Price, location, and curb appeal aren't going anywhere — but they've never told the whole story. The Pearl SCORE™ Report shows your clients what a home is actually like to own, from operating costs to comfort to the systems behind the walls. Reports are now available on active single-family listings across the U.S.</p>
+          <div style="display:flex; gap:14px; align-items:center; flex-wrap:wrap; margin-bottom:36px;">
+            <button class="btn btn-lg" style="background:white; color:black;">See How It Works</button>
+            <button class="btn btn-gh btn-lg">Get a Pearl SCORE™ Report →</button>
+          </div>
+          <div style="display:flex; gap:24px; padding-top:24px; border-top:1px solid rgba(255,255,255,0.08); flex-wrap:wrap;">
+            <div style="display:flex; align-items:center; gap:7px; font-size:11px; color:rgba(255,255,255,0.4); font-weight:500; letter-spacing:0.07em; text-transform:uppercase;"><span style="width:6px;height:6px;border-radius:50%;background:#4ade80;display:inline-block;"></span>Public Data, Made Transparent</div>
+            <div style="display:flex; align-items:center; gap:7px; font-size:11px; color:rgba(255,255,255,0.4); font-weight:500; letter-spacing:0.07em; text-transform:uppercase;"><span style="width:6px;height:6px;border-radius:50%;background:#4ade80;display:inline-block;"></span>Built for Appraiser Conversations</div>
+            <div style="display:flex; align-items:center; gap:7px; font-size:11px; color:rgba(255,255,255,0.4); font-weight:500; letter-spacing:0.07em; text-transform:uppercase;"><span style="width:6px;height:6px;border-radius:50%;background:#4ade80;display:inline-block;"></span>Shareable Link</div>
+          </div>
+        </div>
+        <div>
+          <div class="img-ph" style="height:380px;">
+            <div class="img-ph-lines"></div>
+            <div class="img-ph-content">
+              <div class="img-ph-icon">📱</div>
+              <div class="img-ph-label">App Screenshot — Agent Dashboard</div>
+              <div class="img-ph-sub">Client report list view<br>as seen by the agent</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ════ WHY AGENTS ════ -->
+  <div class="block">
+    <div class="block-tag">WHY PEARL SCORE — AGENTS</div>
+    <div class="p" style="background:var(--g50);">
+      <div class="g2" style="gap:48px; align-items:center; margin-bottom:36px;">
+        <div>
+          <div class="kicker">Why Pearl SCORE™</div>
+          <div class="h2" style="margin-bottom:8px;">What your clients can't see is what matters most.</div>
+          <p class="body-t">Price, size, and location are table stakes. Without a Pearl SCORE™ Report, your clients are making decisions blind to the things that actually shape daily life — air quality, insulation, HVAC condition, monthly operating costs, storm preparedness, and whether a home can generate or store its own energy. No other tool puts it all into one place.</p>
+        </div>
+        <div>
+          <div class="img-ph" style="height:260px;">
+            <div class="img-ph-lines"></div>
+            <div class="img-ph-content">
+              <div class="img-ph-icon">📱</div>
+              <div class="img-ph-label">App Screenshot</div>
+              <div class="img-ph-sub">Pearl SCORE™ Report<br>pillar overview or comparison view</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="g3">
+        <div class="reason">
+          <div class="reason-n">01 ——</div>
+          <div class="reason-t">Compare What Matters, Not Just What's Visible</div>
+          <div class="reason-b">Is the air quality safe? How well insulated is the home? What shape is the HVAC in? Can it handle a severe storm? What will it cost to run every month? Your clients can't answer these from a traditional listing. A Pearl SCORE™ Report can.</div>
+        </div>
+        <div class="reason">
+          <div class="reason-n">02 ——</div>
+          <div class="reason-t">Your Advantage on Both Sides of the Deal</div>
+          <div class="reason-b">Use a Pearl SCORE™ Report to help buyers narrow their shortlist based on how homes actually live — or to differentiate a listing by highlighting the high-performing features that don't show up anywhere else.</div>
+        </div>
+        <div class="reason">
+          <div class="reason-n">03 ——</div>
+          <div class="reason-t">Own What Other Agents Miss</div>
+          <div class="reason-b">We work with the best in the industry — the U.S. Department of Energy, the National Association of REALTORS®, the Appraisal Institute, and the Real Estate Standards Organization (RESO). A Pearl SCORE™ Report equips you to facilitate home-purchase conversations where other agents can't.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ PARTNER LOGOS ════ -->
+  <div class="block">
+    <div class="block-tag">PARTNER LOGOS</div>
+    <div class="psm" style="background:var(--white); text-align:center;">
+      <div style="font-size:11px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--g400); margin-bottom:24px;">In Partnership With</div>
+      <div style="display:flex; justify-content:center; align-items:center; gap:48px; flex-wrap:wrap;">
+        <div class="img-ph" style="width:140px; height:50px; border-radius:4px;"><div class="img-ph-lines"></div><div class="img-ph-content" style="padding:6px 12px;"><div class="img-ph-label" style="font-size:8px;">U.S. Department of Energy</div></div></div>
+        <div class="img-ph" style="width:140px; height:50px; border-radius:4px;"><div class="img-ph-lines"></div><div class="img-ph-content" style="padding:6px 12px;"><div class="img-ph-label" style="font-size:8px;">National Association of REALTORS®</div></div></div>
+        <div class="img-ph" style="width:140px; height:50px; border-radius:4px;"><div class="img-ph-lines"></div><div class="img-ph-content" style="padding:6px 12px;"><div class="img-ph-label" style="font-size:8px;">Appraisal Institute</div></div></div>
+        <div class="img-ph" style="width:140px; height:50px; border-radius:4px;"><div class="img-ph-lines"></div><div class="img-ph-content" style="padding:6px 12px;"><div class="img-ph-label" style="font-size:8px;">RESO</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ════ REPORT FEATURES ════ -->
+  <div class="block">
+    <div class="block-tag">REPORT FEATURES</div>
+    <div class="p">
+      <div class="kicker">What's in the Report</div>
+      <div class="h2" style="margin-bottom:8px;">What's inside a Pearl SCORE™ Report.</div>
+      <p class="body-t" style="max-width:560px; margin-bottom:40px;">The nation's first home performance profile — shareable, comparable, and designed to help you answer the questions more buyers are asking today.</p>
+      <div class="g2" style="gap:60px; align-items:start;">
+        <div>
+          <div class="feat">
+            <div class="feat-icon">icon</div>
+            <div><div class="feat-t">Overall Performance Score</div><div class="feat-b">Every report includes a 1–1,000 Pearl SCORE™ for the property. Use it to help clients evaluate their shortlist — or to show what sets a listing apart.</div></div>
+          </div>
+          <div class="feat">
+            <div class="feat-icon">icon</div>
+            <div><div class="feat-t">Five Performance Pillars</div><div class="feat-b">Pearl SCORE™ measures how a home performs across five critical pillars — Safety, Comfort, Operations, Resilience, and Energy. Each pillar is scored individually, so you can see exactly where a property excels and how it compares to others in the same market.</div></div>
+          </div>
+          <div class="feat">
+            <div class="feat-icon">icon</div>
+            <div><div class="feat-t">Shareable Link</div><div class="feat-b">Every report comes with a shareable link — send it to clients comparing properties, embed it in MLS remarks, or include it in listing packets.</div></div>
+          </div>
+          <div class="feat">
+            <div class="feat-icon">icon</div>
+            <div><div class="feat-t">Certifications &amp; Achievements</div><div class="feat-b">If a property has earned certifications from programs like ENERGY STAR, LEED, or Pearl, the report flags them automatically — giving you instant visibility into verified improvements.</div></div>
+          </div>
+          <div class="feat">
+            <div class="feat-icon">icon</div>
+            <div><div class="feat-t">Estimated Operating Costs</div><div class="feat-b">Each report includes estimated monthly operating costs and how they compare to similar properties — so you can have real conversations about total cost of ownership and show clients you're looking out for them beyond the closing table.</div></div>
+          </div>
+        </div>
+        <!-- Report panel -->
+        <div style="position:sticky; top:80px;">
+          <div class="img-ph" style="height:480px;">
+            <div class="img-ph-lines"></div>
+            <div class="img-ph-content">
+              <div class="img-ph-icon">📱</div>
+              <div class="img-ph-label">App Screenshot — Sample Client Report</div>
+              <div class="img-ph-sub">SCORE Report detail screen<br>showing score, performance rating, and pillar breakdown<br>as seen by the agent</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ════ HOW IT WORKS — AGENTS ════ -->
+  <div class="block">
+    <div class="block-tag">HOW IT WORKS — AGENTS</div>
+    <div class="p" style="background:var(--g50);">
+      <div class="kicker">For Real Estate Professionals</div>
+      <div class="h2" style="margin-bottom:8px;">How agents use a Pearl SCORE™ Report</div>
+      <p class="body-t" style="max-width:560px; margin-bottom:36px;">Pearl is the first and only company in the country providing tools like this to deepen agent-client conversations. From any property address to a shareable Pearl SCORE™ Report in minutes — no technical knowledge required.</p>
+      <div class="g3">
+        <div style="display:flex; flex-direction:column; gap:0;">
+          <div class="img-ph" style="height:160px; border-radius:8px 8px 0 0; border-bottom:none;">
+            <div class="img-ph-lines"></div>
+            <div class="img-ph-content">
+              <div class="img-ph-icon">💻</div>
+              <div class="img-ph-label" style="font-size:8px;">Login / Dashboard Screen</div>
+            </div>
+          </div>
+          <div class="step" style="flex-direction:column; gap:12px; border-radius:0 0 6px 6px;">
+            <div class="step-n" style="border-radius:50%;">01</div>
+            <div><div class="step-title">Create an account or log in</div><div class="step-desc">Head to Pearl app for professionals — this is where you access your full suite of home performance tools.</div></div>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:0;">
+          <div class="img-ph" style="height:160px; border-radius:8px 8px 0 0; border-bottom:none;">
+            <div class="img-ph-lines"></div>
+            <div class="img-ph-content">
+              <div class="img-ph-icon">🔍</div>
+              <div class="img-ph-label" style="font-size:8px;">Search / Claim Screen</div>
+            </div>
+          </div>
+          <div class="step" style="flex-direction:column; gap:12px; border-radius:0 0 6px 6px;">
+            <div class="step-n" style="border-radius:50%;">02</div>
+            <div><div class="step-title">Search, claim, and compare homes</div><div class="step-desc">Look up any single-family address, claim homes on behalf of your clients, and compare properties side by side.</div></div>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:0;">
+          <div class="img-ph" style="height:160px; border-radius:8px 8px 0 0; border-bottom:none;">
+            <div class="img-ph-lines"></div>
+            <div class="img-ph-content">
+              <div class="img-ph-icon">📄</div>
+              <div class="img-ph-label" style="font-size:8px;">SCORE Report Screen</div>
+            </div>
+          </div>
+          <div class="step" style="flex-direction:column; gap:12px; border-radius:0 0 6px 6px;">
+            <div class="step-n" style="border-radius:50%;">03</div>
+            <div><div class="step-title">Get and share the Pearl SCORE™ Report</div><div class="step-desc">Send a shareable link to your clients, or use the report to strengthen a listing and show what makes a property stand out.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ════ SOCIAL PROOF ════ -->
+  <div class="block">
+    <div class="block-tag">STATS / TESTIMONIALS</div>
+    <div class="psm" style="background:var(--g900);">
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:0;">
+        <div style="padding:32px 24px; text-align:center; border-right:1px solid rgba(255,255,255,0.07);">
+          <div class="stat-v" style="font-size:36px; border:2px dashed rgba(255,255,255,0.15); border-radius:8px; padding:12px; margin-bottom:12px;">[ stat ]</div>
+          <div class="stat-l">Placeholder — e.g., homes rated, sale price premium, or market data</div>
+        </div>
+        <div style="padding:32px 24px; text-align:center; border-right:1px solid rgba(255,255,255,0.07);">
+          <div class="stat-v" style="font-size:36px; border:2px dashed rgba(255,255,255,0.15); border-radius:8px; padding:12px; margin-bottom:12px;">[ stat ]</div>
+          <div class="stat-l">Placeholder — e.g., operating cost savings, agent adoption, or time-on-market</div>
+        </div>
+        <div style="padding:32px 24px; text-align:center;">
+          <div style="font-size:20px; font-style:italic; color:rgba(255,255,255,0.6); line-height:1.5; margin-bottom:16px; border:2px dashed rgba(255,255,255,0.15); border-radius:8px; padding:20px;">"[ Agent testimonial ]"</div>
+          <div class="stat-l">— Name, Brokerage, Market</div>
+        </div>
+      </div>
+      <p style="font-size:10px; color:#333; text-align:center; padding-top:8px; letter-spacing:0.07em; text-transform:uppercase;">[ Stats and testimonials to be sourced from EAP participants and Pearl data ]</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ════ CTA ════ -->
+  <div class="block">
+    <div class="block-tag">PRIMARY CTA</div>
+    <div class="plg" style="text-align:center; background:var(--g50);">
+      <div class="kicker">Get Started</div>
+      <div class="h2" style="max-width:640px; margin:0 auto 16px;">Clients are asking how homes perform.<br>Are you ready?</div>
+      <p class="body-t" style="max-width:500px; margin:0 auto 36px;">The Pearl SCORE™ Report is available now on active single-family listings across the U.S. Create an account and run your first report in minutes.</p>
+      <button class="btn btn-dk btn-lg" style="margin-bottom:24px;">Open the Web App →</button>
+      <div style="display:flex; justify-content:center; gap:14px; flex-wrap:wrap; margin-bottom:12px;">
+        <div class="img-ph" style="width:150px; height:50px; border-radius:8px;">
+          <div class="img-ph-lines"></div>
+          <div class="img-ph-content" style="padding:8px 14px; flex-direction:row; gap:8px; white-space:nowrap;">
+            <span style="font-size:18px; opacity:0.6;">🍎</span>
+            <div style="text-align:left;">
+              <div style="font-size:8px; color:var(--g500); letter-spacing:0.06em; text-transform:uppercase;">Download on the</div>
+              <div style="font-size:12px; font-weight:700; color:var(--black);">App Store</div>
+            </div>
+          </div>
+        </div>
+        <div class="img-ph" style="width:150px; height:50px; border-radius:8px;">
+          <div class="img-ph-lines"></div>
+          <div class="img-ph-content" style="padding:8px 14px; flex-direction:row; gap:8px; white-space:nowrap;">
+            <span style="font-size:18px; opacity:0.6;">▶️</span>
+            <div style="text-align:left;">
+              <div style="font-size:8px; color:var(--g500); letter-spacing:0.06em; text-transform:uppercase;">Get it on</div>
+              <div style="font-size:12px; font-weight:700; color:var(--black);">Google Play</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Pro app callout -->
+      <div style="display:inline-flex; align-items:center; gap:10px; border:1px solid var(--g200); padding:12px 24px; border-radius:4px; font-size:14px; color:var(--g600);">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+        Looking for the homeowner experience? <strong style="color:var(--black);">&nbsp;Check out the Pearl app for consumers&nbsp;</strong>
+      </div>
+      <p class="small" style="margin-top:16px; max-width:440px; margin-left:auto; margin-right:auto;">The Pearl SCORE™ Report is designed to guide understanding — it is not a home inspection, appraisal, or guarantee of condition.</p>
+    </div>
+  </div>
+
+  <div class="wf-foot">
+    <span>📐 Page 2 of 2 · Real Estate Professionals</span>
+    <span>⚠️ Verify all stats before publishing</span>
+    <span>🔀 Confirm report availability: any home or listed homes only?</span>
+    <span>🔗 Final CTA link / App Store URLs needed</span>
+  </div>
+
+</div>
+</body>
+</html>

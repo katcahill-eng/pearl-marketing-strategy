@@ -104,11 +104,33 @@ function getImageUrl(post: SocialPost, imageUrls: ImageURLMap): string | null {
 }
 
 /**
+ * Builds per-platform Sprout Social CSVs (one per social profile).
+ * Returns a map of platform → CSV content.
+ */
+export function buildPerPlatformCSVs(
+  posts: SocialPost[],
+  imageUrls: ImageURLMap,
+  startDate: Date,
+  spacingDays: number
+): Record<string, string> {
+  const platforms = [...new Set(posts.map(p => p.platform))];
+  const result: Record<string, string> = {};
+
+  for (const platform of platforms) {
+    const platformPosts = posts.filter(p => p.platform === platform);
+    result[platform] = buildSproutCSV(platformPosts, imageUrls, startDate, spacingDays);
+  }
+
+  return result;
+}
+
+/**
  * Writes CSV to output/ directory. Returns the file path.
  */
-export function writeCSVToFile(csv: string, blogSlug: string): string {
+export function writeCSVToFile(csv: string, blogSlug: string, platform?: string): string {
   const date = new Date().toISOString().split('T')[0];
-  const filename = `sprout_import_${blogSlug}_${date}.csv`;
+  const suffix = platform ? `_${platform}` : '';
+  const filename = `sprout_import_${blogSlug}${suffix}_${date}.csv`;
   const outputDir = join(__dirname, '..', 'output');
   if (!existsSync(outputDir)) {
     mkdirSync(outputDir, { recursive: true });

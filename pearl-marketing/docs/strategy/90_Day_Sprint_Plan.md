@@ -61,8 +61,10 @@ This plan is designed for:
 | Media coverage | Total mentions | 15+ |
 | Podcast appearances | Booked | 12-18 |
 | Speaking | Sponsored speaking slots | 2+ |
-| Content | Pillar pieces launched | 2 |
-| Content | Derivative pieces | 20+ |
+| Content | B2C pillar series (Pearl-produced) | 5-part series covering all SCORE pillars |
+| Content | B2B blog posts (Pearl-produced) | 3 posts (1/month) |
+| Content | FPS SEO content pipeline | Scaling to 2/week delivery |
+| Content | FPS AI Exchange placements | 1 published |
 | Paid media | Geo-fence campaigns | 1 (Inman NYC) |
 | Foundation | Speaker kit complete | Yes |
 | Foundation | Video recording plan | Yes |
@@ -81,7 +83,8 @@ This plan is designed for:
 |------|-------|-------------|
 | **Complete Partnership Audit** | Marketing + Owners | Confirmed Q1 partnership usage |
 | **Complete Conference Audit** | Marketing + BD | Confirmed Q1 event priorities |
-| Finalize "State of Home Performance 2026" content | Marketing + AI | Draft report |
+| Launch B2C pillar series: "What Every Buyer Needs to Know" (Safety, Comfort) | Marketing + AI | First 2 posts of 5-part series |
+| Launch B2B blog: agent-focused thought leadership | Marketing + AI | First B2B post |
 | Brief Atkinson on Q1 priorities | Marketing | Kick-off call |
 | Create speaker support kit | Marketing + AI | Messaging doc, key stats, talking points |
 | **Establish video recording requirements** | Marketing | Specs for capturing all sponsored presentations |
@@ -96,8 +99,10 @@ This plan is designed for:
 
 | Audience | Channel | Owner | Volume | Notes |
 |----------|---------|-------|--------|-------|
-| `[B2C]` | SEO blog | Front Page Sage | 2 posts | Consumer-focused, LLM-optimized |
-| `[B2C]` | Meta (Facebook) | Front Page Sage | 4-6 posts | Repurpose FPS blog content |
+| `[B2C]` | Pillar series blog | Marketing + AI | 2 posts | "What Every Buyer" series (Safety, Comfort) |
+| `[B2C]` | SEO blog | Front Page Sage | 2-4 posts | Consumer-focused, LLM-optimized |
+| `[B2B]` | Blog | Marketing + AI | 1 post | Agent thought leadership |
+| `[B2C]` | Meta (Facebook) | Marketing | 4-6 posts | Repurpose blog content |
 | `[B2B]` | LinkedIn | Marketing | 6 posts | Industry news, Pearl updates |
 | `[B2B]` | X (Twitter) | Marketing | 6-10 posts | Real estate conversations |
 | Both | PR/Media pitches | Atkinson | 10 pitches | Q1 priority targets |
@@ -113,10 +118,11 @@ This plan is designed for:
 **Event & Campaign Tasks**
 | Task | Owner | Deliverable |
 |------|-------|-------------|
-| Launch "State of Home Performance 2026" | Marketing | Report live, gated |
+| Continue B2C pillar series (Operations post) | Marketing + AI | "What Every Buyer Needs to Know About Operating Costs" |
 | Geo-fencing campaign live at Inman | Marketing | Ads running |
 | Atkinson media push | Atkinson | Pitches sent, follow-ups |
 | Email blast to full list | Marketing | Announcement sent |
+| FPS AI Exchange: Skaggs Walsh Q+A published | Front Page Sage | External authority placement |
 | Founder interviews (if booked) | Founders + Marketing | Talking points provided |
 | Capture content from event | Founders | Photos, quotes, insights |
 
@@ -124,14 +130,16 @@ This plan is designed for:
 
 | Audience | Channel | Owner | Volume | Notes |
 |----------|---------|-------|--------|-------|
-| `[B2C]` | SEO blog | Front Page Sage | 2 posts | Consumer-focused |
-| `[B2C]` | Meta (Facebook) | Front Page Sage | 6-8 posts | FPS content + report promo |
-| `[B2B]` | LinkedIn | Marketing | **DAILY (14+)** | Report launch, Inman coverage |
-| `[B2B]` | X (Twitter) | Marketing | **DAILY (14+)** | Report launch, Inman coverage |
-| Both | PR/Media pitches | Atkinson | 10+ pitches | Report launch push |
+| `[B2C]` | Pillar series blog | Marketing + AI | 1 post | "What Every Buyer" series continues |
+| `[B2C]` | SEO blog | Front Page Sage | 2-4 posts | Consumer-focused |
+| `[B2B]` | Blog | Marketing + AI | 1 post | Agent thought leadership |
+| `[B2C]` | Meta (Facebook) | Marketing | 6-8 posts | Blog content + Inman promo |
+| `[B2B]` | LinkedIn | Marketing | **DAILY (14+)** | Inman coverage, pillar series |
+| `[B2B]` | X (Twitter) | Marketing | **DAILY (14+)** | Inman coverage |
+| Both | PR/Media pitches | Atkinson | 10+ pitches | Inman push |
 | Both | Podcast pitches | Atkinson | 6 pitches | Initial outreach |
 
-**Milestone:** Inman NYC executed, report launched, initial media hits
+**Milestone:** Inman NYC executed, B2C series mid-flight, initial media hits
 
 ---
 
@@ -143,7 +151,8 @@ This plan is designed for:
 | Task | Owner | Deliverable |
 |------|-------|-------------|
 | Podcast agency kick-off (if using) OR Atkinson podcast push | Atkinson/Agency | First pitches sent |
-| B2B blog content: Agent-focused | Marketing + AI | 2 posts |
+| Continue B2C pillar series (Resilience post) | Marketing + AI | "Built to Last: How Resilience Scores Protect Your Home Investment" |
+| B2B blog: "America's 40-Year-Old Problem" | Marketing + AI | Agent thought leadership |
 | Media follow-up from Inman | Atkinson | Coverage tracking |
 | Retargeting campaign live | Marketing | Always-on ads |
 | Push RESO Spring speaking to Product team | Marketing | Email + offer to help |
@@ -153,9 +162,11 @@ This plan is designed for:
 
 | Audience | Channel | Owner | Volume | Notes |
 |----------|---------|-------|--------|-------|
-| `[B2C]` | SEO blog | Front Page Sage | 2 posts | Consumer-focused |
-| `[B2C]` | Meta (Facebook) | Front Page Sage | 4-6 posts | FPS content repurposed |
-| `[B2B]` | LinkedIn | Marketing | 6 posts | Derivative content from report |
+| `[B2C]` | Pillar series blog | Marketing + AI | 1 post | "What Every Buyer" series (Resilience) |
+| `[B2C]` | SEO blog | Front Page Sage | 2-4 posts | Consumer-focused |
+| `[B2B]` | Blog | Marketing + AI | 1 post | Agent thought leadership |
+| `[B2C]` | Meta (Facebook) | Marketing | 4-6 posts | Blog content repurposed |
+| `[B2B]` | LinkedIn | Marketing | 6 posts | Pillar series derivatives |
 | `[B2B]` | X (Twitter) | Marketing | 6-10 posts | Industry conversations |
 | Both | PR/Media pitches | Atkinson | 10 pitches | Ongoing outreach |
 | Both | Podcast pitches | Atkinson | 6 pitches | Ongoing outreach |
@@ -171,10 +182,10 @@ This plan is designed for:
 **Content & Planning Tasks**
 | Task | Owner | Deliverable |
 |------|-------|-------------|
-| Second pillar: "What Buyers Want That Listings Don't Show" | Marketing + AI | Draft complete |
+| Complete B2C pillar series (Energy post — final in series) | Marketing + AI | "What Every Buyer Should Know About Home Energy" |
+| B2B blog: "The Home Buying Conversation Is Changing" | Marketing + AI | Agent thought leadership |
 | Continue podcast bookings | Atkinson/Agency | 4-6 confirmed |
 | LinkedIn content calendar for Q2 | Marketing | Calendar drafted |
-| Case study development (if data available) | Marketing + AI | 1 case study |
 | Media monitoring report | Atkinson | Coverage summary |
 | Partnership benefits summary to leadership | Marketing | Brief document |
 | Prep for spring events (RESO, T3, NAR) | Marketing | Speaker materials ready |
@@ -183,15 +194,17 @@ This plan is designed for:
 
 | Audience | Channel | Owner | Volume | Notes |
 |----------|---------|-------|--------|-------|
-| `[B2C]` | SEO blog | Front Page Sage | 2 posts | Consumer-focused |
-| `[B2C]` | Meta (Facebook) | Front Page Sage | 4-6 posts | FPS content repurposed |
-| `[B2B]` | LinkedIn | Marketing | 6 posts | Second pillar teaser content |
+| `[B2C]` | Pillar series blog | Marketing + AI | 1 post | Series finale (Energy) |
+| `[B2C]` | SEO blog | Front Page Sage | 2-4 posts | Consumer-focused |
+| `[B2B]` | Blog | Marketing + AI | 1 post | Agent thought leadership |
+| `[B2C]` | Meta (Facebook) | Marketing | 4-6 posts | Blog content repurposed |
+| `[B2B]` | LinkedIn | Marketing | 6 posts | Series wrap-up content |
 | `[B2B]` | X (Twitter) | Marketing | 6-10 posts | Industry conversations |
 | Both | PR/Media pitches | Atkinson | 10 pitches | Ongoing outreach |
 | Both | Podcast pitches | Atkinson | 6 pitches | Ongoing outreach |
 | — | Monthly report | Front Page Sage | 1 | Performance analytics |
 
-**Milestone:** Content engine running, podcast appearances happening, spring events prepped
+**Milestone:** B2C pillar series complete (all 5 SCORE pillars), content engine running, spring events prepped
 
 ---
 
@@ -202,7 +215,7 @@ This plan is designed for:
 **Planning & Review Tasks**
 | Task | Owner | Deliverable |
 |------|-------|-------------|
-| Launch second pillar content | Marketing | Blog, social, email |
+| Plan B2C series 2 for Q2 | Marketing + AI | Series outline and first drafts |
 | Confirm RESO Spring participation | Product + Marketing | Status confirmed |
 | Confirm T3 Summit participation | BD + Marketing | Status confirmed |
 | Confirm NAR Sustainability Summit | BD + Marketing | Status confirmed |
@@ -214,14 +227,14 @@ This plan is designed for:
 
 | Audience | Channel | Owner | Volume | Notes |
 |----------|---------|-------|--------|-------|
-| `[B2C]` | SEO blog | Front Page Sage | 2 posts | Consumer-focused |
-| `[B2C]` | Meta (Facebook) | Front Page Sage | 4-6 posts | FPS content repurposed |
-| `[B2B]` | LinkedIn | Marketing | 6 posts | Second pillar launch |
+| `[B2C]` | SEO blog | Front Page Sage | 2-4 posts | Consumer-focused |
+| `[B2C]` | Meta (Facebook) | Marketing | 4-6 posts | Blog content repurposed |
+| `[B2B]` | LinkedIn | Marketing | 6 posts | Q1 wins, Q2 preview |
 | `[B2B]` | X (Twitter) | Marketing | 6-10 posts | Industry conversations |
 | Both | PR/Media pitches | Atkinson | 10 pitches | Ongoing outreach |
 | Both | Podcast pitches | Atkinson | 6 pitches | Ongoing outreach |
 
-**Milestone:** Q2 events confirmed, Q1 momentum documented
+**Milestone:** Q1 pillar series complete, Q2 events confirmed, Q1 momentum documented
 
 ---
 
@@ -244,8 +257,8 @@ This plan is designed for:
 
 | Audience | Channel | Owner | Volume | Notes |
 |----------|---------|-------|--------|-------|
-| `[B2C]` | SEO blog | Front Page Sage | 2 posts | Consumer-focused |
-| `[B2C]` | Meta (Facebook) | Front Page Sage | 4-6 posts | FPS content repurposed |
+| `[B2C]` | SEO blog | Front Page Sage | 2-4 posts | Consumer-focused |
+| `[B2C]` | Meta (Facebook) | Marketing | 4-6 posts | Blog content repurposed |
 | `[B2B]` | LinkedIn | Marketing | 6 posts | Q1 wins, Q2 preview |
 | `[B2B]` | X (Twitter) | Marketing | 6-10 posts | Industry conversations |
 | Both | PR/Media pitches | Atkinson | 10 pitches | Ongoing outreach |
@@ -258,23 +271,23 @@ This plan is designed for:
 
 ## Key Activities Detail
 
-### 1. "State of Home Performance 2026" Report
+### 1. B2C Pillar Series: "What Every Buyer Needs to Know"
 
-**What:** Flagship annual report establishing Pearl as the definitive source on home performance trends.
+**What:** 5-part blog series covering all Pearl SCORE pillars, establishing Pearl as the authority on what buyers should evaluate beyond listing photos.
 
-**Contents:**
-- National home performance trends by region
-- What buyers are asking that listings don't show
-- The rise of performance-aware buyers
-- Pearl SCORE methodology highlights
-- 2026 predictions
+**Series:**
+1. What Every Buyer Needs to Know About Home Safety (Jan 7)
+2. What Every Buyer Should Know About Home Comfort (Jan 21)
+3. What Every Buyer Needs to Know About Operating Costs (Feb 4)
+4. Built to Last: How Resilience Scores Protect Your Home Investment (Feb 18)
+5. What Every Buyer Should Know About Home Energy (Mar 4)
 
 **Execution:**
-- AI drafts initial content from Pearl data + market research
-- Marketing edits and refines
-- Design via Canva or contractor
-- Gate behind email capture
-- Coordinate launch with Atkinson for media push
+- Marketing + Claude draft each post
+- Internal review for voice and accuracy
+- Built in Craft CMS, promoted through Sprout Social
+- Each post generates derivative social content
+- Biweekly cadence gives each post time to build organic traction
 
 ---
 
@@ -427,7 +440,7 @@ Additional services proposed for Series B visibility push:
 | Total media mentions | 10+ |
 | Podcast appearances booked | 12+ |
 | Geo-fence campaigns | 1 (of 10 annual) |
-| B2B blog posts | 3 (ramp with AI) |
+| B2B blog posts (Pearl-produced) | 3 (1/month, ramping) |
 | LinkedIn/X cadence | Maintained |
 | Speaker kit | Distributed |
 
@@ -435,9 +448,10 @@ Additional services proposed for Series B visibility push:
 
 | Goal | Target |
 |------|--------|
-| Report downloads | 500+ |
-| B2C blog posts (Front Page Sage) | 12 |
-| Meta/Blue Sky cadence | Maintained |
+| B2C pillar series (Pearl-produced) | 5-part series (all SCORE pillars) |
+| FPS SEO content pipeline | Scaling to 2/week delivery |
+| FPS AI Exchange placements | 1 published |
+| Meta/BlueSky cadence | Maintained |
 | pearlscore.com consumer page views | Baseline established |
 | Consumer email list growth | Tracked |
 

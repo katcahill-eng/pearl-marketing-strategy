@@ -6,7 +6,7 @@ import { generateInitialPosts, generateFollowupPosts, generateVIPQuotePosts, typ
 import { qcPosts, regenerateFailedPosts } from './qc-integration';
 import { matchAndExportGraphics } from './canva-graphics';
 import { uploadGraphicsToGDrive } from './image-uploader';
-import { buildSproutCSV, writeCSVToFile } from './csv-builder';
+import { buildPerPlatformCSVs, writeCSVToFile } from './csv-builder';
 
 export interface SocialWorkflowOptions {
   blogUrl?: string;
@@ -118,7 +118,7 @@ export async function runSocialWorkflow(options: SocialWorkflowOptions): Promise
   console.log('');
 
   // Step 8: Build CSV
-  const startDate = startDateStr ? new Date(startDateStr) : addDays(new Date(), 1);
+  const startDate = startDateStr ? parseLocalDate(startDateStr) : addDays(new Date(), 1);
 
   if (dryRun) {
     console.log('🏃 DRY RUN — CSV not generated\n');
@@ -126,11 +126,16 @@ export async function runSocialWorkflow(options: SocialWorkflowOptions): Promise
     return;
   }
 
-  console.log('📊 Building Sprout Social CSV...');
-  const csv = buildSproutCSV(finalPosts, imageUrls, startDate, spacingDays);
+  console.log('📊 Building Sprout Social CSVs (one per profile)...');
   const slug = slugify(title);
-  const csvPath = writeCSVToFile(csv, slug);
-  console.log(`   CSV saved: ${csvPath}\n`);
+  const platformCSVs = buildPerPlatformCSVs(finalPosts, imageUrls, startDate, spacingDays);
+  const csvPaths: string[] = [];
+  for (const [platform, csv] of Object.entries(platformCSVs)) {
+    const csvPath = writeCSVToFile(csv, slug, platform);
+    csvPaths.push(csvPath);
+    console.log(`   ✓ ${platform}: ${csvPath}`);
+  }
+  console.log('');
 
   // Step 9: Summary
   printPostSummary(finalPosts, startDate, spacingDays);
@@ -143,6 +148,12 @@ function addDays(date: Date, days: number): Date {
   const result = new Date(date);
   result.setDate(result.getDate() + days);
   return result;
+}
+
+/** Parse YYYY-MM-DD as local date (not UTC) to avoid off-by-one timezone issues */
+function parseLocalDate(dateStr: string): Date {
+  const [year, month, day] = dateStr.split('-').map(Number);
+  return new Date(year, month - 1, day);
 }
 
 function slugify(text: string): string {

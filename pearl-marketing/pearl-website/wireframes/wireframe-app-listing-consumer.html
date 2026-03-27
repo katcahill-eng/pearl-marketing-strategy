@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[WIREFRAME] Pearl App — App Store & Google Play Listing (Consumer)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --black: #111111; --g900: #1a1a1a; --g700: #444444; --g600: #555555;
+    --g500: #777777; --g400: #999999; --g300: #bbbbbb; --g200: #d4d4d4;
+    --g150: #e0e0e0; --g100: #ebebeb; --g50: #f5f5f5; --white: #ffffff;
+    --blue: #3b82f6;
+  }
+  body { font-family: 'Inter', sans-serif; background: var(--g50); color: var(--black); font-size: 14px; line-height: 1.5; }
+  body::before {
+    content: 'WIREFRAME'; position: fixed; top: 50%; left: 50%;
+    transform: translate(-50%, -50%) rotate(-25deg);
+    font-size: 130px; font-weight: 800; letter-spacing: 0.12em;
+    color: rgba(0,0,0,0.035); pointer-events: none; z-index: 0; white-space: nowrap;
+  }
+  .wf-bar {
+    background: var(--black); color: white; padding: 9px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 11px; letter-spacing: 0.07em; position: sticky; top: 0; z-index: 200;
+  }
+  .wf-pill { background: rgba(255,255,255,0.12); padding: 3px 10px; border-radius: 2px; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; }
+  .page { max-width: 900px; margin: 0 auto; background: var(--white); position: relative; z-index: 1; }
+  .block { border-left: 1px solid var(--g200); border-right: 1px solid var(--g200); position: relative; }
+  .block + .block { border-top: 1px solid var(--g150); }
+  .block-tag {
+    position: absolute; top: 0; right: 0;
+    background: var(--g100); border-left: 1px solid var(--g200); border-bottom: 1px solid var(--g200);
+    font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--g400); padding: 4px 10px; user-select: none;
+  }
+  .img-ph {
+    background: var(--g100); border: 2px dashed var(--g300); border-radius: 8px;
+    position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;
+  }
+  .img-ph-lines { position: absolute; inset: 0; overflow: hidden; }
+  .img-ph-lines::before, .img-ph-lines::after { content: ''; position: absolute; background: var(--g200); width: 160%; height: 1px; top: 50%; left: -30%; }
+  .img-ph-lines::before { transform: rotate(22deg); }
+  .img-ph-lines::after { transform: rotate(-22deg); }
+  .img-ph-content {
+    position: relative; z-index: 1; background: rgba(240,240,240,0.9);
+    border: 1px solid var(--g200); border-radius: 5px; padding: 14px 22px;
+    display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center;
+  }
+  .img-ph-icon { font-size: 24px; opacity: 0.55; }
+  .img-ph-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--g500); }
+  .img-ph-sub { font-size: 10px; color: var(--g400); line-height: 1.5; }
+  .kicker { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--g500); margin-bottom: 10px; }
+  .h1 { font-size: 36px; font-weight: 700; line-height: 1.12; color: var(--black); margin-bottom: 14px; }
+  .h2 { font-size: 26px; font-weight: 700; line-height: 1.15; color: var(--black); margin-bottom: 12px; }
+  .body-t { font-size: 15px; line-height: 1.72; color: var(--g600); }
+  .small { font-size: 12px; color: var(--g400); }
+  .p { padding: 48px 40px; }
+  .divider { height: 6px; background: var(--g100); border-top: 1px solid var(--g200); border-bottom: 1px solid var(--g200); }
+  .wf-foot { background: var(--g100); border-top: 2px solid var(--g200); padding: 10px 40px; display: flex; gap: 28px; flex-wrap: wrap; font-size: 11px; color: var(--g500); }
+</style>
+</head>
+<body>
+
+<div class="wf-bar">
+  <div><strong style="color:#ccc">PEARL</strong> &nbsp;·&nbsp; App Listing — Pearl app (consumer)</div>
+  <div class="wf-pill">App Store & Google Play</div>
+  <div>Wireframe · Draft · v1</div>
+</div>
+
+<div class="page">
+
+  <!-- ════ APP NAME & DESCRIPTION ════ -->
+  <div class="block">
+    <div class="block-tag">APP NAME & SHORT DESCRIPTION</div>
+    <div class="p">
+      <div class="kicker">App Name</div>
+      <div class="h1">Pearl</div>
+      <div style="margin-bottom:24px;">
+        <div class="kicker" style="margin-bottom:4px;">Short Description (max 80 characters)</div>
+        <p class="body-t" style="font-weight:500;">Home performance data for buyers and sellers.</p>
+      </div>
+      <div>
+        <div class="kicker" style="margin-bottom:4px;">Developer Name</div>
+        <p class="body-t">PLS Inc</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ════ DETAILED DESCRIPTION ════ -->
+  <div class="block">
+    <div class="block-tag">DETAILED DESCRIPTION (max 4000 chars)</div>
+    <div class="p">
+      <div class="kicker">Detailed Description</div>
+      <div style="background:var(--g50); border:1px solid var(--g200); border-radius:6px; padding:20px; margin-bottom:16px;">
+        <p class="small" style="margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em;">Copy as it will appear in the store (line breaks, no HTML):</p>
+        <p class="body-t" style="white-space:pre-line; font-size:14px; line-height:1.7;">The way homes are bought and sold is changing. 90% of buyers say safety and health factors influence their purchase decision — but until now, there hasn't been a way to evaluate how comfortable a home is, what it costs to run, or how well its systems hold up over time. Pearl changes that.
+
+Benefits for buyers:
+
+◆ Discover the five factors that shape what a home is actually like to own
+◆ View a home performance profile for any single-family home in the U.S. — the nation's first searchable registry
+◆ Save favorites and compare homes side by side
+◆ Order a Pearl SCORE™ Report on active listings to narrow your shortlist
+
+Benefits for sellers:
+
+◆ Claim your home and add the upgrades a traditional listing can't capture — so buyers see the real home, not just the public record
+◆ Build a more complete performance profile that sets your home apart in the market
+◆ Find rebates and tax credits for home energy improvements based on your location
+◆ Store and access important home documents in one place
+
+Pearl works in partnership with the U.S. Department of Energy, the National Association of REALTORS®, the Appraisal Institute, and RESO.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ════ APP SCREENSHOTS ════ -->
+  <div class="block">
+    <div class="block-tag">APP SCREENSHOTS (4-6 required)</div>
+    <div class="p">
+      <div class="kicker">App Screenshots</div>
+      <p class="body-t" style="margin-bottom:24px;">Each image: headline text at top, smartphone mockup below with app screen, feature callouts pointing to relevant parts of the screen.</p>
+
+      <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:16px;">
+        <!-- Screenshot 1 -->
+        <div>
+          <div class="img-ph" style="height:340px; margin-bottom:12px;">
+            <div class="img-ph-lines"></div>
+            <div class="img-ph-content">
+              <div class="img-ph-icon">📱</div>
+              <div class="img-ph-label" style="font-size:7px;">Screenshot 1</div>
+              <div class="img-ph-sub" style="font-size:9px;">Registry<br>map search</div>
+            </div>
+          </div>
+          <div style="font-size:13px; font-weight:600; color:var(--black); margin-bottom:4px;">Every home has a performance story.</div>
+          <div style="font-size:11px; color:var(--g500); line-height:1.5;"><strong>Screen:</strong> Home Performance Registry map view with address search</div>
+        </div>
+
+        <!-- Screenshot 2 -->
+        <div>
+          <div class="img-ph" style="height:340px; margin-bottom:12px;">
+            <div class="img-ph-lines"></div>
+            <div class="img-ph-content">
+              <div class="img-ph-icon">📱</div>
+              <div class="img-ph-label" style="font-size:7px;">Screenshot 2</div>
+              <div class="img-ph-sub" style="font-size:9px;">SCORE Report<br>overview</div>
+            </div>
+          </div>
+          <div style="font-size:9px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--g400); margin-bottom:4px;">Buyers</div>
+          <div style="font-size:13px; font-weight:600; color:var(--black); margin-bottom:4px;">Understand what a home is like to own.</div>
+          <div style="font-size:11px; color:var(--g500); line-height:1.5;"><strong>Screen:</strong> Pearl SCORE™ Report showing overall score and five pillar breakdown</div>
+        </div>
+
+        <!-- Screenshot 3 -->
+        <div>
+          <div class="img-ph" style="height:340px; margin-bottom:12px;">
+            <div class="img-ph-lines"></div>
+            <div class="img-ph-content">
+              <div class="img-ph-icon">📱</div>
+              <div class="img-ph-label" style="font-size:7px;">Screenshot 3</div>
+              <div class="img-ph-sub" style="font-size:9px;">Save & compare<br>homes</div>
+            </div>
+          </div>
+          <div style="font-size:9px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--g400); margin-bottom:4px;">Buyers</div>
+          <div style="font-size:13px; font-weight:600; color:var(--black); margin-bottom:4px;">Narrow your shortlist.</div>
+          <div style="font-size:11px; color:var(--g500); line-height:1.5;"><strong>Screen:</strong> Favorites list or comparison view showing saved homes side by side</div>
+        </div>
+
+        <!-- Screenshot 4 -->
+        <div>
+          <div class="img-ph" style="height:340px; margin-bottom:12px;">
+            <div class="img-ph-lines"></div>
+            <div class="img-ph-content">
+              <div class="img-ph-icon">📱</div>
+              <div class="img-ph-label" style="font-size:7px;">Screenshot 4</div>
+              <div class="img-ph-sub" style="font-size:9px;">Claim home /<br>update features</div>
+            </div>
+          </div>
+          <div style="font-size:9px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--g400); margin-bottom:4px;">Sellers</div>
+          <div style="font-size:13px; font-weight:600; color:var(--black); margin-bottom:4px;">Your upgrades deserve to be seen.</div>
+          <div style="font-size:11px; color:var(--g500); line-height:1.5;"><strong>Screen:</strong> Claim home or update assets screen showing feature additions</div>
+        </div>
+
+        <!-- Screenshot 5 -->
+        <div>
+          <div class="img-ph" style="height:340px; margin-bottom:12px;">
+            <div class="img-ph-lines"></div>
+            <div class="img-ph-content">
+              <div class="img-ph-icon">📱</div>
+              <div class="img-ph-label" style="font-size:7px;">Screenshot 5</div>
+              <div class="img-ph-sub" style="font-size:9px;">Rebates<br>finder</div>
+            </div>
+          </div>
+          <div style="font-size:9px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--g400); margin-bottom:4px;">Sellers</div>
+          <div style="font-size:13px; font-weight:600; color:var(--black); margin-bottom:4px;">Find rebates you didn't know existed.</div>
+          <div style="font-size:11px; color:var(--g500); line-height:1.5;"><strong>Screen:</strong> Rebates Finder showing available rebates and tax credits by location</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ════ WF FOOTNOTE ════ -->
+  <div class="wf-foot">
+    <span>📐 Pearl app (consumer) — App Store & Google Play Listing</span>
+    <span>⚠️ All screenshots need to be captured from the current build — old certification screens are outdated</span>
+<span>📅 Pricing intentionally omitted — handled inside the app</span>
+  </div>
+
+</div>
+</body>
+</html>

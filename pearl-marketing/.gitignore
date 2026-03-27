@@ -29,6 +29,7 @@ yarn-error.*
 *.pem
 
 # Local env files
+.env
 .env*.local
 
 # TypeScript
@@ -43,6 +44,16 @@ yarn-error.*
 .vscode/
 *.swp
 *.swo
+
+# Credentials
+credentials.json
+token.json
+
+# Playwright
+.playwright-mcp/
+
+# Figma screenshots (temporary)
+figma-*.png
 
 # Ralph internal
 .ralph-last-branch

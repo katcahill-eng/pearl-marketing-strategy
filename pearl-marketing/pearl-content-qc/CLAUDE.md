@@ -67,7 +67,7 @@ The `strategy-docs/` directory contains the reference documents that define what
 ### Google Docs Reader (`src/google-docs-reader.ts`)
 
 - Accepts a Google Docs URL or raw document ID
-- Uses service account auth (same pattern as pearl-bot)
+- Uses service account auth (same pattern as MarcomsBot)
 - Extracts text from paragraphs, tables, and table of contents
 
 ## Grading Rubric

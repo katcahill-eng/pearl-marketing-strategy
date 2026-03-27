@@ -1,0 +1,41 @@
+name: website-manager
+display_name: Website Manager
+version: 1.0.0
+description: Owns pearlscore.com copy quality, landing page development, and SEO performance — delegates brand compliance to Content QC
+
+aliases:
+  - website
+  - web
+  - site
+  - seo
+  - landing page
+
+capabilities:
+  - crawl_sitemap: "Discovers all pages on pearlscore.com via sitemap.xml"
+  - scrape_pages: "Extracts structured content (headings, body, meta) from each page"
+  - website_qc: "Sends page content to Content QC spoke and produces a consolidated report"
+  - landing_page_copy: "Generates copy and layout recommendations for new landing pages"
+  - seo_analysis: "Combines Semrush data and Front Page Sage deliverables into SEO recommendations"
+
+inputs:
+  - command: "CLI command: scan, landing-page, seo"
+  - pages: "Comma-separated URLs to scan instead of full sitemap (optional)"
+  - exclude: "Additional path patterns to exclude from crawl (optional)"
+  - skip_qc: "Skip Content QC step and produce crawl-only report (optional)"
+
+outputs:
+  - qc_report: "Excel workbook with per-page grades, issues, and suggested fixes"
+  - page_list: "Sorted list of discovered URLs with metadata"
+  - console_summary: "Terminal-friendly summary table of page grades"
+
+shared_services:
+  - claude_api
+  - brand_context
+  - google_workspace
+
+dependencies:
+  - content-qc
+
+invoke:
+  cli: "npx tsx src/cli.ts {command}"
+  library: "import { runWebsiteScan } from 'pearl-website'"
