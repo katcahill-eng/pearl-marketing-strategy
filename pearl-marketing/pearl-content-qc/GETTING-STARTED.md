@@ -38,6 +38,8 @@ Do these steps once to get everything ready. All of these happen in Terminal.
 
 ### Step 1: Download the project
 
+This downloads a working copy of the shared project to your computer. You and Kat are both working from the same repository — any changes either of you push will be available to the other.
+
 Open Terminal and copy/paste these lines one at a time, pressing Enter after each:
 
 ```
@@ -132,9 +134,11 @@ After a QC check runs, you'll see:
 - **Tone** — Does it sound like Pearl (Sage/Genius voice) or like generic marketing?
 - **Data** — Are statistics sourced and current?
 
-## Keeping the Tool Updated
+## How We Share Changes
 
-When Kat pushes updates to the QC rules or tool, pull the latest version:
+You and Kat share the same repository. Think of it like a shared Google Drive folder, but for code.
+
+**Before you start working**, pull the latest changes so you have everything up to date:
 
 1. Open Terminal
 2. Navigate to the project:
@@ -145,10 +149,16 @@ When Kat pushes updates to the QC rules or tool, pull the latest version:
    ```
    git pull
    ```
-4. Reinstall if needed:
-   ```
-   cd pearl-marketing/pearl-content-qc && npm install
-   ```
+
+**After you make changes** to strategy docs or anything else, push them so Kat can see them:
+
+```
+git add -A
+git commit -m "Describe what you changed"
+git push
+```
+
+If you're using Claude Code, you can just ask it: *"Commit and push my changes."*
 
 ## Questions?
 
