@@ -10,13 +10,13 @@ Pearl is NOT a data aggregator, an inspection service, or an energy efficiency p
 
 **Pearl SCORE™** — A standardized 1–1,000 rating across five pillars: Safety, Comfort, Operations, Resilience, and Energy. Scores map to six performance zones: Needs Improvement, Typical, Good, Very Good, Excellent, Exceptional. Homes scoring 500+ may qualify for Pearl Certification (Silver, Gold, Platinum).
 
-**Pearl Home Performance Registry™** — A free, searchable public database of 92+ million single-family homes. The Registry is the permanent record. The SCORE is what the Registry produces. Any buyer, agent, lender, or insurer can look up any home. Homeowners can claim their home's record and complete or correct its profile.
+**Pearl Home Performance Registry™** — A free, searchable public database of 97+ million single-family homes. The Registry is the permanent record. The SCORE is what the Registry produces. Any buyer, agent, lender, or insurer can look up any home. Homeowners can claim their home's record and complete or correct its profile.
 
 ## Mission and Values
 
-- **Vision (internal):** A world where ordinary people power energy transformation
+- **Vision:** INTERNAL ONLY — never publish or use in public-facing content
 - **Mission:** To make home performance matter
-- **Goal:** Every home listing in America will include Pearl SCORE by the end of the decade
+- **Goal:** Every home listing in America will include Pearl SCORE by the end of the decade (internal — do not publish)
 - **Certified B Corporation**
 
 **Values:** Profit with purpose, Be transparent, Measure what matters, Do no harm, Make it personal, Make it visual, Keep it simple, Foster hope
