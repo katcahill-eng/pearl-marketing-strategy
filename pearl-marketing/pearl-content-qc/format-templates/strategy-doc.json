@@ -1,0 +1,2695 @@
+[
+  {
+    "index": 0,
+    "text": "Document Status: DRAFT",
+    "runs": [
+      {
+        "italic": true,
+        "fontSize_halfPt": 18,
+        "fontSize_pt": 9.0,
+        "color": "666666",
+        "font": "Lato",
+        "text": "Document Status: DRAFT"
+      }
+    ],
+    "alignment": "right",
+    "spacing": {
+      "after": "100",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 1,
+    "text": "90-Day PR Sprint Plan | January 2026",
+    "runs": [
+      {
+        "fontSize_halfPt": 18,
+        "fontSize_pt": 9.0,
+        "color": "666666",
+        "font": "Lato",
+        "text": "90-Day PR Sprint Plan | January 2026"
+      }
+    ],
+    "alignment": "right",
+    "spacing": {
+      "after": "400",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 2,
+    "text": "Pearl PR",
+    "runs": [
+      {
+        "bold": true,
+        "fontSize_halfPt": 56,
+        "fontSize_pt": 28.0,
+        "color": "1e3a5f",
+        "font": "Lato",
+        "text": "Pearl PR"
+      }
+    ],
+    "alignment": "center",
+    "spacing": {
+      "before": "600",
+      "after": "200",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 3,
+    "text": "90-Day Sprint Plan",
+    "runs": [
+      {
+        "fontSize_halfPt": 44,
+        "fontSize_pt": 22.0,
+        "color": "1e3a5f",
+        "font": "Lato",
+        "text": "90-Day Sprint Plan"
+      }
+    ],
+    "alignment": "center",
+    "spacing": {
+      "after": "100",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 4,
+    "text": "January 27 - April 27, 2026",
+    "runs": [
+      {
+        "fontSize_halfPt": 28,
+        "fontSize_pt": 14.0,
+        "color": "666666",
+        "font": "Lato",
+        "text": "January 27 - April 27, 2026"
+      }
+    ],
+    "alignment": "center",
+    "spacing": {
+      "after": "400",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 5,
+    "text": "What This Plan Achieves",
+    "runs": [
+      {
+        "fontSize_halfPt": 32,
+        "fontSize_pt": 16.0,
+        "color": "1e3a5f",
+        "font": "Lato",
+        "text": "What This Plan Achieves"
+      }
+    ],
+    "style": "Heading1",
+    "spacing": {
+      "before": "300",
+      "after": "200",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 6,
+    "text": "Build Pearl's media presence and industry authority ahead of Series B through relentless, multi-chan",
+    "runs": [
+      {
+        "bold": true,
+        "fontSize_halfPt": 24,
+        "fontSize_pt": 12.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "Build Pearl's media presence and industry authorit"
+      }
+    ],
+    "spacing": {
+      "after": "200",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 7,
+    "text": "PR Activity at a Glance (Q1)",
+    "runs": [
+      {
+        "bold": true,
+        "fontSize_halfPt": 24,
+        "fontSize_pt": 12.0,
+        "color": "1e3a5f",
+        "font": "Lato",
+        "text": "PR Activity at a Glance (Q1)"
+      }
+    ],
+    "spacing": {
+      "before": "240",
+      "after": "120",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 8,
+    "text": "Activity Type",
+    "runs": [
+      {
+        "bold": true,
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "ffffff",
+        "font": "Lato",
+        "text": "Activity Type"
+      }
+    ]
+  },
+  {
+    "index": 9,
+    "text": "Q1 Volume",
+    "runs": [
+      {
+        "bold": true,
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "ffffff",
+        "font": "Lato",
+        "text": "Q1 Volume"
+      }
+    ]
+  },
+  {
+    "index": 10,
+    "text": "Why It Matters",
+    "runs": [
+      {
+        "bold": true,
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "ffffff",
+        "font": "Lato",
+        "text": "Why It Matters"
+      }
+    ]
+  },
+  {
+    "index": 11,
+    "text": "Media Pitches",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "Media Pitches"
+      }
+    ]
+  },
+  {
+    "index": 12,
+    "text": "60 targeted pitches",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "60 targeted pitches"
+      }
+    ]
+  },
+  {
+    "index": 13,
+    "text": "Direct outreach to journalists builds relationships",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "Direct outreach to journalists builds relationship"
+      }
+    ]
+  },
+  {
+    "index": 14,
+    "text": "Media Pitches",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "Media Pitches"
+      }
+    ]
+  },
+  {
+    "index": 15,
+    "text": "60 follow-up pitches/calls",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "60 follow-up pitches/calls"
+      }
+    ]
+  },
+  {
+    "index": 16,
+    "text": "Follow up with journalists who we have pitched ",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "Follow up with journalists who we have pitched "
+      }
+    ]
+  },
+  {
+    "index": 17,
+    "text": "Press Releases",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "Press Releases"
+      }
+    ]
+  },
+  {
+    "index": 18,
+    "text": "3 releases on wire",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "3 releases on wire"
+      }
+    ]
+  },
+  {
+    "index": 19,
+    "text": "Establishes credibility with investors, media, competitors",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "Establishes credibility with investors, media, com"
+      }
+    ]
+  },
+  {
+    "index": 20,
+    "text": "Story Concepts",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "Story Concepts"
+      }
+    ]
+  },
+  {
+    "index": 21,
+    "text": "15 pitch memos",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "15 pitch memos"
+      }
+    ]
+  },
+  {
+    "index": 22,
+    "text": "Proactive narrative control",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "Proactive narrative control"
+      }
+    ]
+  },
+  {
+    "index": 23,
+    "text": "Reporter Relationships",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "Reporter Relationships"
+      }
+    ]
+  },
+  {
+    "index": 24,
+    "text": "20+ active contacts",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "20+ active contacts"
+      }
+    ]
+  },
+  {
+    "index": 25,
+    "text": "Media pipeline for ongoing coverage",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "Media pipeline for ongoing coverage"
+      }
+    ]
+  },
+  {
+    "index": 27,
+    "text": "Immediate Opportunities",
+    "runs": [
+      {
+        "fontSize_halfPt": 32,
+        "fontSize_pt": 16.0,
+        "color": "1e3a5f",
+        "font": "Lato",
+        "text": "Immediate Opportunities"
+      }
+    ],
+    "style": "Heading1",
+    "spacing": {
+      "before": "300",
+      "after": "200",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 28,
+    "text": "These are time-sensitive opportunities that can generate quick wins and demonstrate PR momentum:",
+    "runs": [
+      {
+        "fontSize_halfPt": 22,
+        "fontSize_pt": 11.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "These are time-sensitive opportunities that can ge"
+      }
+    ],
+    "spacing": {
+      "after": "120",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 30,
+    "text": "1. Citybiz Q&A Feature",
+    "runs": [
+      {
+        "bold": true,
+        "fontSize_halfPt": 24,
+        "fontSize_pt": 12.0,
+        "color": "1e3a5f",
+        "font": "Lato",
+        "text": "1. Citybiz Q&A Feature"
+      }
+    ],
+    "spacing": {
+      "before": "240",
+      "after": "120",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 31,
+    "text": "Platform reach: 8 million monthly clicks, 45,000 LinkedIn followers, newsletters in 20 cities",
+    "runs": [
+      {
+        "italic": true,
+        "fontSize_halfPt": 22,
+        "fontSize_pt": 11.0,
+        "color": "000000",
+        "font": "Lato",
+        "text": "Platform reach: 8 million monthly clicks, 45,000 L"
+      }
+    ],
+    "alignment": "left",
+    "indent": {
+      "left": "720",
+      "right": "0",
+      "hanging": "360"
+    },
+    "spacing": {
+      "before": "0",
+      "after": "0",
+      "line": "240",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 32,
+    "text": "No paywall = maximum visibility",
+    "runs": [
+      {
+        "italic": true,
+        "fontSize_halfPt": 22,
+        "fontSize_pt": 11.0,
+        "color": "000000",
+        "font": "Lato",
+        "text": "No paywall = maximum visibility"
+      }
+    ],
+    "alignment": "left",
+    "indent": {
+      "left": "720",
+      "right": "0",
+      "hanging": "360"
+    },
+    "spacing": {
+      "before": "0",
+      "after": "0",
+      "line": "240",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 33,
+    "text": "Action: Draft Q&A on Registry + Pearl Score with Cynthia; follow with Robin on separate topic, follo",
+    "runs": [
+      {
+        "italic": true,
+        "fontSize_halfPt": 22,
+        "fontSize_pt": 11.0,
+        "color": "000000",
+        "font": "Lato",
+        "text": "Action: Draft Q&A on Registry + Pearl Score with C"
+      },
+      {
+        "italic": true,
+        "fontSize_halfPt": 22,
+        "fontSize_pt": 11.0,
+        "font": "Lato",
+        "text": "followed by Tim"
+      },
+      {
+        "font": "Lato",
+        "text": ". "
+      }
+    ],
+    "alignment": "left",
+    "indent": {
+      "left": "720",
+      "right": "0",
+      "hanging": "360"
+    },
+    "spacing": {
+      "before": "0",
+      "after": "0",
+      "line": "240",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 34,
+    "text": "Assets needed: Headshots, charts, graphics",
+    "runs": [
+      {
+        "italic": true,
+        "fontSize_halfPt": 22,
+        "fontSize_pt": 11.0,
+        "color": "000000",
+        "font": "Lato",
+        "text": "Assets needed: Headshots, charts, graphics"
+      }
+    ],
+    "alignment": "left",
+    "indent": {
+      "left": "720",
+      "right": "0",
+      "hanging": "360"
+    },
+    "spacing": {
+      "before": "0",
+      "after": "0",
+      "line": "240",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 36,
+    "text": "2. KeyCrew Media Partnership",
+    "runs": [
+      {
+        "bold": true,
+        "fontSize_halfPt": 24,
+        "fontSize_pt": 12.0,
+        "color": "1e3a5f",
+        "font": "Lato",
+        "text": "2. KeyCrew Media Partnership"
+      }
+    ],
+    "spacing": {
+      "before": "240",
+      "after": "120",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 37,
+    "text": "Standing offer from co-founder Steve Marcinuk for Pearl data stories",
+    "runs": [
+      {
+        "italic": true,
+        "fontSize_halfPt": 22,
+        "fontSize_pt": 11.0,
+        "color": "000000",
+        "font": "Lato",
+        "text": "Standing offer from co-founder Steve Marcinuk for "
+      }
+    ],
+    "alignment": "left",
+    "indent": {
+      "left": "720",
+      "right": "0",
+      "hanging": "360"
+    },
+    "spacing": {
+      "before": "0",
+      "after": "0",
+      "line": "240",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 38,
+    "text": "Coverage: Housing, commercial real estate, brokers, real estate economics",
+    "runs": [
+      {
+        "italic": true,
+        "fontSize_halfPt": 22,
+        "fontSize_pt": 11.0,
+        "color": "000000",
+        "font": "Lato",
+        "text": "Coverage: Housing, commercial real estate, brokers"
+      }
+    ],
+    "alignment": "left",
+    "indent": {
+      "left": "720",
+      "right": "0",
+      "hanging": "360"
+    },
+    "spacing": {
+      "before": "0",
+      "after": "0",
+      "line": "240",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 39,
+    "text": "Opportunity: Cynthia profile (precedent: Tim Stanislaus featured twice)",
+    "runs": [
+      {
+        "italic": true,
+        "fontSize_halfPt": 22,
+        "fontSize_pt": 11.0,
+        "color": "000000",
+        "font": "Lato",
+        "text": "Opportunity: Cynthia profile (precedent: Tim Stani"
+      }
+    ],
+    "alignment": "left",
+    "indent": {
+      "left": "720",
+      "right": "0",
+      "hanging": "360"
+    },
+    "spacing": {
+      "before": "0",
+      "after": "0",
+      "line": "240",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 40,
+    "text": "Action: Pitch first data story as soon as Registry produces newsworthy insights",
+    "runs": [
+      {
+        "italic": true,
+        "fontSize_halfPt": 22,
+        "fontSize_pt": 11.0,
+        "color": "000000",
+        "font": "Lato",
+        "text": "Action: Pitch first data story as soon as Registry"
+      }
+    ],
+    "alignment": "left",
+    "indent": {
+      "left": "720",
+      "right": "0",
+      "hanging": "360"
+    },
+    "spacing": {
+      "before": "0",
+      "after": "0",
+      "line": "240",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 41,
+    "text": "Pitching KeyCrew a short series of stories on a topic to be determined.",
+    "runs": [
+      {
+        "font": "Lato",
+        "text": "Pitching KeyCrew a short series of stories on a to"
+      }
+    ],
+    "alignment": "left",
+    "indent": {
+      "left": "720",
+      "right": "0",
+      "hanging": "360"
+    },
+    "spacing": {
+      "before": "0",
+      "after": "0",
+      "line": "240",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 43,
+    "text": "3. Inman Conference Press Release",
+    "runs": [
+      {
+        "bold": true,
+        "fontSize_halfPt": 24,
+        "fontSize_pt": 12.0,
+        "color": "1e3a5f",
+        "font": "Lato",
+        "text": "3. Inman Conference Press Release"
+      }
+    ],
+    "spacing": {
+      "before": "240",
+      "after": "120",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 44,
+    "text": "Release ready; Tim final review (Completed)",
+    "runs": [
+      {
+        "italic": true,
+        "fontSize_halfPt": 22,
+        "fontSize_pt": 11.0,
+        "color": "000000",
+        "font": "Lato",
+        "text": "Release ready; Tim final review "
+      },
+      {
+        "italic": true,
+        "fontSize_halfPt": 22,
+        "fontSize_pt": 11.0,
+        "color": "ff0000",
+        "font": "Lato",
+        "text": "(Completed)"
+      }
+    ],
+    "alignment": "left",
+    "indent": {
+      "left": "720",
+      "right": "0",
+      "hanging": "360"
+    },
+    "spacing": {
+      "before": "0",
+      "after": "0",
+      "line": "240",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 45,
+    "text": "Distribution: GlobeNewswire during Inman conference (9,703 views up 76% from Nov. release.)",
+    "runs": [
+      {
+        "italic": true,
+        "fontSize_halfPt": 22,
+        "fontSize_pt": 11.0,
+        "color": "000000",
+        "font": "Lato",
+        "text": "Distribution: GlobeNewswire during Inman conferenc"
+      },
+      {
+        "italic": true,
+        "fontSize_halfPt": 22,
+        "fontSize_pt": 11.0,
+        "color": "ff0000",
+        "font": "Lato",
+        "text": "(9,703 views up 76% from Nov. release.)"
+      }
+    ],
+    "alignment": "left",
+    "indent": {
+      "left": "720",
+      "right": "0",
+      "hanging": "360"
+    },
+    "spacing": {
+      "before": "0",
+      "after": "0",
+      "line": "240",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 46,
+    "text": "Highlights Inman award while underscoring Registry and Pearl SCORE",
+    "runs": [
+      {
+        "italic": true,
+        "fontSize_halfPt": 22,
+        "fontSize_pt": 11.0,
+        "color": "000000",
+        "font": "Lato",
+        "text": "Highlights Inman award while underscoring Registry"
+      },
+      {
+        "font": "Lato",
+        "text": "CORE"
+      }
+    ],
+    "alignment": "left",
+    "indent": {
+      "left": "720",
+      "right": "0",
+      "hanging": "360"
+    },
+    "spacing": {
+      "before": "0",
+      "after": "0",
+      "line": "240",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 47,
+    "text": "Tactical distribution: Copies at Inman media center, Pearl dinner, exec handouts",
+    "runs": [
+      {
+        "italic": true,
+        "fontSize_halfPt": 22,
+        "fontSize_pt": 11.0,
+        "color": "000000",
+        "font": "Lato",
+        "text": "Tactical distribution: Copies at Inman media cente"
+      }
+    ],
+    "alignment": "left",
+    "indent": {
+      "left": "720",
+      "right": "0",
+      "hanging": "360"
+    },
+    "spacing": {
+      "before": "0",
+      "after": "0",
+      "line": "240",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 49,
+    "text": "Supporting Documents",
+    "runs": [
+      {
+        "fontSize_halfPt": 32,
+        "fontSize_pt": 16.0,
+        "color": "1e3a5f",
+        "font": "Lato",
+        "text": "Supporting Documents"
+      }
+    ],
+    "style": "Heading1",
+    "spacing": {
+      "before": "300",
+      "after": "200",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 50,
+    "text": "Document",
+    "runs": [
+      {
+        "bold": true,
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "ffffff",
+        "font": "Lato",
+        "text": "Document"
+      }
+    ]
+  },
+  {
+    "index": 51,
+    "text": "Purpose",
+    "runs": [
+      {
+        "bold": true,
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "ffffff",
+        "font": "Lato",
+        "text": "Purpose"
+      }
+    ]
+  },
+  {
+    "index": 53,
+    "text": "Media coverage, podcasts, deliverables tracking",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "Media coverage, podcasts, deliverables tracking"
+      }
+    ]
+  },
+  {
+    "index": 55,
+    "text": "Headlines, talking points, exec bios",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "Headlines, talking points, exec bios"
+      }
+    ]
+  },
+  {
+    "index": 57,
+    "text": "Q1 PR Objectives",
+    "runs": [
+      {
+        "fontSize_halfPt": 32,
+        "fontSize_pt": 16.0,
+        "color": "1e3a5f",
+        "font": "Lato",
+        "text": "Q1 PR Objectives"
+      }
+    ],
+    "style": "Heading1",
+    "spacing": {
+      "before": "300",
+      "after": "200",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 58,
+    "text": "Objective",
+    "runs": [
+      {
+        "bold": true,
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "ffffff",
+        "font": "Lato",
+        "text": "Objective"
+      }
+    ]
+  },
+  {
+    "index": 59,
+    "text": "Target",
+    "runs": [
+      {
+        "bold": true,
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "ffffff",
+        "font": "Lato",
+        "text": "Target"
+      }
+    ]
+  },
+  {
+    "index": 60,
+    "text": "Status",
+    "runs": [
+      {
+        "bold": true,
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "ffffff",
+        "font": "Lato",
+        "text": "Status"
+      }
+    ]
+  },
+  {
+    "index": 61,
+    "text": "Tier-1 media placement goal",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "Tier-1 media placement "
+      },
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "goal"
+      }
+    ]
+  },
+  {
+    "index": 62,
+    "text": "2+",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "2+"
+      }
+    ]
+  },
+  {
+    "index": 63,
+    "text": "In progress",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "In progress"
+      }
+    ]
+  },
+  {
+    "index": 64,
+    "text": "Total media mentions",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "Total media mentions"
+      }
+    ]
+  },
+  {
+    "index": 65,
+    "text": "15+",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "15+"
+      }
+    ]
+  },
+  {
+    "index": 66,
+    "text": "Tracking",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "Tracking"
+      }
+    ]
+  },
+  {
+    "index": 67,
+    "text": "Press releases distributed",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "Press releases distributed"
+      }
+    ]
+  },
+  {
+    "index": 68,
+    "text": "3",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "3"
+      }
+    ]
+  },
+  {
+    "index": 69,
+    "text": "1 finalized, 2 in development",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "1 finalized, 2 in development"
+      }
+    ]
+  },
+  {
+    "index": 70,
+    "text": "Story concepts developed",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "Story concepts developed"
+      }
+    ]
+  },
+  {
+    "index": 71,
+    "text": "15",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "15"
+      }
+    ]
+  },
+  {
+    "index": 72,
+    "text": "On track",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "On track"
+      }
+    ]
+  },
+  {
+    "index": 73,
+    "text": "Reporter relationships active",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "Reporter relationships active"
+      }
+    ]
+  },
+  {
+    "index": 74,
+    "text": "20+",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "20+"
+      }
+    ]
+  },
+  {
+    "index": 75,
+    "text": "28 pitched in Jan/Feb",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "28 pitched in Jan/Feb"
+      }
+    ]
+  },
+  {
+    "index": 77,
+    "text": "PR Tactics",
+    "runs": [
+      {
+        "fontSize_halfPt": 32,
+        "fontSize_pt": 16.0,
+        "color": "1e3a5f",
+        "font": "Lato",
+        "text": "PR Tactics"
+      }
+    ],
+    "style": "Heading1",
+    "spacing": {
+      "before": "300",
+      "after": "200",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 78,
+    "text": "Press Releases",
+    "runs": [
+      {
+        "bold": true,
+        "fontSize_halfPt": 24,
+        "fontSize_pt": 12.0,
+        "color": "1e3a5f",
+        "font": "Lato",
+        "text": "Press Releases"
+      }
+    ],
+    "spacing": {
+      "before": "240",
+      "after": "120",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 79,
+    "text": "Pearl should issue 2-3 press releases per month. Press releases signal to employees, investors, medi",
+    "runs": [
+      {
+        "fontSize_halfPt": 22,
+        "fontSize_pt": 11.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "Pearl should issue 2-3 press releases per month. P"
+      }
+    ],
+    "spacing": {
+      "after": "120",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 81,
+    "text": "Newsworthy topics include:",
+    "runs": [
+      {
+        "bold": true,
+        "fontSize_halfPt": 22,
+        "fontSize_pt": 11.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "Newsworthy topics include:"
+      }
+    ],
+    "spacing": {
+      "after": "120",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 82,
+    "text": "Registry data insights and milestones",
+    "runs": [
+      {
+        "italic": true,
+        "fontSize_halfPt": 22,
+        "fontSize_pt": 11.0,
+        "color": "000000",
+        "font": "Lato",
+        "text": "Registry data insights and milestones"
+      }
+    ],
+    "alignment": "left",
+    "indent": {
+      "left": "720",
+      "right": "0",
+      "hanging": "360"
+    },
+    "spacing": {
+      "before": "0",
+      "after": "0",
+      "line": "240",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 83,
+    "text": "Awards and recognition",
+    "runs": [
+      {
+        "italic": true,
+        "fontSize_halfPt": 22,
+        "fontSize_pt": 11.0,
+        "color": "000000",
+        "font": "Lato",
+        "text": "Awards and recognition"
+      }
+    ],
+    "alignment": "left",
+    "indent": {
+      "left": "720",
+      "right": "0",
+      "hanging": "360"
+    },
+    "spacing": {
+      "before": "0",
+      "after": "0",
+      "line": "240",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 84,
+    "text": "New products and offerings",
+    "runs": [
+      {
+        "italic": true,
+        "fontSize_halfPt": 22,
+        "fontSize_pt": 11.0,
+        "color": "000000",
+        "font": "Lato",
+        "text": "New products and offerings"
+      }
+    ],
+    "alignment": "left",
+    "indent": {
+      "left": "720",
+      "right": "0",
+      "hanging": "360"
+    },
+    "spacing": {
+      "before": "0",
+      "after": "0",
+      "line": "240",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 85,
+    "text": "Partnership announcements",
+    "runs": [
+      {
+        "italic": true,
+        "fontSize_halfPt": 22,
+        "fontSize_pt": 11.0,
+        "color": "000000",
+        "font": "Lato",
+        "text": "Partnership announcements"
+      }
+    ],
+    "alignment": "left",
+    "indent": {
+      "left": "720",
+      "right": "0",
+      "hanging": "360"
+    },
+    "spacing": {
+      "before": "0",
+      "after": "0",
+      "line": "240",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 87,
+    "text": "Releases in Development:",
+    "runs": [
+      {
+        "bold": true,
+        "fontSize_halfPt": 22,
+        "fontSize_pt": 11.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "Releases in Development:"
+      }
+    ],
+    "spacing": {
+      "after": "120",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 88,
+    "text": "Release",
+    "runs": [
+      {
+        "bold": true,
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "ffffff",
+        "font": "Lato",
+        "text": "Release"
+      }
+    ]
+  },
+  {
+    "index": 89,
+    "text": "Status",
+    "runs": [
+      {
+        "bold": true,
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "ffffff",
+        "font": "Lato",
+        "text": "Status"
+      }
+    ]
+  },
+  {
+    "index": 90,
+    "text": "Target Distribution",
+    "runs": [
+      {
+        "bold": true,
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "ffffff",
+        "font": "Lato",
+        "text": "Target Distribution"
+      }
+    ]
+  },
+  {
+    "index": 91,
+    "text": "Inman Award + Registry/Score",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "Inman Award + Registry/Score"
+      }
+    ]
+  },
+  {
+    "index": 92,
+    "text": "Finalized",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "Finalized"
+      }
+    ]
+  },
+  {
+    "index": 93,
+    "text": "Feb 3, 2026 (GlobeNewswire AM)",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "Feb 3, 2026 (GlobeNewswire AM)"
+      }
+    ]
+  },
+  {
+    "index": 94,
+    "text": "Early Access Program Launch",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "Early Access Program Launch"
+      }
+    ]
+  },
+  {
+    "index": 95,
+    "text": "In development",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "In development"
+      }
+    ]
+  },
+  {
+    "index": 96,
+    "text": "Late March/Early April",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "Late March/Early April"
+      }
+    ]
+  },
+  {
+    "index": 97,
+    "text": "Pearl Score Data Analysis",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "Pearl Score Data Analysis"
+      }
+    ]
+  },
+  {
+    "index": 98,
+    "text": "In development",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "In development"
+      }
+    ]
+  },
+  {
+    "index": 99,
+    "text": "TBD based on data",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "TBD based on data"
+      }
+    ]
+  },
+  {
+    "index": 101,
+    "text": "Media Pitching",
+    "runs": [
+      {
+        "bold": true,
+        "fontSize_halfPt": 24,
+        "fontSize_pt": 12.0,
+        "color": "1e3a5f",
+        "font": "Lato",
+        "text": "Media Pitching"
+      }
+    ],
+    "spacing": {
+      "before": "240",
+      "after": "120",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 102,
+    "text": "Goal: Connect with 20+ reporters per month across multiple verticals.",
+    "runs": [
+      {
+        "fontSize_halfPt": 22,
+        "fontSize_pt": 11.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "Goal: Connect with 20+ reporters per month across "
+      }
+    ],
+    "spacing": {
+      "after": "120",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 104,
+    "text": "Target Verticals (the \"home\" crosses multiple themes):",
+    "runs": [
+      {
+        "bold": true,
+        "fontSize_halfPt": 22,
+        "fontSize_pt": 11.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "Target Verticals (the \"home\" crosses multiple them"
+      }
+    ],
+    "spacing": {
+      "after": "120",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 105,
+    "text": "Technology: What Pearl\u2019s Registry reveals about housing",
+    "runs": [
+      {
+        "font": "Lato",
+        "text": "Technology: What Pearl\u2019s Registry reveals about ho"
+      }
+    ],
+    "alignment": "left",
+    "indent": {
+      "left": "720",
+      "right": "0",
+      "hanging": "360"
+    },
+    "spacing": {
+      "before": "0",
+      "after": "0",
+      "line": "240",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 106,
+    "text": "Technology: Behind Pearl\u2019s database. Why homes aren\u2019t performing.",
+    "runs": [
+      {
+        "font": "Lato",
+        "text": "Technology: Behind Pearl\u2019s database. Why homes are"
+      }
+    ],
+    "alignment": "left",
+    "indent": {
+      "left": "720",
+      "right": "0",
+      "hanging": "360"
+    },
+    "spacing": {
+      "before": "0",
+      "after": "0",
+      "line": "240",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 107,
+    "text": "Transparency - for the first time - for buyers and sellers",
+    "runs": [
+      {
+        "font": "Lato",
+        "text": "Transparency - for the first time - for buyers and"
+      }
+    ],
+    "alignment": "left",
+    "indent": {
+      "left": "720",
+      "right": "0",
+      "hanging": "360"
+    },
+    "spacing": {
+      "before": "0",
+      "after": "0",
+      "line": "240",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 108,
+    "text": "Personal finance, consumer finance, tax implications",
+    "runs": [
+      {
+        "italic": true,
+        "fontSize_halfPt": 22,
+        "fontSize_pt": 11.0,
+        "font": "Lato",
+        "text": "Personal finance"
+      },
+      {
+        "font": "Lato",
+        "text": ", "
+      },
+      {
+        "italic": true,
+        "fontSize_halfPt": 22,
+        "fontSize_pt": 11.0,
+        "font": "Lato",
+        "text": "consumer finance,"
+      },
+      {
+        "italic": true,
+        "fontSize_halfPt": 22,
+        "fontSize_pt": 11.0,
+        "font": "Lato",
+        "text": " tax implications"
+      }
+    ],
+    "alignment": "left",
+    "indent": {
+      "left": "720",
+      "right": "0",
+      "hanging": "360"
+    },
+    "spacing": {
+      "before": "0",
+      "after": "0",
+      "line": "240",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 109,
+    "text": "Home restoration and home investment",
+    "runs": [
+      {
+        "italic": true,
+        "fontSize_halfPt": 22,
+        "fontSize_pt": 11.0,
+        "font": "Lato",
+        "text": "Home restoration and home investment"
+      }
+    ],
+    "alignment": "left",
+    "indent": {
+      "left": "720",
+      "right": "0",
+      "hanging": "360"
+    },
+    "spacing": {
+      "before": "0",
+      "after": "0",
+      "line": "240",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 110,
+    "text": "Climate and environment",
+    "runs": [
+      {
+        "italic": true,
+        "fontSize_halfPt": 22,
+        "fontSize_pt": 11.0,
+        "font": "Lato",
+        "text": "Climate and environment"
+      }
+    ],
+    "alignment": "left",
+    "indent": {
+      "left": "720",
+      "right": "0",
+      "hanging": "360"
+    },
+    "spacing": {
+      "before": "0",
+      "after": "0",
+      "line": "240",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 111,
+    "text": "Real estate industry",
+    "runs": [
+      {
+        "italic": true,
+        "fontSize_halfPt": 22,
+        "fontSize_pt": 11.0,
+        "font": "Lato",
+        "text": "Real estate industry"
+      }
+    ],
+    "alignment": "left",
+    "indent": {
+      "left": "720",
+      "right": "0",
+      "hanging": "360"
+    },
+    "spacing": {
+      "before": "0",
+      "after": "0",
+      "line": "240",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 112,
+    "text": "Health and wellness (home health angle)",
+    "runs": [
+      {
+        "italic": true,
+        "fontSize_halfPt": 22,
+        "fontSize_pt": 11.0,
+        "font": "Lato",
+        "text": "Health and wellness (home health angle)"
+      }
+    ],
+    "alignment": "left",
+    "indent": {
+      "left": "720",
+      "right": "0",
+      "hanging": "360"
+    },
+    "spacing": {
+      "before": "0",
+      "after": "0",
+      "line": "240",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 114,
+    "text": "Op-Eds and Thought Leadership",
+    "runs": [
+      {
+        "bold": true,
+        "fontSize_halfPt": 24,
+        "fontSize_pt": 12.0,
+        "color": "1e3a5f",
+        "font": "Lato",
+        "text": "Op-Eds and Thought Leadership"
+      }
+    ],
+    "spacing": {
+      "before": "240",
+      "after": "120",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 115,
+    "text": "Commentaries, op-eds, white papers, and letters to the editor generate visibility while pitching con",
+    "runs": [
+      {
+        "fontSize_halfPt": 22,
+        "fontSize_pt": 11.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "Commentaries, op-eds, white papers, and letters to"
+      }
+    ],
+    "spacing": {
+      "after": "120",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 116,
+    "text": "Current Pipeline",
+    "runs": [
+      {
+        "bold": true,
+        "color": "333333",
+        "font": "Lato",
+        "text": "Current Pipeline"
+      }
+    ],
+    "spacing": {
+      "after": "120",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 117,
+    "text": "Topic",
+    "runs": [
+      {
+        "bold": true,
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "ffffff",
+        "font": "Lato",
+        "text": "Topic"
+      }
+    ]
+  },
+  {
+    "index": 118,
+    "text": "Publisher",
+    "runs": [
+      {
+        "bold": true,
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "ffffff",
+        "font": "Lato",
+        "text": "Publisher"
+      }
+    ]
+  },
+  {
+    "index": 119,
+    "text": "Audience",
+    "runs": [
+      {
+        "bold": true,
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "ffffff",
+        "font": "Lato",
+        "text": "Audience"
+      }
+    ]
+  },
+  {
+    "index": 120,
+    "text": "The Hidden Reality of America's Aging Housing Stock",
+    "runs": [
+      {
+        "font": "Lato",
+        "text": "The Hidden Reality of America's Aging Housing Stoc"
+      }
+    ],
+    "indent": {
+      "left": "0",
+      "firstLine": "0"
+    }
+  },
+  {
+    "index": 121,
+    "text": "Chicago Agent Magazine",
+    "runs": [
+      {
+        "font": "Lato",
+        "text": "Chicago Agent Magazine"
+      }
+    ]
+  },
+  {
+    "index": 122,
+    "text": "Real estate agents and brokerages",
+    "runs": [
+      {
+        "font": "Lato",
+        "text": "Real estate agents and brokerages"
+      }
+    ]
+  },
+  {
+    "index": 123,
+    "text": "97 Million Homes Scored: What the Data Reveals",
+    "runs": [
+      {
+        "font": "Lato",
+        "text": "97 Million Homes Scored: What the Data Reveals"
+      }
+    ],
+    "spacing": {
+      "line": "276",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 139,
+    "text": "Topics to Consider",
+    "runs": [
+      {
+        "bold": true,
+        "color": "333333",
+        "font": "Lato",
+        "text": "Topics to Consider"
+      }
+    ],
+    "spacing": {
+      "after": "120",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 140,
+    "text": "Topic",
+    "runs": [
+      {
+        "bold": true,
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "ffffff",
+        "font": "Lato",
+        "text": "Topic"
+      }
+    ]
+  },
+  {
+    "index": 141,
+    "text": "Publisher",
+    "runs": [
+      {
+        "bold": true,
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "ffffff",
+        "font": "Lato",
+        "text": "Publisher"
+      }
+    ]
+  },
+  {
+    "index": 142,
+    "text": "Audience",
+    "runs": [
+      {
+        "bold": true,
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "ffffff",
+        "font": "Lato",
+        "text": "Audience"
+      }
+    ]
+  },
+  {
+    "index": 143,
+    "text": "The Blind Spot in Every Home Purchase",
+    "runs": [
+      {
+        "font": "Lato",
+        "text": "The Blind Spot in Every Home Purchase"
+      }
+    ],
+    "spacing": {
+      "line": "276",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 145,
+    "text": "Real estate agents and brokerages",
+    "runs": [
+      {
+        "font": "Lato",
+        "text": "Real estate agents and brokerages"
+      }
+    ]
+  },
+  {
+    "index": 146,
+    "text": "What Buyers Are Asking That Listings Don't Show",
+    "runs": [
+      {
+        "font": "Lato",
+        "text": "What Buyers Are Asking That Listings Don't Show"
+      }
+    ],
+    "spacing": {
+      "line": "276",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 148,
+    "text": "Real estate agents and brokerages",
+    "runs": [
+      {
+        "font": "Lato",
+        "text": "Real estate agents and brokerages"
+      }
+    ]
+  },
+  {
+    "index": 149,
+    "text": "Home Performance: The New Differentiator",
+    "runs": [
+      {
+        "font": "Lato",
+        "text": "Home Performance: The New Differentiator"
+      }
+    ],
+    "spacing": {
+      "line": "276",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 151,
+    "text": "Real estate agents and brokerages",
+    "runs": [
+      {
+        "font": "Lato",
+        "text": "Real estate agents and brokerages"
+      }
+    ]
+  },
+  {
+    "index": 152,
+    "text": "Is your home a Yugo or a Ferrari? Why home Performance is the best way to measure your home\u2019s value.",
+    "runs": [
+      {
+        "font": "Lato",
+        "text": "Is your home a Yugo or a Ferrari? Why home Perform"
+      }
+    ]
+  },
+  {
+    "index": 154,
+    "text": "Consumers. Real estate agents, brokerages, contractors",
+    "runs": [
+      {
+        "font": "Lato",
+        "text": "Consumers. Real estate agents, brokerages, contrac"
+      }
+    ]
+  },
+  {
+    "index": 155,
+    "text": "5 million homes are sold each year: Do buyers know what they are getting? Here\u2019s a strategy to level",
+    "runs": [
+      {
+        "font": "Lato",
+        "text": "5 million homes are sold each year: Do buyers know"
+      }
+    ]
+  },
+  {
+    "index": 157,
+    "text": "Consumers. Real estate agents, brokerages, contractors",
+    "runs": [
+      {
+        "font": "Lato",
+        "text": "Consumers. Real estate agents, brokerages, contrac"
+      }
+    ]
+  },
+  {
+    "index": 158,
+    "text": "5 easy steps to put your home on the high Performance path and save money.(Casey)",
+    "runs": [
+      {
+        "font": "Lato",
+        "text": "5 easy steps to put your home on the high Performa"
+      }
+    ]
+  },
+  {
+    "index": 160,
+    "text": "Consumers. Real estate agents, brokerages, contractors",
+    "runs": [
+      {
+        "font": "Lato",
+        "text": "Consumers. Real estate agents, brokerages, contrac"
+      }
+    ]
+  },
+  {
+    "index": 165,
+    "text": "Monthly Story Mining Sessions ",
+    "runs": [
+      {
+        "font": "Lato",
+        "text": "Monthly Story Mining Sessions "
+      }
+    ],
+    "style": "Heading1"
+  },
+  {
+    "index": 166,
+    "text": "Topic",
+    "runs": [
+      {
+        "bold": true,
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "ffffff",
+        "font": "Lato",
+        "text": "Topic"
+      }
+    ]
+  },
+  {
+    "index": 167,
+    "text": "Executive",
+    "runs": [
+      {
+        "bold": true,
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "ffffff",
+        "font": "Lato",
+        "text": "Executive"
+      }
+    ]
+  },
+  {
+    "index": 168,
+    "text": "PR Focus",
+    "runs": [
+      {
+        "bold": true,
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "ffffff",
+        "font": "Lato",
+        "text": "PR Focus"
+      }
+    ]
+  },
+  {
+    "index": 169,
+    "text": "The Pearl database. Size. 700 data points. Trends/Conclusions",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "The Pearl database. Size. 700 data points. Trends/"
+      }
+    ],
+    "indent": {
+      "left": "0",
+      "firstLine": "0"
+    }
+  },
+  {
+    "index": 171,
+    "text": "Robin, Adam, Jeff",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "Robin, Adam, Jeff"
+      }
+    ]
+  },
+  {
+    "index": 172,
+    "text": "Trade media in housing and technology. Data stories. ",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "Trade media in housing and technology. Data storie"
+      }
+    ]
+  },
+  {
+    "index": 173,
+    "text": "Industry pressure points, trends, company growth.",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "Industry pressure points, trends, company growth."
+      }
+    ],
+    "indent": {
+      "left": "0",
+      "firstLine": "0"
+    }
+  },
+  {
+    "index": 175,
+    "text": "Cynthia",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "Cynthia"
+      }
+    ]
+  },
+  {
+    "index": 176,
+    "text": "Ideas for trade and traditional media.",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "Ideas for trade and traditional media."
+      }
+    ]
+  },
+  {
+    "index": 177,
+    "text": "The home of the future. How homes work.",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "The home of the future. How homes work."
+      }
+    ]
+  },
+  {
+    "index": 178,
+    "text": "Casey",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "Casey"
+      }
+    ]
+  },
+  {
+    "index": 179,
+    "text": "Trade and traditional media.",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "Trade and traditional media."
+      }
+    ]
+  },
+  {
+    "index": 181,
+    "text": "Target Audiences",
+    "runs": [
+      {
+        "fontSize_halfPt": 32,
+        "fontSize_pt": 16.0,
+        "color": "1e3a5f",
+        "font": "Lato",
+        "text": "Target Audiences"
+      }
+    ],
+    "style": "Heading1",
+    "spacing": {
+      "before": "300",
+      "after": "200",
+      "lineRule": "auto"
+    }
+  },
+  {
+    "index": 182,
+    "text": "Audience",
+    "runs": [
+      {
+        "bold": true,
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "ffffff",
+        "font": "Lato",
+        "text": "Audience"
+      }
+    ]
+  },
+  {
+    "index": 183,
+    "text": "Segment",
+    "runs": [
+      {
+        "bold": true,
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "ffffff",
+        "font": "Lato",
+        "text": "Segment"
+      }
+    ]
+  },
+  {
+    "index": 184,
+    "text": "PR Focus",
+    "runs": [
+      {
+        "bold": true,
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "ffffff",
+        "font": "Lato",
+        "text": "PR Focus"
+      }
+    ]
+  },
+  {
+    "index": 185,
+    "text": "Primary B2B",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "Primary B2B"
+      }
+    ]
+  },
+  {
+    "index": 186,
+    "text": "Real estate agents, brokers",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "Real estate agents, brokers"
+      }
+    ]
+  },
+  {
+    "index": 187,
+    "text": "Trade media, National media",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "Trade media, National media"
+      }
+    ]
+  },
+  {
+    "index": 188,
+    "text": "Primary B2C",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "Primary B2C"
+      }
+    ]
+  },
+  {
+    "index": 189,
+    "text": "Home buyers, homeowners",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "Home buyers, homeowners"
+      }
+    ]
+  },
+  {
+    "index": 190,
+    "text": "Consumer media, lifestyle outlets",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "Consumer media, lifestyle outlets"
+      }
+    ]
+  },
+  {
+    "index": 191,
+    "text": "Secondary",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "Secondary"
+      }
+    ]
+  },
+  {
+    "index": 192,
+    "text": "Investors, industry analysts",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "Investors, industry analysts"
+      }
+    ]
+  },
+  {
+    "index": 193,
+    "text": "Business media, data stories",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "color": "333333",
+        "font": "Lato",
+        "text": "Business media, data stories"
+      }
+    ]
+  },
+  {
+    "index": 196,
+    "text": "Target Media Audiences",
+    "runs": [
+      {
+        "font": "Lato",
+        "text": "Target Media Audiences"
+      }
+    ],
+    "style": "Heading1"
+  },
+  {
+    "index": 197,
+    "text": "Audience",
+    "runs": [
+      {
+        "bold": true,
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "Audience"
+      }
+    ]
+  },
+  {
+    "index": 198,
+    "text": "Select News Outlets",
+    "runs": [
+      {
+        "bold": true,
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "Select News Outlets"
+      }
+    ]
+  },
+  {
+    "index": 199,
+    "text": "Focus",
+    "runs": [
+      {
+        "bold": true,
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "Focus"
+      }
+    ]
+  },
+  {
+    "index": 200,
+    "text": "Business, Enviro Media",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "Business, Enviro Media"
+      }
+    ]
+  },
+  {
+    "index": 201,
+    "text": "NYT. WSJ. WaPo. Business Insider. NPR. Axios.",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "NYT. WSJ. WaPo. Business Insider. NPR. Axios."
+      }
+    ]
+  },
+  {
+    "index": 202,
+    "text": "New database. Transparency. Homebuying strategy.",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "New database. Transparency. Homebuying strategy."
+      }
+    ]
+  },
+  {
+    "index": 203,
+    "text": "Technology",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "Technology"
+      }
+    ]
+  },
+  {
+    "index": 204,
+    "text": "Data Center Magazine. Wired. CNET. The Real Deal.",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "Data Center Magazine. Wired. CNET. The Real Deal."
+      }
+    ]
+  },
+  {
+    "index": 205,
+    "text": "Powerful database. Home performance",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "Powerful database. Home performance"
+      }
+    ]
+  },
+  {
+    "index": 206,
+    "text": "Trade outlets",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "Trade outlets"
+      }
+    ]
+  },
+  {
+    "index": 207,
+    "text": "Green Builder. Chicago Agent. Housing Wire. . Custom Builder.",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "Green Builder. Chicago Agent. Housing Wire. "
+      },
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": ". Custom Builder."
+      }
+    ]
+  },
+  {
+    "index": 208,
+    "text": "Data stories. Pearl profile. Cynthia /Robin profile.",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "Data stories. Pearl profile. Cynthia /Robin profil"
+      }
+    ]
+  },
+  {
+    "index": 209,
+    "text": "Personal Finance",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "Personal Finance"
+      }
+    ]
+  },
+  {
+    "index": 210,
+    "text": "Kiplinger. Bloomberg. NerdWallet. Consumer Reports",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "Kiplinger. Bloomberg. NerdWallet. Consumer Reports"
+      }
+    ]
+  },
+  {
+    "index": 211,
+    "text": "Personal finance. Home improvement. Data stories.",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "Personal finance. Home improvement. Data stories."
+      }
+    ]
+  },
+  {
+    "index": 212,
+    "text": "Local TV",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "Local TV"
+      }
+    ]
+  },
+  {
+    "index": 213,
+    "text": "WBAL. WUSA. WRIC (Richmond) DTV (Durango)",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "WBAL. WUSA. WRIC (Richmond) DTV (Durango)"
+      }
+    ]
+  },
+  {
+    "index": 214,
+    "text": "The Registry and SCORE.",
+    "runs": [
+      {
+        "fontSize_halfPt": 20,
+        "fontSize_pt": 10.0,
+        "font": "Lato",
+        "text": "The Registry and SCORE."
+      }
+    ]
+  }
+]

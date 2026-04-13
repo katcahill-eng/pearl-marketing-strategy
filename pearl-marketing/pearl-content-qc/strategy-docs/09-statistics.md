@@ -17,7 +17,7 @@ QC should flag any statistic not on this list or without a cited source.
 
 ## Pearl Platform
 
-- 92+ million single-family homes in the Registry (update quarterly)
+- 97+ million single-family homes in the Registry (update quarterly)
 - 250,000+ homes certified (legacy)
 - Homes scoring 500+ may qualify for Pearl Certification
 - Most American homes score in the Typical range (300s)
