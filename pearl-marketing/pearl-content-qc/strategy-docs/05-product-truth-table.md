@@ -17,6 +17,16 @@ Use this table to verify product claims in content.
 | "Pearl no longer certifies homes" | NO | Pearl still certifies. Homes scoring 500+ may qualify. Scope expanded, certification capability did not go away. |
 | "Pearl is a tool for sellers to market homes / get a higher price" | NO | Pearl 1.0 thinking. Pearl is buyer-first. Perceived as seller tool = loses buyer trust = loses value for everyone. |
 
+## Product Naming and Availability
+
+| Claim | Correct? | Notes |
+|-------|----------|-------|
+| "Pearl Seller's Toolkit" / "Order Toolkit" | NO | Deprecated name. Product was rebranded to Pearl Home Listing Package. It is an agent-only product available through the Pearl app for professionals — it must not appear in consumer-facing surfaces (Registry, Pearl App, consumer site). |
+| "Pearl Performance Value" | NO | Correct name is "Performance Valuation." |
+| "Pearl Registry" | NO | Correct name with trademark: "Pearl Home Performance Registry™" |
+| "Increase your Pearl SCORE" / "improve your score" | NO | Claiming completes the profile, it does not "increase" or "improve" the score. Use "complete your home's performance story." |
+| "Claimed homes have more accurate scores" | NO | The methodology is always accurate. Claimed homes have more complete profiles. Accuracy and completeness are different things. |
+
 ## Accuracy and Data Claims
 
 | Claim | Correct? | Notes |

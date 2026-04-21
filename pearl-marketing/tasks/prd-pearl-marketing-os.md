@@ -232,6 +232,106 @@ Director:
   6. Returns: blog draft for publishing + Sprout Social CSV for promotion
 ```
 
+## Phase 4: Local Model Migration and Remote Access
+
+### Overview
+
+Migrate the Director and all spokes from the Claude API to a locally-hosted LLM (Qwen3-30B-A3B via LM Studio) running on the user's Mac. This enables full privacy, eliminates API costs, and supports remote access from any device via messaging platforms.
+
+### Architecture
+
+```
+Phone (Telegram/Discord)
+    |
+OpenClaw (messaging bridge)
+    |
+LM Studio API (http://localhost:1234/v1)
+    |
+Director (local)
+    |
+Spokes (QC, Website, Social, Scribe, Admin, etc.)
+    |
+MCP Servers (Google Workspace, Slack, Sprout, Playwright)
+```
+
+The user talks to the Director only. The Director routes to spokes. The user never interacts with individual spokes directly.
+
+### Local Model Details
+
+- Model: Qwen3-30B-A3B-2507 (Q4 quantized, 17.19GB)
+- Runtime: LM Studio on Mac M3 Pro, 36GB RAM
+- API: OpenAI-compatible endpoint at http://localhost:1234/v1
+- Context window: 128K tokens (vs Claude's 1M)
+- Remote access: OpenClaw connected to Telegram or Discord
+
+### Migration Per Spoke
+
+Each spoke currently calls the Anthropic SDK. Migration requires swapping the API endpoint:
+- Replace `Anthropic` client with `OpenAI`-compatible client pointing at localhost
+- System prompts, strategy doc loading, and QC logic stay unchanged
+- Test each spoke against approved outputs before going live
+
+### Persistent Task Memory
+
+To compensate for the smaller context window (128K vs 1M), the system uses persistent task summaries instead of holding everything in context.
+
+**How it works:**
+1. After every task, the spoke writes a summary to a reference file in the project memory
+2. Summaries are organized by project, not chronologically
+3. Each summary is 50 words max and captures: what was done, what was decided, what the user's preferences were, what is still open
+4. Before handing off to a spoke, the Director reads relevant summaries so the spoke starts with context
+5. Summaries older than 90 days are archived unless flagged as permanent
+6. User preferences and feedback are stored separately (already exists in the memory system) and persist indefinitely
+
+**File structure:**
+```
+.claude/projects/memory/
+  task-summaries/
+    founding-members/
+      2026-04-07-approval-docs.md
+      2026-04-07-sprout-drafts.md
+    website-audit/
+      2026-04-01-qc-reports.md
+      2026-04-01-homepage-copy.md
+    p2-georgia/
+      2026-04-08-partnership-research.md
+  user/          (existing - user preferences)
+  feedback/      (existing - corrections and confirmations)
+  project/       (existing - project state)
+  reference/     (existing - external resource pointers)
+```
+
+**What this solves:**
+- Spokes start with relevant context without needing the full conversation history
+- The user never has to repeat themselves across sessions
+- Context stays under 128K because only relevant summaries are loaded, not everything
+- The Director knows what has been done and what is still open
+
+### Remote Access Setup
+
+1. Install OpenClaw on the Mac (or a dedicated always-on machine)
+2. Connect OpenClaw to LM Studio's local API
+3. Connect OpenClaw to Telegram or Discord
+4. The user sends messages from their phone; OpenClaw routes to the Director via LM Studio
+5. The Mac must stay on or be replaced with an always-on machine (Mac Mini recommended for dedicated use)
+
+### Updated Spoke Registry
+
+| Spoke | Domain | Status |
+|-------|--------|--------|
+| Content QC Specialist | Brand compliance review | Active |
+| Website Manager | Website copy QC, landing pages, SEO | Active |
+| Marketing Strategist | Strategy briefs, negotiations, planning | Active |
+| Social Media Coordinator | Social post generation, Sprout Social | Planned |
+| PR/Media Analyst | Coverage monitoring, media lists | Planned |
+| Content Writer | Blog drafts, email copy, pillar content | Planned |
+| SEO Monitor | Keyword tracking, rankings, LLM citations | Planned |
+| Campaign Manager | Multi-channel campaigns, geo-fencing | Planned |
+| Analytics/Reporting | KPI dashboards, performance summaries | Planned |
+| Contractor Monitor | Vendor deliverable tracking, SLA compliance | Planned |
+| Meeting Scribe | Recording, transcription, meeting briefs | Planned |
+| Executive Admin | Task management, calendar, daily briefings | Planned |
+
 ## Non-Goals
 
 - Pearl Marketing OS does not replace Sprout Social, Canva, or Google Workspace — it orchestrates work across them

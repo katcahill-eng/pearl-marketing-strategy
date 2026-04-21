@@ -26,11 +26,16 @@ yarn-error.*
 
 # macOS
 .DS_Store
+**/.DS_Store
 *.pem
 
-# Local env files
-.env
-.env*.local
+# Environment files (all levels)
+**/.env
+**/.env.local
+**/.env*.local
+
+# Claude Code local config
+.claude/
 
 # TypeScript
 *.tsbuildinfo
@@ -55,5 +60,16 @@ token.json
 # Figma screenshots (temporary)
 figma-*.png
 
-# Ralph internal
+# Working archives
+.working-archive/
+
+# Large binary files (store in Google Drive, not git)
+assets/video/
+*.mp4
+*.mov
+
+# Ralph (deprecated)
 .ralph-last-branch
+.ralph-archive/
+prd.json
+progress.txt

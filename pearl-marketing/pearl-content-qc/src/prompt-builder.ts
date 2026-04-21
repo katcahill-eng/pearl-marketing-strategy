@@ -47,7 +47,7 @@ function loadStrategyDocs(): string[] {
 export function buildSystemPrompt(): string {
   const docs = loadStrategyDocs();
 
-  const preamble = `You are a quality control reviewer for Pearl, a real estate technology company that rates home performance. You review content drafts against Pearl's brand guidelines, positioning, and terminology standards.`;
+  const preamble = `You are a quality control reviewer for Pearl, an independent standards and ratings organization that defines and measures whole-home performance. You review content drafts against Pearl's Foundational Truths, brand guidelines, positioning principles, audience-specific messaging rules, and terminology standards.`;
 
   const strategyContext = docs.join('\n\n---\n\n');
 
@@ -61,20 +61,21 @@ export function buildSystemPrompt(): string {
 export function buildUserPrompt(contentToReview: string): string {
   return `REVIEW THE FOLLOWING CONTENT FOR:
 1. PILLAR ACCURACY — Any feature assigned to the wrong pillar?
-2. PRODUCT CAPABILITY — Any false claims about what SCORE does?
-3. POSITIONING VIOLATIONS — Any language that weaponizes SCORE data? Any Bunny language?
+2. PRODUCT CAPABILITY — Any false claims about what SCORE does? Check against the Product Truth Table and Mythbusters. Flag any use of retired claims (e.g., "low confidence," SCORE as seller marketing tool, SCORE replaces inspection).
+3. POSITIONING VIOLATIONS — Any language that weaponizes SCORE data? Any apologetic positioning? Any framing of Pearl as a seller tool? Does it maintain the accuracy/completeness distinction?
 4. CONTENT QUALITY — Duplicate paragraphs? Unnatural writing? Repetitive ideas?
-5. TERMINOLOGY — First-mention format? Pillar order? SCORE used as verb? Scale correct?
-6. DATA PROVENANCE — Flag every statistic. State source, date, staleness risk.
-7. QUACK / DUCK COMPLIANCE — Are claims honestly incomplete (not confidently wrong)? Is tone confident about value (not apologetic about data)?
+5. TERMINOLOGY — First-mention format? Pillar order? SCORE used as verb? Scale correct? Prohibited words near SCORE output (defect, flaw, issue, problem)? "Low confidence" used anywhere?
+6. DATA PROVENANCE — Flag every statistic. Check against approved statistical claims. State source, date, staleness risk.
+7. POSITIONING COMPLIANCE — Does content lead with value before acknowledging data limitations? Does it treat the framework as inherently valuable? Does it maintain the accuracy/completeness distinction? Is "low confidence" language absent? Is typical score framed positively?
 8. BRAND ESSENCE ALIGNMENT — Does it sound like a Sage (not a salesperson or academic)? Benefits before features? Plain language? Optimistic pragmatism? Guide, don't criticize? Judo Approach? Audience-appropriate tone? Do any brand tensions tip too far in one direction?
+9. AUDIENCE MESSAGING — Is the content correctly targeted to its audience (buyers, homeowners, buy-side agents, listing agents)? Does it follow the audience-specific guardrails, timing, and value proposition? Is buyer-first positioning maintained? Does it lead with the right concerns for the audience (e.g., safety/comfort for buyers, not cost savings)?
 
 You MUST respond with valid JSON matching this exact schema. Do not include any text outside the JSON object.
 
 {
   "criticalIssues": [
     {
-      "category": "string — one of: PILLAR_ACCURACY, PRODUCT_CAPABILITY, POSITIONING_VIOLATION, CONTENT_QUALITY, TERMINOLOGY, DATA_PROVENANCE, DUCK_COMPLIANCE, BRAND_ESSENCE",
+      "category": "string — one of: PILLAR_ACCURACY, PRODUCT_CAPABILITY, POSITIONING_VIOLATION, CONTENT_QUALITY, TERMINOLOGY, DATA_PROVENANCE, POSITIONING_COMPLIANCE, BRAND_ESSENCE, AUDIENCE_MESSAGING",
       "originalText": "string — exact quote from the content",
       "issue": "string — description of the problem",
       "suggestedFix": "string — corrected version of the text",
@@ -84,10 +85,11 @@ You MUST respond with valid JSON matching this exact schema. Do not include any 
   "importantIssues": [same structure as criticalIssues],
   "minorIssues": [same structure as criticalIssues],
   "positioningStressTest": "string — rewrite the article's most aggressive paragraph from a skeptical listing agent's perspective. Does it feel threatening? Answer yes/no with explanation.",
-  "bunnyDetection": "string — quote any sentences that lead with caveats, apologize for data, or undermine confidence before demonstrating value. For each, provide a Duck-compliant rewrite.",
+  "apologeticPositioningDetection": "string — quote any sentences that lead with caveats, apologize for data, use 'low confidence,' or undermine value before demonstrating it. For each, provide a compliant rewrite.",
   "brandEssenceToneCheck": "string — does this content sound like a trusted Sage or a salesperson? Flag any passages that are too academic, too preachy, too doom-and-gloom, or too jargon-heavy. For each, provide a rewrite.",
-  "dataProvenanceAudit": "string — table of every statistic found, source status, and staleness risk",
-  "overallAssessment": "string — does this article position Pearl correctly? Is it Duck, not Bunny? Does it match Pearl's brand personality? Would a real estate agent feel comfortable with how Pearl is presented?"
+  "audienceAlignment": "string — which audience is this content targeting? Does it follow that audience's specific guardrails? Does it lead with the right concerns? Flag any audience mismatches.",
+  "dataProvenanceAudit": "string — table of every statistic found, source status, and staleness risk. Check against approved statistical claims list.",
+  "overallAssessment": "string — does this content position Pearl correctly per the Foundational Truths? Is it buyer-first? Does it maintain the accuracy/completeness distinction? Does it match Pearl's brand personality? Would a real estate agent feel comfortable with how Pearl is presented? Does it frame Pearl as an independent standards and ratings organization?"
 }
 
 CONTENT TO REVIEW:

@@ -31,6 +31,8 @@ Pearl's go-to-market depends on real estate agents feeling SAFER, not more expos
 
 **Near SCORE output — never use:** "defect," "flaw," "issue," "problem." Pearl describes performance characteristics and context.
 
+**Near SCORE output — never use:** "reveals," "uncovers," "exposes." These imply Pearl is surfacing hidden information or secrets. Pearl organizes publicly available data into a structured view — it does not reveal what someone was hiding. Use "shows," "organizes," or "puts into one place" instead.
+
 **Anywhere — never use:** "low confidence" in connection with a SCORE. This phrase is retired from all Pearl communications.
 
 **Near unclaimed homes — never use:** "inaccurate," "unreliable," "incomplete score." The score is accurate; the profile may be less complete.

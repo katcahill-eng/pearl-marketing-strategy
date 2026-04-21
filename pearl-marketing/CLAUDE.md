@@ -28,7 +28,7 @@
 | Conferences | Ongoing | Event strategy, geo-fencing, sponsorship |
 | Partnerships | In Planning | DOE, NAR, RESO, NASEO activation |
 | Pearl App | Active | React Native homeowner app (separate dev track) |
-| MarcomsBot | Complete | Slack intake bot for marketing requests |
+| Sage | Complete | Slack intake bot for marketing requests |
 | Content QC | Active | Automated content review against brand guidelines (TypeScript/CLI) — Pearl Marketing OS spoke |
 | Pearl Marketing OS | Active | Hub-and-spoke AI marketing automation architecture |
 | Social Media Coordinator | In Progress | Blog-to-social promotion workflow — Pearl Marketing OS spoke |
@@ -80,7 +80,7 @@
 - **Next:** See active PRDs in tasks/pearl-app/
 </details>
 
-<details><summary><strong>MarcomsBot</strong></summary>
+<details><summary><strong>Sage</strong></summary>
 
 - **Repo:** Separate repo — `github.com/katcahill-eng/pearl-bot` (clone to `~/pearl-bot`)
 - **Stack:** TypeScript, Slack Bolt, Railway
@@ -95,7 +95,7 @@
 - **Run:** `cd pearl-content-qc && npm install && npx tsx src/cli.ts --input <file>`
 - **Output:** Report card (stdout) + Excel workbook (`output/`)
 - **Key files:** `src/qc-runner.ts`, `src/prompt-builder.ts`, `strategy-docs/`
-- **Next:** Integrate with MarcomsBot Slack workflow
+- **Next:** Integrate with Sage Slack workflow
 </details>
 
 <details><summary><strong>GAS Automation</strong></summary>
@@ -151,23 +151,25 @@ pearl-marketing/
 │   └── reference/          # Template scripts
 ├── tasks/                  # PRDs organized by project
 │   ├── pearl-app/          # Mobile app PRDs & UX specs
-│   └── marcomsbot/          # MarcomsBot PRDs
-├── prd.json                # Active Ralph PRD (auto-managed)
-├── progress.txt            # Ralph progress log (auto-managed)
+│   └── sage/                # Sage PRDs (Slack intake bot)
 └── CLAUDE.md               # This file
 ```
+
+## Repo Structure
+
+This is a single shared repository hosted on Pearl's GitHub organization (pearlscore). All marketing staff work from the same repo — no one clones or maintains their own copy. Each staff member sets up their own local `.env` file with their own credentials; everything else (code, strategy docs, spoke configs, PRDs) is shared.
 
 ## Adding a New Project
 
 1. Create a folder at root: `pearl-<project-name>/`
 2. Add a `tasks/pearl-<project-name>/` folder for its PRDs
 3. Each project manages its own dependencies (package.json, etc.)
-4. Use `/prd` to create the initial PRD, then `/ralph` to generate prd.json
+4. Use `/prd` to create the initial PRD
 5. Add the project to the **Projects** table above with status and description
 
 ## Pearl Marketing OS
 
-Pearl Marketing OS is the AI-powered hub-and-spoke system for the marketing department. The Director (Claude Code) orchestrates specialized spokes. When the user references a spoke by alias, map it to the correct spoke and invoke accordingly.
+Pearl Marketing OS is the AI-powered hub-and-spoke system for the marketing department. The Director orchestrates specialized spokes via enterprise API accounts (Claude, OpenAI, and others as needed). When the user references a spoke by alias, map it to the correct spoke and invoke accordingly.
 
 **Full architecture:** `pearl-marketing-os/` — manifest template, schema, shared services docs, spoke registry
 **Architecture PRD:** `tasks/prd-pearl-marketing-os.md`
@@ -199,7 +201,7 @@ Documented in `pearl-marketing-os/shared-services.md`:
 - **Brand Context** — strategy docs in `pearl-content-qc/strategy-docs/`
 - **Canva** — MCP server for design search, content reading, and export
 - **Google Workspace** — MCP server for Drive, Slides, Docs
-- **Claude API** — `ANTHROPIC_API_KEY` env var, shared across spokes
+- **AI APIs** — Enterprise accounts (Claude, OpenAI, others as needed), configured per spoke via local .env
 - **Asset Storage** — Google Drive upload with public sharing for image URLs
 
 ### Example Workflows

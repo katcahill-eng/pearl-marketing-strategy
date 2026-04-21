@@ -3,6 +3,8 @@
 ## Product Names
 - First reference: "Pearl SCORE™"; subsequent: "Pearl SCORE" or "the SCORE"
 - First reference: "Pearl Home Performance Registry™"; subsequent: "the Registry" or "Pearl Registry"
+- Pearl app: write "Pearl app" — lowercase "app." Never use "the" before it ("inside Pearl app," not "inside the Pearl app"). Treat like "Facebook."
+- Pearl for Professionals: write in full. Never abbreviate to "Pearl PRO" or "Pearl Pro."
 - Never use SCORE as a verb
 - Scale: 1–1,000 (not 0–1,000)
 

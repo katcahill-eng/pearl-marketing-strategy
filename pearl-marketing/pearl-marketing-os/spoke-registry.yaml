@@ -147,3 +147,55 @@ spokes:
     invoke:
       cli: "npx tsx src/cli.ts {command}"
       library: "import { checkDeliverables } from 'pearl-contractors'"
+
+  - name: scribe
+    display_name: Meeting Scribe
+    status: planned
+    aliases:
+      - scribe
+      - notetaker
+      - meeting notes
+      - recap
+      - transcript
+      - meeting
+    location: pearl-scribe/
+    invoke:
+      cli: "npx tsx src/cli.ts {command}"
+      library: "import { processRecording } from 'pearl-scribe'"
+    integrations:
+      - meetily (local transcription)
+      - slack (post recaps)
+      - google-calendar (read meeting context)
+    capabilities:
+      - record and transcribe meetings locally via Meetily
+      - identify speakers and attribute statements
+      - extract action items, commitments, deadlines, and owners
+      - post structured recaps to Slack
+      - flag items for Executive Admin to schedule
+
+  - name: executive-admin
+    display_name: Executive Admin
+    status: planned
+    aliases:
+      - admin
+      - ea
+      - scheduler
+      - task manager
+      - calendar
+      - monday
+    location: pearl-admin/
+    invoke:
+      cli: "npx tsx src/cli.ts {command}"
+      library: "import { manageTasks } from 'pearl-admin'"
+    integrations:
+      - slack (read messages, post updates)
+      - google-calendar (block time, check conflicts)
+      - monday.com (create and manage tasks)
+      - scribe (receive action items from meetings)
+    capabilities:
+      - receive action items from Scribe after every meeting
+      - create tasks in Monday.com with assignees and deadlines
+      - estimate time per task based on configurable parameters
+      - block time on Google Calendar for task completion
+      - send daily briefing of priorities and schedule
+      - flag overcommitments and scheduling conflicts
